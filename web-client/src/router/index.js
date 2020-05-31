@@ -5,9 +5,21 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "",
+    path: "/",
     name: "login",
     component: () => import("../pages/Login"),
+  },
+
+  {
+    path: "/dashboard",
+    component: () => import("../layouts/Dashboard"),
+    children: [
+      {
+        path: ":chatId",
+        name: "chat-window",
+        component: () => import("../pages/ChatWindow"),
+      },
+    ],
   },
 ];
 

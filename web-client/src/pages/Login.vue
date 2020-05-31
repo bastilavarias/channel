@@ -1,5 +1,19 @@
 <template>
   <v-app>
+    <v-app-bar
+      :color="isScrolled ? 'white' : 'transparent'"
+      :flat="!isScrolled"
+      app
+    >
+      <v-toolbar-title>
+        <div class="d-flex">
+          <span class="mr-2 text-uppercase font-weight-bold primary--text"
+            >Channel</span
+          >
+          <v-icon color="primary">mdi-access-point-network</v-icon>
+        </div>
+      </v-toolbar-title>
+    </v-app-bar>
     <v-content>
       <v-container class="fill-height">
         <v-row>
@@ -55,7 +69,7 @@
               >access <span class="font-weight-bold">Channel</span></span
             >
           </h1>
-          <v-btn color="primary" x-large rounded>
+          <v-btn color="primary" x-large rounded :to="{ name: 'dashboard' }">
             <v-icon class="mr-3" large>mdi-github</v-icon>
             <span>Login With Github</span>
           </v-btn>
@@ -74,6 +88,8 @@ export default {
       isLoginDialogShow: false,
     };
   },
+
+  mixins: [customUtilities],
 };
 </script>
 
