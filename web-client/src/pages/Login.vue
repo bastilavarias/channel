@@ -69,7 +69,12 @@
               >access <span class="font-weight-bold">Channel</span></span
             >
           </h1>
-          <v-btn color="primary" x-large rounded :to="{ name: 'chat-window' }">
+          <v-btn
+            color="primary"
+            x-large
+            rounded
+            :to="{ name: 'chat-window', params: { chatId: '1' } }"
+          >
             <v-icon class="mr-3" large>mdi-github</v-icon>
             <span>Login With Github</span>
           </v-btn>
