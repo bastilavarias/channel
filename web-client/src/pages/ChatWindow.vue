@@ -49,6 +49,46 @@
     </div>
     <v-navigation-drawer app right width="400">
       <v-card flat color="white">
+        <v-card-title class="font-weight-bold">Room Information</v-card-title>
+        <v-list>
+          <v-list-item>
+            <v-list-item-content>
+              <v-list-item-subtitle>Room Name</v-list-item-subtitle>
+              <v-list-item-title class="font-weight-bold"
+                >Room Name</v-list-item-title
+              >
+            </v-list-item-content>
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-content>
+              <v-list-item-subtitle>Description</v-list-item-subtitle>
+              <v-list-item-title
+                >Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Aperiam explicabo molestiae natus officia quos recusandae
+                reprehenderit sint ut vel voluptates.</v-list-item-title
+              >
+            </v-list-item-content>
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-content>
+              <v-list-item-subtitle>Room Type</v-list-item-subtitle>
+              <v-list-item-title>
+                <span class="error--text">
+                  Private
+                </span>
+              </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-content>
+              <v-list-item-subtitle>Admin</v-list-item-subtitle>
+              <v-list-item-title>Name Name</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
         <v-card-title class="font-weight-bold">Members</v-card-title>
         <v-card-subtitle>5 Members in this room</v-card-subtitle>
         <v-list>
@@ -75,6 +115,7 @@
           </template>
         </v-list>
       </v-card>
+      <v-card flat color="white"> </v-card>
       <template v-slot:append>
         <div class="pa-2">
           <v-btn color="error" outlined block>

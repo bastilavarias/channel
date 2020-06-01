@@ -3,7 +3,7 @@
     <div class="d-flex justify-space-between" v-if="isAuthorAndUserSame">
       <div class="flex-grow-1"></div>
       <div>
-        <v-card color="primary" flat min-width="200" max-width="600" tile>
+        <v-card color="primary" flat min-width="200" max-width="600" shaped>
           <v-card-text>
             <span class="body-1 white--text">
               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad
