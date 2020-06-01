@@ -4,7 +4,7 @@
       <span class="display-1 font-weight-bold">Rooms</span>
       <div class="flex-grow-1"></div>
       <v-btn outlined color="primary" rounded :to="{ name: 'room-form' }">
-        <span class="font-weight-bold">Create Room</span>
+        <span class="font-weight-bold text-capitalize">Create Room</span>
       </v-btn>
     </v-card-title>
 
