@@ -45,49 +45,23 @@
     </v-content>
     <div class="banner">
       <img
-        :src="require('../assets/login-background.png')"
+        src="../assets/login-background.png"
         alt="Login Banner"
         class="banner-image"
       />
     </div>
-    <v-dialog v-model="isLoginDialogShow" width="600">
-      <v-card>
-        <div class="text-center py-10">
-          <v-avatar :size="100" class="mb-5">
-            <v-img
-              src="../assets/github-logo.png"
-              lazy-src="../assets/github-logo.png"
-            ></v-img>
-          </v-avatar>
-          <h1 class="display-1 font-weight-bold black--text mb-5">
-            GitHub access required.
-          </h1>
-          <h1 class="title mb-5">
-            Login to your <span class="font-weight-bold">GitHub Account</span>
-            to
-            <span class="d-block"
-              >access <span class="font-weight-bold">Channel</span></span
-            >
-          </h1>
-          <v-btn
-            color="primary"
-            x-large
-            rounded
-            :to="{ name: 'chat-window', params: { chatId: '1' } }"
-          >
-            <v-icon class="mr-3" large>mdi-github</v-icon>
-            <span>Login With Github</span>
-          </v-btn>
-        </div>
-      </v-card>
-    </v-dialog>
+    <custom-login-dialog
+      :is-show.sync="isLoginDialogShow"
+    ></custom-login-dialog>
   </v-app>
 </template>
 
 <script>
 import customUtilities from "../common/customUtilities";
+import CustomLoginDialog from "../components/custom/CustomLoginDialog";
 
 export default {
+  components: { CustomLoginDialog },
   data() {
     return {
       isLoginDialogShow: false,

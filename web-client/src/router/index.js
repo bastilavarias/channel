@@ -62,6 +62,11 @@ const routes = [
       },
     ],
   },
+
+  {
+    path: "/github-login-callback",
+    component: () => import("../layouts/GithubLoginCallback"),
+  },
 ];
 
 const router = new VueRouter({
