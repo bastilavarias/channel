@@ -49,7 +49,15 @@
     </div>
     <v-navigation-drawer app right width="400">
       <v-card flat color="white">
-        <v-card-title class="font-weight-bold">Room Information</v-card-title>
+        <v-card-title>
+          <span class="font-weight-bold">
+            Room Information
+          </span>
+          <div class="flex-grow-1"></div>
+          <v-btn icon>
+            <v-icon>mdi-information</v-icon>
+          </v-btn>
+        </v-card-title>
         <v-list>
           <v-list-item>
             <v-list-item-content>
@@ -89,6 +97,7 @@
             </v-list-item-content>
           </v-list-item>
         </v-list>
+
         <v-card-title class="font-weight-bold">Members</v-card-title>
         <v-card-subtitle>5 Members in this room</v-card-subtitle>
         <v-list>
