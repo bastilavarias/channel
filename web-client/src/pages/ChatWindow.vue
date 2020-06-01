@@ -1,6 +1,6 @@
 <template>
   <section>
-    <v-toolbar clipped-right flat color="white">
+    <v-toolbar flat color="white">
       <v-toolbar-title>
         <v-list-item-avatar :size="45">
           <v-img
@@ -11,28 +11,36 @@
         <span class="font-weight-bold">CET - Developers</span>
       </v-toolbar-title>
     </v-toolbar>
-    <div id="chat-messages">
-      <template v-for="n in 200">
-        <v-list-item>sfsdf</v-list-item>
-      </template>
+    <div id="chat-messages" ref="chatMessages">
+      <v-container>
+        <template v-for="n in 100 + messages.length">
+          <chat-message
+            :key="n"
+            :is-author-and-user-same="n % 2 === 1"
+          ></chat-message>
+        </template>
+      </v-container>
     </div>
-    <div id="chat-input">
+    <div>
       <v-row no-gutters>
         <v-col cols="11">
-          <v-textarea
+          <v-text-field
             class="ml-5"
             placeholder="Write a message..."
-            auto-grow
-            rows="3"
-            outlined
+            filled
             rounded
-            row-height="15"
-            full-width
-          ></v-textarea>
+            v-model="message"
+            @keyup.enter="sendMessage"
+          ></v-text-field>
         </v-col>
         <v-col cols="1">
           <div class="text-center">
-            <v-btn color="primary" fab>
+            <v-btn
+              color="primary"
+              fab
+              @click="sendMessage"
+              :disabled="!isMessageValid"
+            >
               <v-icon>mdi-send</v-icon>
             </v-btn>
           </div>
@@ -68,25 +76,68 @@
         </v-list>
       </v-card>
       <template v-slot:append>
-        <v-card-actions>
+        <div class="pa-2">
           <v-btn color="error" outlined block>
             <span class="text-capitalize font-weight-bold mr-1">
               Leave Room
             </span>
             <v-icon>mdi-logout</v-icon>
           </v-btn>
-        </v-card-actions>
+        </div>
       </template>
     </v-navigation-drawer>
   </section>
 </template>
+
+<script>
+import ChatMessage from "../components/ChatMessage";
+export default {
+  components: { ChatMessage },
+
+  data() {
+    return {
+      messages: [],
+      message: "",
+    };
+  },
+
+  computed: {
+    chatMessagesDiv() {
+      return this.$refs.chatMessages;
+    },
+
+    isMessageValid() {
+      return this.message;
+    },
+  },
+
+  methods: {
+    sendMessage() {
+      if (this.isMessageValid) {
+        this.messages = [...this.messages, this.message];
+        this.message = "";
+      }
+    },
+
+    scrollNewMessage() {
+      this.chatMessagesDiv.scrollTop = this.chatMessagesDiv.scrollHeight;
+    },
+  },
+
+  mounted() {
+    this.scrollNewMessage();
+  },
+
+  updated() {
+    this.scrollNewMessage();
+  },
+};
+</script>
 
 <style scoped>
 #chat-messages {
   flex: 1 0 100%;
   overflow: auto;
   height: 85vh;
-}
-#chat-input {
 }
 </style>
