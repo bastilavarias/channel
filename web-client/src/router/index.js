@@ -11,9 +11,50 @@ const routes = [
   },
 
   {
-    path: "/dashboard",
+    path: "/messages",
     component: () => import("../layouts/Dashboard"),
     children: [
+      {
+        path: "room",
+        component: () => import("../layouts/Room"),
+        children: [
+          {
+            path: "",
+            name: "room-list",
+            component: () => import("../pages/room/List"),
+            meta: {
+              breadcrumbs: [
+                {
+                  text: "Room List",
+                  icon: "mdi-clipboard-list-outline",
+                  to: { name: "room-list" },
+                },
+              ],
+            },
+          },
+
+          {
+            path: "create",
+            name: "room-form",
+            component: () => import("../pages/room/Form"),
+            meta: {
+              breadcrumbs: [
+                {
+                  text: "Room List",
+                  icon: "mdi-clipboard-list-outline",
+                  to: { name: "room-list" },
+                },
+
+                {
+                  text: "Room Form",
+                  icon: "mdi-form-select",
+                  to: { name: "room-form" },
+                },
+              ],
+            },
+          },
+        ],
+      },
       {
         path: ":chatId",
         name: "chat-window",

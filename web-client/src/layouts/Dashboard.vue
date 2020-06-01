@@ -34,8 +34,8 @@
             label="Search Room"
             prepend-inner-icon="mdi-magnify"
           ></v-text-field>
-          <template v-for="n in 35">
-            <v-list-item :key="n">
+          <template v-for="n in 3">
+            <v-list-item :key="n" @click="viewMessages">
               <v-list-item-avatar :size="45">
                 <v-img
                   src="../assets/noah-halpert.png"
@@ -58,6 +58,22 @@
           </template>
         </v-list>
       </v-card>
+      <template v-slot:append>
+        <div class="pa-2">
+          <v-btn
+            color="primary"
+            rounded
+            outlined
+            block
+            :to="{ name: 'room-list' }"
+          >
+            <v-icon class="mr-1">mdi-magnify</v-icon>
+            <span class="text-capitalize font-weight-bold">
+              Discover more room
+            </span>
+          </v-btn>
+        </div>
+      </template>
     </v-navigation-drawer>
     <v-content>
       <router-view></router-view>
@@ -68,5 +84,16 @@
 <script>
 export default {
   name: "main-layout",
+
+  methods: {
+    viewMessages() {
+      this.$router.push({
+        name: "chat-window",
+        params: {
+          chatId: "1002323230909vhuh93232",
+        },
+      });
+    },
+  },
 };
 </script>

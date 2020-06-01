@@ -52,7 +52,7 @@
         <v-card-title class="font-weight-bold">Members</v-card-title>
         <v-card-subtitle>5 Members in this room</v-card-subtitle>
         <v-list>
-          <template v-for="n in 35">
+          <template v-for="n in 5">
             <v-list-item :key="n">
               <v-list-item-avatar :size="45">
                 <v-img
