@@ -1,6 +1,16 @@
 <template>
   <v-app>
-    <v-navigation-drawer app width="400">
+    <v-app-bar app clipped-left clipped-right flat color="primary" dark>
+      <v-toolbar-title>
+        <div class="d-flex">
+          <span class="mr-2 text-uppercase font-weight-bold">Channel</span>
+          <v-icon>mdi-access-point-network</v-icon>
+        </div>
+      </v-toolbar-title>
+      <v-spacer></v-spacer>
+      <dashboard-app-bar-menu></dashboard-app-bar-menu>
+    </v-app-bar>
+    <v-navigation-drawer app clipped width="400">
       <profile-list-item></profile-list-item>
       <v-divider></v-divider>
       <joined-room-list></joined-room-list>
@@ -30,9 +40,10 @@
 <script>
 import JoinedRoomList from "../components/JoinedRoomList";
 import ProfileListItem from "../components/ProfileListItem";
+import DashboardAppBarMenu from "../components/DashboardToolbarMenu";
 export default {
   name: "main-layout",
 
-  components: { ProfileListItem, JoinedRoomList },
+  components: { DashboardAppBarMenu, ProfileListItem, JoinedRoomList },
 };
 </script>

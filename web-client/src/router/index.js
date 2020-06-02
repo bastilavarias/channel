@@ -72,7 +72,7 @@ const routes = [
   {
     path: "/github-login-callback",
     name: "github-login",
-    component: () => import("../layouts/GithubLoginCallback"),
+    component: () => import("../pages/GithubLoginCallback"),
   },
 ];
 

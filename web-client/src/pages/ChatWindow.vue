@@ -47,7 +47,7 @@
         </v-col>
       </v-row>
     </div>
-    <v-navigation-drawer app right width="400">
+    <v-navigation-drawer app right clipped width="400">
       <v-card flat color="white">
         <v-card-title>
           <span class="font-weight-bold">
@@ -188,6 +188,6 @@ export default {
 #chat-messages {
   flex: 1 0 100%;
   overflow: auto;
-  height: 85vh;
+  height: 78vh;
 }
 </style>
