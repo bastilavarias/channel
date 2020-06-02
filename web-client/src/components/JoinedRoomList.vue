@@ -49,7 +49,7 @@ export default {
   methods: {
     viewMessages() {
       this.$router.push({
-        name: "chat-window",
+        name: "chat-list",
         params: {
           chatId: "1002323230909vhuh93232",
         },
