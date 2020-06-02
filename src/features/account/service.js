@@ -22,13 +22,14 @@ const accountService = {
     );
     const isGotAccountEmpty = Object.keys(gotRawAccount).length === 0;
     if (isGotAccountEmpty) {
+      const createdAt = utilityService.timestamp();
       await accountModel.save({
         id,
         username: login,
         nodeId: node_id,
         name,
         avatarUrl: avatar_url,
-        createdAt: utilityService.timestamp(),
+        createdAt,
       });
     }
     const tokenCredentials = {
