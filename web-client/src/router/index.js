@@ -71,6 +71,7 @@ const routes = [
 
   {
     path: "/github-login-callback",
+    name: "github-login",
     component: () => import("../layouts/GithubLoginCallback"),
   },
 ];
@@ -89,6 +90,9 @@ router.beforeEach(async (to, from, next) => {
   );
   if (isProtectedRoute && !isAuthenticated) return next({ name: "login" });
   if (to.name === "login" && isAuthenticated) {
+    next({ name: "chat-window", params: { chatId: "123456789" } });
+  }
+  if (to.name === "github-login" && isAuthenticated) {
     next({ name: "chat-window", params: { chatId: "123456789" } });
   }
   next();
