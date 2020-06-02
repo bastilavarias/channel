@@ -9,4 +9,10 @@ router.post(
   roomController.create
 );
 
+router.get(
+  "/:keyword/:lastItemId",
+  passport.authenticate("jwt", { session: false }),
+  roomController.search
+);
+
 module.exports = router;

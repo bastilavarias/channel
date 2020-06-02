@@ -19,6 +19,17 @@ const roomController = {
       res.status(400).json(error);
     }
   },
+
+  search: async (req, res) => {
+    try {
+      const keyword = req.params.keyword;
+      const lastItemId = parseInt(req.params.lastItemId);
+      const result = await roomService.search(keyword, lastItemId);
+      res.status(200).json(result);
+    } catch (error) {
+      res.status(400).json(error);
+    }
+  },
 };
 
 module.exports = roomController;

@@ -27,6 +27,12 @@ const roomModel = {
       .returning("id")
       .then((result) => result[0]);
   },
+
+  search: async (keyword, lastItemId) => {
+    return await knex(roomModel.tableName)
+      .select(["id", "name", "type", "avatar_url", "account_id"])
+      .where("name", "like", `%${keyword}%`);
+  },
 };
 
 module.exports = roomModel;

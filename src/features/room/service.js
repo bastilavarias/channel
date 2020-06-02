@@ -9,8 +9,8 @@ const roomService = {
     const createdAt = utilityService.timestamp();
     const createdRoomId = await roomModel.create({
       id,
-      name,
-      description,
+      name: name.toLowerCase().trim(),
+      description: description.toLowerCase().trim(),
       type,
       password,
       avatarUrl,
@@ -22,6 +22,9 @@ const roomService = {
       id: createdRoomId,
     };
   },
+
+  search: async (keyword, lastItemId) =>
+    await roomModel.search(keyword, lastItemId),
 };
 
 module.exports = roomService;
