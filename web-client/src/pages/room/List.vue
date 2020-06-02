@@ -1,5 +1,8 @@
 <template>
   <v-card flat color="white">
+    <v-card-text>
+      <custom-breadcrumbs :routes="breadcrumbs"></custom-breadcrumbs>
+    </v-card-text>
     <v-card-title>
       <span class="display-1 font-weight-bold">Rooms</span>
       <div class="flex-grow-1"></div>
@@ -91,11 +94,19 @@
 </template>
 
 <script>
+import CustomBreadcrumbs from "../../components/custom/Breadcrumbs";
 export default {
+  components: { CustomBreadcrumbs },
   data() {
     return {
       isRoomDetailsDialogShow: false,
     };
+  },
+
+  computed: {
+    breadcrumbs() {
+      return this.$route.meta.breadcrumbs;
+    },
   },
 };
 </script>

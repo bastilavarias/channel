@@ -1,5 +1,8 @@
 <template>
   <v-card flat color="white">
+    <v-card-text>
+      <custom-breadcrumbs :routes="breadcrumbs"></custom-breadcrumbs>
+    </v-card-text>
     <v-card-title>
       <span class="display-1 font-weight-bold">Room Information</span>
     </v-card-title>
@@ -77,6 +80,7 @@
 <script>
 import CustomPasswordTextField from "../../components/custom/PasswordTextField";
 import { ROOM_CREATE } from "../../store/types/room";
+import CustomBreadcrumbs from "../../components/custom/Breadcrumbs";
 const defaultForm = {
   name: "",
   description: "",
@@ -84,7 +88,7 @@ const defaultForm = {
   password: "",
 };
 export default {
-  components: { CustomPasswordTextField },
+  components: { CustomBreadcrumbs, CustomPasswordTextField },
   data() {
     return {
       form: Object.assign({}, defaultForm),
@@ -103,6 +107,10 @@ export default {
       const { name, type, password } = this.form;
       if (this.isPrivateRoom) return name && type && password;
       return name && type;
+    },
+
+    breadcrumbs() {
+      return this.$route.meta.breadcrumbs;
     },
   },
 
