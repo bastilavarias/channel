@@ -50,18 +50,16 @@
         class="banner-image"
       />
     </div>
-    <custom-login-dialog
-      :is-show.sync="isLoginDialogShow"
-    ></custom-login-dialog>
+    <login-dialog :is-show.sync="isLoginDialogShow"></login-dialog>
   </v-app>
 </template>
 
 <script>
 import customUtilities from "../common/customUtilities";
-import CustomLoginDialog from "../components/custom/CustomLoginDialog";
+import LoginDialog from "../components/LoginDialog";
 
 export default {
-  components: { CustomLoginDialog },
+  components: { LoginDialog },
   data() {
     return {
       isLoginDialogShow: false,

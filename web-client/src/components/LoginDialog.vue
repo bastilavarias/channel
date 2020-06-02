@@ -4,8 +4,8 @@
       <div class="text-center py-10">
         <v-avatar :size="100" class="mb-5">
           <v-img
-            src="../../assets/github-logo.png"
-            lazy-src="../../assets/github-logo.png"
+            src="../assets/github-logo.png"
+            lazy-src="../assets/github-logo.png"
           ></v-img>
         </v-avatar>
         <h1 class="display-1 font-weight-bold black--text mb-5">
@@ -29,7 +29,7 @@
 
 <script>
 export default {
-  name: "custom-login-dialog",
+  name: "login-dialog",
 
   props: {
     isShow: {

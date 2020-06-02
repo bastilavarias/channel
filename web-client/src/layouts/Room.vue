@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import CustomBreadcrumbs from "../components/custom/CustomBreadcrumbs";
+import CustomBreadcrumbs from "../components/custom/Breadcrumbs";
 export default {
   name: "room-layout",
   components: { CustomBreadcrumbs },
