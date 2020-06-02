@@ -13,8 +13,8 @@ const routes = [
   },
 
   {
-    path: "/messages",
-    component: () => import("../layouts/Dashboard"),
+    path: "/chats",
+    component: () => import("../layouts/ChatWindow"),
     meta: {
       requiresAuth: true,
     },
@@ -63,8 +63,8 @@ const routes = [
 
       {
         path: ":chatId",
-        name: "chat-window",
-        component: () => import("../pages/ChatWindow"),
+        name: "chat-list",
+        component: () => import("../pages/ChatList"),
       },
     ],
   },
@@ -90,10 +90,10 @@ router.beforeEach(async (to, from, next) => {
   );
   if (isProtectedRoute && !isAuthenticated) return next({ name: "login" });
   if (to.name === "login" && isAuthenticated) {
-    next({ name: "chat-window", params: { chatId: "123456789" } });
+    next({ name: "chat-list", params: { chatId: "123456789" } });
   }
   if (to.name === "github-login" && isAuthenticated) {
-    next({ name: "chat-window", params: { chatId: "123456789" } });
+    next({ name: "chat-list", params: { chatId: "123456789" } });
   }
   next();
 });

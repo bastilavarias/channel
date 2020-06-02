@@ -26,7 +26,7 @@ export default {
     const { code } = this.$route.query;
     await this.$store.dispatch(ACCOUNT_LOGIN, code);
     await this.$router.push({
-      name: "chat-window",
+      name: "chat-list",
       params: { chatId: "123445" },
     });
   },

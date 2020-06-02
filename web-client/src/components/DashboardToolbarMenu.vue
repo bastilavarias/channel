@@ -12,18 +12,27 @@
     </template>
     <v-list>
       <v-list-item>Profile</v-list-item>
-      <v-list-item>Logout</v-list-item>
+      <v-list-item @click="logout">Logout</v-list-item>
     </v-list>
   </v-menu></template
 >
 
 <script>
+import { ACCOUNT_PURGE_AUTHENTICATION } from "../store/types/account";
+
 export default {
   name: "dashboard-app-bar-menu",
 
   computed: {
     currentAccount() {
       return this.$store.state.account.current;
+    },
+  },
+
+  methods: {
+    async logout() {
+      await this.$store.commit(ACCOUNT_PURGE_AUTHENTICATION);
+      await this.$router.push({ name: "login" });
     },
   },
 };
