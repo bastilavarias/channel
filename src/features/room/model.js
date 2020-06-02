@@ -28,10 +28,13 @@ const roomModel = {
       .then((result) => result[0]);
   },
 
-  search: async (keyword, lastItemId) => {
+  search: async (keyword, offset) => {
     return await knex(roomModel.tableName)
       .select(["id", "name", "type", "avatar_url", "account_id"])
-      .where("name", "like", `%${keyword}%`);
+      .where("name", "like", `%${keyword}%`)
+      .offset(offset)
+      .limit(20)
+      .orderBy("name", "asc");
   },
 };
 

@@ -10,7 +10,7 @@ router.post(
 );
 
 router.get(
-  "/:keyword/:lastItemId",
+  "/:keyword/:offset",
   passport.authenticate("jwt", { session: false }),
   roomController.search
 );

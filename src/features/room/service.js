@@ -23,8 +23,7 @@ const roomService = {
     };
   },
 
-  search: async (keyword, lastItemId) =>
-    await roomModel.search(keyword, lastItemId),
+  search: async (keyword, offset) => await roomModel.search(keyword, offset),
 };
 
 module.exports = roomService;
