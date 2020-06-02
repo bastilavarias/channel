@@ -1,17 +1,17 @@
 import Vue from "vue";
 import axios from "axios";
 import vueAxios from "vue-axios";
-// import tokenService from "./token";
+import token from "./tokenService";
 
-const api = {
+const apiService = {
   init: () => {
     Vue.use(vueAxios, axios);
     Vue.axios.defaults.baseURL = "/api";
   },
 
-  // setHeader() {
-  //     Vue.axios.defaults.headers.common["Authorization"] = tokenService.get();
-  // },
+  setHeader() {
+    Vue.axios.defaults.headers.common["Authorization"] = token.get();
+  },
 
   get: (route, body) => {
     return Vue.axios.get(route, body);
@@ -30,4 +30,10 @@ const api = {
   },
 };
 
-export default api;
+export default apiService;
+
+export const Account = {
+  login: (code) => apiService.post("/account/login", { code }),
+
+  checkCurrent: () => apiService.get("/account/check-current"),
+};

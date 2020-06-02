@@ -3,10 +3,10 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import vuetify from "./plugins/vuetify";
-import api from "./common/api/modules/account";
+import apiService from "./common/apiService";
 
 Vue.config.productionTip = false;
-api.init();
+apiService.init();
 
 new Vue({
   router,

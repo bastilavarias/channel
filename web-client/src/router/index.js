@@ -1,5 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import store from "../store";
+import { ACCOUNT_CHECK_AUTHENTICATION } from "../store/types/account";
 
 Vue.use(VueRouter);
 
@@ -13,6 +15,9 @@ const routes = [
   {
     path: "/messages",
     component: () => import("../layouts/Dashboard"),
+    meta: {
+      requiresAuth: true,
+    },
     children: [
       {
         path: "room",
@@ -55,6 +60,7 @@ const routes = [
           },
         ],
       },
+
       {
         path: ":chatId",
         name: "chat-window",
@@ -73,6 +79,19 @@ const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes,
+});
+
+router.beforeEach(async (to, from, next) => {
+  await store.dispatch(ACCOUNT_CHECK_AUTHENTICATION);
+  const isAuthenticated = store.state.account.isAuthenticated;
+  const isProtectedRoute = to.matched.some(
+    (record) => record.meta.requiresAuth
+  );
+  if (isProtectedRoute && !isAuthenticated) return next({ name: "login" });
+  if (to.name === "login" && isAuthenticated) {
+    next({ name: "chat-window", params: { chatId: "123456789" } });
+  }
+  next();
 });
 
 export default router;

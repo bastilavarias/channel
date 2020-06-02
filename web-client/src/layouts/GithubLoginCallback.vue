@@ -25,6 +25,10 @@ export default {
   async created() {
     const { code } = this.$route.query;
     await this.$store.dispatch(ACCOUNT_LOGIN, code);
+    await this.$router.push({
+      name: "chat-window",
+      params: { chatId: "123445" },
+    });
   },
 };
 </script>

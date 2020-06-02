@@ -47,6 +47,27 @@ const accountService = {
       token: `Bearer ${jsonToken}`,
     };
   },
+
+  checkCurrent: async ({ id, githubToken }) => {
+    const gotRawAccount = await helperService.getSingle("account", "id", id, [
+      "*",
+    ]);
+    const tokenCredentials = {
+      id: gotRawAccount.id,
+      username: gotRawAccount.username,
+      nodeId: gotRawAccount.node_id,
+      name: gotRawAccount.name,
+      avatarUrl: gotRawAccount.avatar_url,
+      githubToken,
+    };
+    const jsonToken = jsonWebToken.sign(
+      tokenCredentials,
+      process.env.AUTH_SECRET_KEY
+    );
+    return {
+      token: `Bearer ${jsonToken}`,
+    };
+  },
 };
 
 module.exports = accountService;
