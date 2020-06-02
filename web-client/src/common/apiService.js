@@ -37,3 +37,8 @@ export const Account = {
 
   checkCurrent: () => apiService.get("/account/check-current"),
 };
+
+export const Room = {
+  create: ({ name, description, type, password }) =>
+    apiService.post("/room/", { name, description, type, password }),
+};
