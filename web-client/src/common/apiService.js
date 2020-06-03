@@ -41,4 +41,6 @@ export const Account = {
 export const Room = {
   create: ({ name, description, type, password }) =>
     apiService.post("/room/", { name, description, type, password }),
+
+  search: (keyword, offset) => apiService.get(`/room/${keyword}/${offset}`),
 };

@@ -10,7 +10,6 @@
         <span class="font-weight-bold text-capitalize">Create Room</span>
       </v-btn>
     </v-card-title>
-
     <v-list rounded dense>
       <v-text-field
         dense
@@ -19,37 +18,27 @@
         single-line
         label="Search Room"
         prepend-inner-icon="mdi-magnify"
+        autofocus
+        v-model="keyword"
       ></v-text-field>
-      <template v-for="n in 3">
-        <v-list-item :key="n" @click="isRoomDetailsDialogShow = true">
-          <v-list-item-avatar :size="45">
-            <v-img
-              src="../../assets/noah-halpert.png"
-              lazy-src="../../assets/noah-halpert.png"
-            ></v-img>
-          </v-list-item-avatar>
-          <v-list-item-content>
-            <v-list-item-title>
-              <span class="title font-weight-bold">CET - Developers</span>
-            </v-list-item-title>
-            <v-list-item-subtitle>
-              <span class="font-weight-bold success--text">Public Room</span>
-              <span class="mx-1">
-                ·
-              </span>
-              8 Members
-            </v-list-item-subtitle>
-            <v-list-item-subtitle>
-              <span class="font-weight-bold"
-                >Admin:
-                <span class="font-weight-regular text-capitalize">
-                  test
-                </span></span
-              >
-            </v-list-item-subtitle>
-          </v-list-item-content>
-        </v-list-item>
+      <v-skeleton-loader
+        type="list-item-avatar-three-line"
+        v-if="isSearchRoomsStart"
+      ></v-skeleton-loader>
+      <template v-for="(room, index) in rooms" v-if="!isSearchRoomsStart">
+        <room-list-item
+          :key="index"
+          :avatar-url="room.avatarUrl"
+          :name="room.name"
+          :type="room.type"
+          :admin="room.admin"
+        ></room-list-item>
       </template>
+      <v-subheader v-if="rooms.length === 0 && !isSearchRoomsStart">
+        <div class="flex-grow-1"></div>
+        <span>No data available.</span>
+        <div class="flex-grow-1"></div>
+      </v-subheader>
     </v-list>
     <v-dialog width="500" v-model="isRoomDetailsDialogShow">
       <v-card tile>
@@ -95,17 +84,45 @@
 
 <script>
 import CustomBreadcrumbs from "../../components/custom/Breadcrumbs";
+import { ROOM_SEARCH } from "../../store/types/room";
+import RoomListItem from "../../components/RoomListItem";
+
 export default {
-  components: { CustomBreadcrumbs },
+  components: { RoomListItem, CustomBreadcrumbs },
   data() {
     return {
       isRoomDetailsDialogShow: false,
+      keyword: "",
+      offset: 0,
+      rooms: [],
+      isSearchRoomsStart: false,
     };
   },
 
   computed: {
     breadcrumbs() {
       return this.$route.meta.breadcrumbs;
+    },
+  },
+
+  watch: {
+    async keyword(val) {
+      await this.searchRooms();
+    },
+  },
+
+  methods: {
+    async searchRooms() {
+      this.isSearchRoomsStart = true;
+      if (this.keyword.length > 0) {
+        this.rooms = await this.$store.dispatch(ROOM_SEARCH, {
+          keyword: this.keyword,
+          offset: this.offset,
+        });
+      } else {
+        this.rooms = [];
+      }
+      this.isSearchRoomsStart = false;
     },
   },
 };
