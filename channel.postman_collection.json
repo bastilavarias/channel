@@ -1,0 +1,156 @@
+{
+	"info": {
+		"_postman_id": "dc16a823-ede9-4812-a9ca-7dae9e6998e0",
+		"name": "channel",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "account",
+			"item": [
+				{
+					"name": "Sign In",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "code",
+									"value": "238aa9888159b248a7c5",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/api/account/login",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"account",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check Current",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjQ4OTA5MTEsInVzZXJuYW1lIjoiYmFzdGlsYXZhcmlhcyIsIm5vZGVJZCI6Ik1EUTZWWE5sY2pJME9Ea3dPVEV4IiwibmFtZSI6IlNlYmFzdGlhbiBDdXJ0aXMgVC4gTGF2YXJpYXMiLCJhdmF0YXJVcmwiOiJodHRwczovL2F2YXRhcnMwLmdpdGh1YnVzZXJjb250ZW50LmNvbS91LzI0ODkwOTExP3Y9NCIsImdpdGh1YlRva2VuIjoiZTFjMmFiODdlZjNhZGZjNDk0ZDhkNGE1NmY1MGEyNWU3YzA0MGI5NSIsImlhdCI6MTU5MTA3NzEwNX0.y2twM9SfntZChRjJ_XUOG2DatbJcfMcr0FWSrw9wOZY",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/api/account/check-current",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"account",
+								"check-current"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "room",
+			"item": [
+				{
+					"name": "Create Room",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjQ4OTA5MTEsInVzZXJuYW1lIjoiYmFzdGlsYXZhcmlhcyIsIm5vZGVJZCI6Ik1EUTZWWE5sY2pJME9Ea3dPVEV4IiwibmFtZSI6IlNlYmFzdGlhbiBDdXJ0aXMgVC4gTGF2YXJpYXMiLCJhdmF0YXJVcmwiOiJodHRwczovL2F2YXRhcnMwLmdpdGh1YnVzZXJjb250ZW50LmNvbS91LzI0ODkwOTExP3Y9NCIsImdpdGh1YlRva2VuIjoiZDhiZDE2ZDcxMmE3ZDczMmQ5MGZmNjAwYWQ0Njk5ZjUwZGM5NDY3NyIsImlhdCI6MTU5MTA5MjEzOH0.cS7pbfN0RZLucS5HXP2Xh38hRZdER4QB37F5sHdgawY",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "name",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "description",
+									"type": "text"
+								},
+								{
+									"key": "type",
+									"value": "type",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/api/room/",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"room",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search Rooms",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjQ4OTA5MTEsInVzZXJuYW1lIjoiYmFzdGlsYXZhcmlhcyIsIm5vZGVJZCI6Ik1EUTZWWE5sY2pJME9Ea3dPVEV4IiwibmFtZSI6IlNlYmFzdGlhbiBDdXJ0aXMgVC4gTGF2YXJpYXMiLCJhdmF0YXJVcmwiOiJodHRwczovL2F2YXRhcnMwLmdpdGh1YnVzZXJjb250ZW50LmNvbS91LzI0ODkwOTExP3Y9NCIsImdpdGh1YlRva2VuIjoiZDhiZDE2ZDcxMmE3ZDczMmQ5MGZmNjAwYWQ0Njk5ZjUwZGM5NDY3NyIsImlhdCI6MTU5MTA5MjEzOH0.cS7pbfN0RZLucS5HXP2Xh38hRZdER4QB37F5sHdgawY",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/api/room/name/0",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"room",
+								"name",
+								"0"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
