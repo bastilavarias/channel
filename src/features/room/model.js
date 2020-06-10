@@ -44,15 +44,21 @@ const roomModel = {
             roomInformation.type = room.type;
             roomInformation.avatarUrl = room.avatar_url;
             roomInformation.admin = await knex("account")
-              .select(["id", "username", "avatar_url"])
+              .select(["id", "name", "avatar_url"])
               .where("id", room.account_id)
               .then((result2) => {
                 const adminInformation = {};
                 adminInformation.id = result2[0].id;
-                adminInformation.username = result2[0].username;
+                adminInformation.name = result2[0].name;
                 adminInformation.avatarUrl = result2[0].avatar_url;
                 return adminInformation;
               });
+            roomInformation.members = await knex("room_member")
+              .count("id")
+              .where("room_id", room.id)
+              .then((result3) =>
+                result3[0].count ? parseInt(result3[0].count) : 0
+              );
             return roomInformation;
           })
         );

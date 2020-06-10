@@ -4,8 +4,8 @@
       <v-toolbar-title>
         <v-list-item-avatar :size="45">
           <v-img
-            src="../assets/noah-halpert.png"
-            lazy-src="../assets/noah-halpert.png"
+            src="../../assets/noah-halpert.png"
+            lazy-src="../../assets/noah-halpert.png"
           ></v-img>
         </v-list-item-avatar>
         <span class="font-weight-bold">CET - Developers</span>
@@ -14,10 +14,10 @@
     <div id="chat-messages" ref="chatMessages">
       <v-container>
         <template v-for="n in 100 + messages.length">
-          <chat-message
+          <chat-item
             :key="n"
             :is-author-and-user-same="n % 2 === 1"
-          ></chat-message>
+          ></chat-item>
         </template>
       </v-container>
     </div>
@@ -105,8 +105,8 @@
             <v-list-item :key="n">
               <v-list-item-avatar :size="45">
                 <v-img
-                  src="../assets/noah-halpert.png"
-                  lazy-src="../assets/noah-halpert.png"
+                  src="../../assets/noah-halpert.png"
+                  lazy-src="../../assets/noah-halpert.png"
                 ></v-img>
               </v-list-item-avatar>
               <v-list-item-content>
@@ -140,9 +140,9 @@
 </template>
 
 <script>
-import ChatMessage from "../components/ChatMessage";
+import ChatItem from "../../components/ChatItem";
 export default {
-  components: { ChatMessage },
+  components: { ChatItem },
 
   data() {
     return {

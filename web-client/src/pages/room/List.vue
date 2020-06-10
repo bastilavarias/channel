@@ -31,6 +31,7 @@
           :avatar-url="room.avatarUrl"
           :name="room.name"
           :type="room.type"
+          :members="room.members"
           :admin="room.admin"
         ></room-list-item>
       </template>

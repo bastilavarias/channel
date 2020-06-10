@@ -57,7 +57,7 @@
 
 <script>
 export default {
-  name: "chat-message",
+  name: "chat-item",
 
   props: {
     isAuthorAndUserSame: {

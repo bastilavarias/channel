@@ -22,6 +22,7 @@
             outlined
             block
             :to="{ name: 'room-list' }"
+            exact
           >
             <v-icon class="mr-1">mdi-magnify</v-icon>
             <span class="text-capitalize font-weight-bold">

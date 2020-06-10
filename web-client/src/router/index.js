@@ -14,7 +14,7 @@ const routes = [
 
   {
     path: "/room",
-    component: () => import("../layouts/ChatWindow"),
+    component: () => import("../layouts/RoomChatWindow"),
     meta: {
       requiresAuth: true,
     },
@@ -56,9 +56,9 @@ const routes = [
       },
 
       {
-        path: ":roomId",
+        path: "chats/:roomId",
         name: "chat-list",
-        component: () => import("../pages/ChatList"),
+        component: () => import("../pages/room/ChatList"),
       },
     ],
   },
