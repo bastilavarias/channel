@@ -1,7 +1,6 @@
 const adorableIOService = require("../adorable-io/service");
 const roomModel = require("./model");
 const utilityService = require("../utility/service");
-const roomMemberService = require("../room-member/service");
 
 const roomService = {
   create: async ({ name, description, type, password, accountId }) => {
@@ -18,12 +17,15 @@ const roomService = {
       accountId,
       createdAt,
     });
-    await roomMemberService.create(createdRoomId, accountId);
+    await roomService.addMember(createdRoomId, accountId);
     return {
       error: {},
       id: createdRoomId,
     };
   },
+
+  addMember: async (createdRoomId, accountId) =>
+    await roomModel.addMember(createdRoomId, accountId),
 
   search: async (keyword, offset) => await roomModel.search(keyword, offset),
 

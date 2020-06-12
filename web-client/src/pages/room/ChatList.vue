@@ -11,9 +11,9 @@
         <span class="font-weight-bold">{{ information.name }}</span>
       </v-toolbar-title>
     </v-toolbar>
-    <div id="chat-messages" ref="chatMessages">
+    <div id="chat-messages" ref="chatsHolder">
       <v-container>
-        <template v-for="n in 100 + messages.length">
+        <template v-for="n in chats.length">
           <chat-item
             :key="n"
             :is-author-and-user-same="n % 2 === 1"
@@ -68,7 +68,6 @@ export default {
 
   data() {
     return {
-      messages: [],
       message: "",
       information: {
         name: "",
@@ -86,8 +85,8 @@ export default {
   },
 
   computed: {
-    chatMessagesDiv() {
-      return this.$refs.chatMessages;
+    chatsHolderDiv() {
+      return this.$refs.chatsHolder;
     },
 
     isMessageValid() {
@@ -103,18 +102,27 @@ export default {
       const members = this.$store.state.room.members;
       return members ? members : [];
     },
+
+    chats() {
+      const chats = this.$store.state.room.chats;
+      return chats ? chats : [];
+    },
   },
 
   methods: {
     sendMessage() {
       if (this.isMessageValid) {
-        this.messages = [...this.messages, this.message];
+        const chatOptions = {
+          roomId: this.roomId,
+          message: this.message,
+        };
+        this.$socket.client.emit("send_chat", chatOptions);
         this.message = "";
       }
     },
 
     scrollNewMessage() {
-      this.chatMessagesDiv.scrollTop = this.chatMessagesDiv.scrollHeight;
+      this.chatsHolderDiv.scrollTop = this.chatsHolderDiv.scrollHeight;
     },
   },
 
@@ -133,7 +141,7 @@ export default {
       this.roomId
     );
     this.isGetInformationStart = false;
-    this.$socket.client.emit("room_members", this.roomId);
+    this.$socket.client.emit("room_join", this.roomId);
   },
 
   sockets: {

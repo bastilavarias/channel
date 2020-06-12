@@ -27,7 +27,7 @@ export default {
     await this.$store.dispatch(ACCOUNT_LOGIN, code);
     await this.$router.push({
       name: "chat-list",
-      params: { chatId: "123445" },
+      params: { roomId: "faba3375-bd5f-4206-a0fa-1a3ddead3987" },
     });
   },
 };

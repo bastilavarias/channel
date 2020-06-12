@@ -9,6 +9,7 @@ import {
 export default {
   state: {
     members: [],
+    chats: [],
   },
 
   mutations: {

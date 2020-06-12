@@ -28,6 +28,13 @@ const roomModel = {
       .then((result) => result[0]);
   },
 
+  addMember: async (roomId, accountId) => {
+    return await knex(`${roomModel.tableName}_member`).insert({
+      room_id: roomId,
+      account_id: accountId,
+    });
+  },
+
   search: async (keyword, offset) => {
     return await knex(roomModel.tableName)
       .select(["id", "name", "type", "avatar_url", "account_id"])
