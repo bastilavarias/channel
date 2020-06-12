@@ -54,6 +54,7 @@
       :type="information.type"
       :admin="information.admin"
       :isGetInformationStart="isGetInformationStart"
+      :members="members"
     ></chat-list-information-drawer>
   </section>
 </template>
@@ -96,6 +97,11 @@ export default {
     roomId() {
       const roomId = this.$route.params.roomId;
       return roomId ? roomId : "";
+    },
+
+    members() {
+      const members = this.$store.state.room.members;
+      return members ? members : [];
     },
   },
 

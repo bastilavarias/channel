@@ -90,6 +90,29 @@ const roomModel = {
         return room;
       });
   },
+
+  getMembers: async (roomId) => {
+    return await knex(`${roomModel.tableName}_member`)
+      .select("account_id")
+      .where("room_id", roomId)
+      .then(async (result) => {
+        return Promise.all(
+          result.map(async (rawInformation) => {
+            return await knex("account")
+              .select(["id", "username", "name", "avatar_url"])
+              .where("id", rawInformation.account_id)
+              .then((result2) => {
+                const accountInformation = {};
+                accountInformation.id = result2[0].id;
+                accountInformation.username = result2[0].username;
+                accountInformation.name = result2[0].name;
+                accountInformation.avatarUrl = result2[0].avatar_url;
+                return accountInformation;
+              });
+          })
+        );
+      });
+  },
 };
 
 module.exports = roomModel;

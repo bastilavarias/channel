@@ -64,21 +64,23 @@
       </v-list>
 
       <v-card-title class="font-weight-bold">Members</v-card-title>
-      <v-card-subtitle>5 Members in this room</v-card-subtitle>
+      <v-card-subtitle>{{ membersTitle }} </v-card-subtitle>
       <v-list>
-        <template v-for="n in 5">
-          <v-list-item :key="n">
+        <template v-for="(member, index) in members">
+          <v-list-item :key="index">
             <v-list-item-avatar :size="45">
               <v-img
-                src="../assets/noah-halpert.png"
-                lazy-src="../assets/noah-halpert.png"
+                :src="member.avatarUrl"
+                :lazy-src="member.avatarUrl"
               ></v-img>
             </v-list-item-avatar>
             <v-list-item-content>
               <v-list-item-title>
-                <span class="font-weight-bold">User Name</span>
+                <span class="font-weight-bold">{{ member.username }}</span>
               </v-list-item-title>
-              <v-list-item-subtitle>Username</v-list-item-subtitle>
+              <v-list-item-subtitle class="text-capitalize">{{
+                member.name
+              }}</v-list-item-subtitle>
             </v-list-item-content>
             <v-list-item-action>
               <v-btn icon>
@@ -136,6 +138,20 @@ export default {
     isGetInformationStart: {
       type: Boolean,
       required: true,
+    },
+
+    members: {
+      type: Array,
+      required: true,
+    },
+  },
+
+  computed: {
+    membersTitle() {
+      const members = this.members;
+      return members.length <= 1
+        ? `You're the only member in this chat group`
+        : `${members.length} Members in this chat group`;
     },
   },
 };
