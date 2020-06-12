@@ -41,6 +41,17 @@ const roomController = {
       res.status(400).json(error);
     }
   },
+
+  getMembers: async (roomId) => {
+    let members = [];
+    try {
+      const result = await roomService.getMembers(roomId);
+      members = result.members;
+    } catch (error) {
+      console.log(error);
+    }
+    return members;
+  },
 };
 
 module.exports = roomController;

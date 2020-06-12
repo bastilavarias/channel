@@ -29,7 +29,12 @@ const roomService = {
 
   getInformation: async (roomId) => await roomModel.getInformation(roomId),
 
-  getMembers: async (roomId) => await roomModel.getMembers(roomId),
+  getMembers: async (roomId) => {
+    const members = await roomModel.getMembers(roomId);
+    return {
+      members,
+    };
+  },
 };
 
 module.exports = roomService;
