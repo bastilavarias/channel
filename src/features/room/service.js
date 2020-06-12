@@ -26,6 +26,8 @@ const roomService = {
   },
 
   search: async (keyword, offset) => await roomModel.search(keyword, offset),
+
+  getInformation: async (roomId) => await roomModel.getInformation(roomId),
 };
 
 module.exports = roomService;

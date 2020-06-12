@@ -47,107 +47,40 @@
         </v-col>
       </v-row>
     </div>
-    <v-navigation-drawer app right clipped width="400">
-      <v-card flat color="white">
-        <v-card-title>
-          <span class="font-weight-bold">
-            Room Information
-          </span>
-          <div class="flex-grow-1"></div>
-          <v-btn icon>
-            <v-icon>mdi-information</v-icon>
-          </v-btn>
-        </v-card-title>
-        <v-list>
-          <v-list-item>
-            <v-list-item-content>
-              <v-list-item-subtitle>Room Name</v-list-item-subtitle>
-              <v-list-item-title class="font-weight-bold"
-                >Room Name</v-list-item-title
-              >
-            </v-list-item-content>
-          </v-list-item>
-
-          <v-list-item>
-            <v-list-item-content>
-              <v-list-item-subtitle>Description</v-list-item-subtitle>
-              <v-list-item-title
-                >Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Aperiam explicabo molestiae natus officia quos recusandae
-                reprehenderit sint ut vel voluptates.</v-list-item-title
-              >
-            </v-list-item-content>
-          </v-list-item>
-
-          <v-list-item>
-            <v-list-item-content>
-              <v-list-item-subtitle>Room Type</v-list-item-subtitle>
-              <v-list-item-title>
-                <span class="error--text">
-                  Private
-                </span>
-              </v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-
-          <v-list-item>
-            <v-list-item-content>
-              <v-list-item-subtitle>Admin</v-list-item-subtitle>
-              <v-list-item-title>Name Name</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
-
-        <v-card-title class="font-weight-bold">Members</v-card-title>
-        <v-card-subtitle>5 Members in this room</v-card-subtitle>
-        <v-list>
-          <template v-for="n in 5">
-            <v-list-item :key="n">
-              <v-list-item-avatar :size="45">
-                <v-img
-                  src="../../assets/noah-halpert.png"
-                  lazy-src="../../assets/noah-halpert.png"
-                ></v-img>
-              </v-list-item-avatar>
-              <v-list-item-content>
-                <v-list-item-title>
-                  <span class="font-weight-bold">User Name</span>
-                </v-list-item-title>
-                <v-list-item-subtitle>Username</v-list-item-subtitle>
-              </v-list-item-content>
-              <v-list-item-action>
-                <v-btn icon>
-                  <v-icon>mdi-dots-vertical</v-icon>
-                </v-btn>
-              </v-list-item-action>
-            </v-list-item>
-          </template>
-        </v-list>
-      </v-card>
-      <v-card flat color="white"> </v-card>
-      <template v-slot:append>
-        <div class="pa-2">
-          <v-btn color="error" outlined block>
-            <span class="text-capitalize font-weight-bold mr-1">
-              Leave Room
-            </span>
-            <v-icon>mdi-logout</v-icon>
-          </v-btn>
-        </div>
-      </template>
-    </v-navigation-drawer>
+    <chat-list-information-drawer
+      :name="information.name"
+      :avatarUrl="information.avatarUrl"
+      :description="information.description"
+      :type="information.type"
+      :admin="information.admin"
+      :isGetInformationStart="isGetInformationStart"
+    ></chat-list-information-drawer>
   </section>
 </template>
 
 <script>
 import ChatItem from "../../components/ChatItem";
+import { ROOM_GET_INFORMATION } from "../../store/types/room";
+import ChatListInformationDrawer from "../../components/ChatListInformationDrawer";
 export default {
-  components: { ChatItem },
+  components: { ChatListInformationDrawer, ChatItem },
 
   data() {
     return {
       messages: [],
       message: "",
+      information: {
+        name: "",
+        description: "",
+        type: "",
+        avatarUrl: "",
+        admin: {
+          avatarUrl: "",
+          name: "",
+          id: null,
+        },
+      },
+      isGetInformationStart: false,
     };
   },
 
@@ -158,6 +91,11 @@ export default {
 
     isMessageValid() {
       return this.message;
+    },
+
+    roomId() {
+      const roomId = this.$route.params.roomId;
+      return roomId ? roomId : "";
     },
   },
 
@@ -180,6 +118,15 @@ export default {
 
   updated() {
     this.scrollNewMessage();
+  },
+
+  async created() {
+    this.isGetInformationStart = true;
+    this.information = await this.$store.dispatch(
+      ROOM_GET_INFORMATION,
+      this.roomId
+    );
+    this.isGetInformationStart = false;
   },
 };
 </script>

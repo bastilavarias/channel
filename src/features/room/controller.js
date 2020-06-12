@@ -30,6 +30,17 @@ const roomController = {
       res.status(400).json(error);
     }
   },
+
+  getInformation: async (req, res) => {
+    try {
+      const roomId = req.params.roomId;
+      const result = await roomService.getInformation(roomId);
+      res.status(200).json(result);
+    } catch (error) {
+      console.log(error);
+      res.status(400).json(error);
+    }
+  },
 };
 
 module.exports = roomController;

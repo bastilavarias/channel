@@ -10,7 +10,13 @@ router.post(
 );
 
 router.get(
-  "/:keyword/:offset",
+  "/information/:roomId",
+  passport.authenticate("jwt", { session: false }),
+  roomController.getInformation
+);
+
+router.get(
+  "/search/:keyword/:offset",
   passport.authenticate("jwt", { session: false }),
   roomController.search
 );

@@ -1,2 +1,3 @@
 export const ROOM_CREATE = "ROOM_CREATE";
 export const ROOM_SEARCH = "ROOM_SEARCH";
+export const ROOM_GET_INFORMATION = "ROOM_GET_INFORMATION";

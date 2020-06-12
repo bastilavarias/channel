@@ -2,6 +2,7 @@ import Vue from "vue";
 import axios from "axios";
 import vueAxios from "vue-axios";
 import token from "./tokenService";
+import room from "../store/modules/room";
 
 const apiService = {
   init: () => {
@@ -42,5 +43,8 @@ export const Room = {
   create: ({ name, description, type, password }) =>
     apiService.post("/room/", { name, description, type, password }),
 
-  search: (keyword, offset) => apiService.get(`/room/${keyword}/${offset}`),
+  search: (keyword, offset) =>
+    apiService.get(`/room/search/${keyword}/${offset}`),
+
+  getInformation: (roomId) => apiService.get(`/room/information/${roomId}`),
 };
