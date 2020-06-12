@@ -4,11 +4,11 @@
       <v-toolbar-title>
         <v-list-item-avatar :size="45">
           <v-img
-            src="../../assets/noah-halpert.png"
-            lazy-src="../../assets/noah-halpert.png"
+            :src="information.avatarUrl"
+            :lazy-src="information.avatarUrl"
           ></v-img>
         </v-list-item-avatar>
-        <span class="font-weight-bold">CET - Developers</span>
+        <span class="font-weight-bold">{{ information.name }}</span>
       </v-toolbar-title>
     </v-toolbar>
     <div id="chat-messages" ref="chatMessages">
@@ -127,6 +127,13 @@ export default {
       this.roomId
     );
     this.isGetInformationStart = false;
+    this.$socket.client.emit("room_members", this.roomId);
+  },
+
+  sockets: {
+    tite(message) {
+      console.log(message);
+    },
   },
 };
 </script>

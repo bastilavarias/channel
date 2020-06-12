@@ -17,7 +17,7 @@
         <v-list-item>
           <v-list-item-content>
             <v-list-item-subtitle>Room Name</v-list-item-subtitle>
-            <v-list-item-title class="font-weight-bold text-capitalize">{{
+            <v-list-item-title class="font-weight-bold">{{
               name
             }}</v-list-item-title>
           </v-list-item-content>
@@ -26,9 +26,7 @@
         <v-list-item>
           <v-list-item-content>
             <v-list-item-subtitle>Description</v-list-item-subtitle>
-            <v-list-item-title class="text-capitalize">{{
-              description
-            }}</v-list-item-title>
+            <v-list-item-title>{{ description }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
 

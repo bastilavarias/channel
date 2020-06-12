@@ -2,6 +2,7 @@ const adorableIOService = require("../adorable-io/service");
 const roomModel = require("./model");
 const utilityService = require("../utility/service");
 const roomMemberService = require("../room-member/service");
+const { emitAccountRooms } = require("./socket");
 
 const roomService = {
   create: async ({ name, description, type, password, accountId }) => {
@@ -10,8 +11,8 @@ const roomService = {
     const createdAt = utilityService.timestamp();
     const createdRoomId = await roomModel.create({
       id,
-      name: name.toLowerCase().trim(),
-      description: description.toLowerCase().trim(),
+      name,
+      description,
       type,
       password,
       avatarUrl,

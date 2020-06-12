@@ -1,7 +1,22 @@
 import { Room } from "../../common/apiService";
-import { ROOM_CREATE, ROOM_GET_INFORMATION, ROOM_SEARCH } from "../types/room";
+import {
+  ROOM_CREATE,
+  ROOM_GET_INFORMATION,
+  ROOM_SEARCH,
+  SOCKET_ROOM_MEMBERS,
+} from "../types/room";
 
 export default {
+  state: {
+    members: [],
+  },
+
+  mutations: {
+    [SOCKET_ROOM_MEMBERS]: (state, members) => {
+      state.members = members;
+    },
+  },
+
   actions: {
     [ROOM_CREATE]: async (
       { commit },
