@@ -10,26 +10,20 @@
         label="Search Room"
         prepend-inner-icon="mdi-magnify"
       ></v-text-field>
-      <template v-for="n in 3">
-        <v-list-item :key="n" @click="viewMessages">
+      <template v-for="(room, index) in joinedRooms">
+        <v-list-item :key="index">
           <v-list-item-avatar :size="45">
-            <v-img
-              src="../assets/noah-halpert.png"
-              lazy-src="../assets/noah-halpert.png"
-            ></v-img>
+            <v-img :src="room.avatarUrl" :lazy-src="room.avatarUrl"></v-img>
           </v-list-item-avatar>
           <v-list-item-content>
             <v-list-item-title>
-              <span class="title font-weight-bold">CET - Developers</span>
+              <span class="title font-weight-bold">{{ room.name }}</span>
             </v-list-item-title>
             <v-list-item-subtitle>
               <span class="font-weight-bold">Basti Sent a message</span>
               <span class="mx-1">·</span> 7:48 PM</v-list-item-subtitle
             >
           </v-list-item-content>
-          <v-list-item-action-text>
-            <v-chip color="primary" dark small>99+</v-chip>
-          </v-list-item-action-text>
         </v-list-item>
       </template>
     </v-list>
@@ -43,6 +37,11 @@ export default {
   computed: {
     currentAccount() {
       return this.$store.state.account.current;
+    },
+
+    joinedRooms() {
+      const rooms = this.$store.state.room.joined;
+      return rooms;
     },
   },
 
