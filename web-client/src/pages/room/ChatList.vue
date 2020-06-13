@@ -154,6 +154,12 @@ export default {
     this.isGetInformationStart = false;
     this.$socket.client.emit("room_join", this.roomId);
   },
+
+  sockets: {
+    room_refresh_joined() {
+      this.$socket.client.emit("room_joined", this.currentAccount.id);
+    },
+  },
 };
 </script>
 

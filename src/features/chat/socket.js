@@ -10,9 +10,8 @@ const chatSocket = (io, socket) => {
       message,
       type,
     });
-    const gotJoinedRooms = await roomController.getJoined(accountId);
-    socket.emit("room_joined", gotJoinedRooms);
     io.to(savedChat.room.id).emit("chat_send_single", savedChat);
+    io.emit("room_refresh_joined");
   });
 };
 

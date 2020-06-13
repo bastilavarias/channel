@@ -5,6 +5,7 @@ const roomSocket = (io, socket) => {
     socket.join(roomId);
     const roomMembers = await roomController.getMembers(roomId);
     io.emit("room_members", roomMembers);
+    io.emit("room_refresh_joined");
   });
 
   socket.on("room_joined", async (accountId) => {
