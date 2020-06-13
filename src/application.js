@@ -9,11 +9,13 @@ const jwtPassport = require("./passport");
 const http = require("http");
 const cors = require("cors");
 
+application.use(cors());
 const serverInstance = http.createServer(application);
 const io = require("socket.io").listen(serverInstance);
 
 io.on("connection", (socket) => {
   require("./features/room/socket")(io, socket);
+  require("./features/chat/socket")(io, socket);
 });
 
 application.use(bodyParser.json());

@@ -107,6 +107,11 @@ export default {
       const chats = this.$store.state.room.chats;
       return chats ? chats : [];
     },
+
+    currentAccount() {
+      const account = this.$store.state.account.current;
+      return account ? account : {};
+    },
   },
 
   methods: {
@@ -115,6 +120,7 @@ export default {
         const chatOptions = {
           roomId: this.roomId,
           message: this.message,
+          accountId: this.currentAccount.id,
         };
         this.$socket.client.emit("send_chat", chatOptions);
         this.message = "";
