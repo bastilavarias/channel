@@ -13,7 +13,7 @@
         <div class="d-flex mt-1">
           <div class="flex-grow-1"></div>
           <span class="caption grey--text"
-            >Sent · {{ formatRelativeTime(createdAt) }}</span
+            >Sent · {{ formatTimestamp(createdAt) }}</span
           >
         </div>
       </div>
@@ -37,7 +37,7 @@
         </v-card>
         <div class="d-flex mt-1">
           <span class="caption grey--text"
-            >Sent · {{ formatRelativeTime(createdAt) }}</span
+            >Sent · {{ formatTimestamp(createdAt) }}</span
           >
         </div>
       </div>

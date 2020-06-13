@@ -18,8 +18,8 @@ export default {
       this.scrollYPosition = window.scrollY;
     },
 
-    formatRelativeTime(timestamp) {
-      return moment(new Date(timestamp)).fromNow();
+    formatTimestamp(timestamp) {
+      return moment(new Date(timestamp)).format("MMM Do YY, h:mm:ss a");
     },
   },
   mounted() {
