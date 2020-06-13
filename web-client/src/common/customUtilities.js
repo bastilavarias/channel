@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export default {
   data() {
     return {
@@ -6,15 +8,6 @@ export default {
   },
 
   computed: {
-    isDesktopMode() {
-      return this.$vuetify.breakpoint.mdAndUp;
-    },
-
-    isSmallLaptopMode() {
-      const currentWidth = this.$vuetify.breakpoint.width;
-      return currentWidth > 1024 && currentWidth < 1439;
-    },
-
     isScrolled() {
       return this.scrollYPosition > 1;
     },
@@ -23,6 +16,10 @@ export default {
   methods: {
     handleScroll() {
       this.scrollYPosition = window.scrollY;
+    },
+
+    formatRelativeTime(timestamp) {
+      return moment(new Date(timestamp)).fromNow();
     },
   },
   mounted() {

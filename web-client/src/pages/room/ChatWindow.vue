@@ -13,10 +13,14 @@
     </v-toolbar>
     <div id="chat-messages" ref="chatsHolder">
       <v-container>
-        <template v-for="n in chats.length + 5">
+        <template v-for="(chat, index) in chats">
           <chat-item
-            :key="n"
-            :is-author-and-user-same="n % 2 === 1"
+            :key="index"
+            :sender="chat.sender"
+            :type="chat.type"
+            :message="chat.message"
+            :createdAt="chat.createdAt"
+            :is-author-and-user-same="index % 2 === 1"
           ></chat-item>
         </template>
       </v-container>
@@ -31,6 +35,7 @@
             rounded
             v-model="message"
             @keyup.enter="sendMessage"
+            autofocus
           ></v-text-field>
         </v-col>
         <v-col cols="1">
@@ -104,7 +109,7 @@ export default {
     },
 
     chats() {
-      const chats = this.$store.state.room.chats;
+      const chats = this.$store.state.chat.list;
       return chats ? chats : [];
     },
 
@@ -148,12 +153,6 @@ export default {
     );
     this.isGetInformationStart = false;
     this.$socket.client.emit("room_join", this.roomId);
-  },
-
-  sockets: {
-    tite(message) {
-      console.log(message);
-    },
   },
 };
 </script>
