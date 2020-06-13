@@ -76,11 +76,11 @@
             </v-list-item-avatar>
             <v-list-item-content>
               <v-list-item-title>
-                <span class="font-weight-bold">{{ member.username }}</span>
+                <span class="font-weight-bold text-capitalize">{{
+                  member.name
+                }}</span>
               </v-list-item-title>
-              <v-list-item-subtitle class="text-capitalize">{{
-                member.name
-              }}</v-list-item-subtitle>
+              <v-list-item-subtitle>{{ member.username }}</v-list-item-subtitle>
             </v-list-item-content>
             <v-list-item-action>
               <v-btn icon>
