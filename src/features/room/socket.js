@@ -9,7 +9,7 @@ const roomSocket = (io, socket) => {
 
   socket.on("room_joined", async (accountId) => {
     const gotJoinedRooms = await roomController.getJoined(accountId);
-    // console.log(gotJoinedRooms);
+    console.log(gotJoinedRooms);
   });
 };
 
