@@ -13,7 +13,7 @@
     </v-toolbar>
     <div id="chat-messages" ref="chatsHolder">
       <v-container>
-        <template v-for="n in chats.length">
+        <template v-for="n in chats.length + 5">
           <chat-item
             :key="n"
             :is-author-and-user-same="n % 2 === 1"

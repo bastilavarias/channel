@@ -24,7 +24,7 @@
     </div>
 
     <div class="d-flex" v-else>
-      <v-avatar class="mr-3 align-self-end">
+      <v-avatar :size="40" class="mr-3 align-self-end">
         <v-img
           src="../assets/noah-halpert.png"
           lazy-src="../assets/noah-halpert.png"
