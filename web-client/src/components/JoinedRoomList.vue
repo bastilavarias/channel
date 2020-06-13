@@ -11,18 +11,20 @@
         prepend-inner-icon="mdi-magnify"
       ></v-text-field>
       <template v-for="(room, index) in joinedRooms">
-        <v-list-item :key="index">
+        <v-list-item :key="index" @click="goToRoom(room.id)">
           <v-list-item-avatar :size="45">
             <v-img :src="room.avatarUrl" :lazy-src="room.avatarUrl"></v-img>
           </v-list-item-avatar>
           <v-list-item-content>
             <v-list-item-title>
-              <span class="title font-weight-bold">{{ room.name }}</span>
+              <div class="d-flex align-center">
+                <span class="title font-weight-bold">{{ room.name }}</span>
+                <span> <span class="mx-1">·</span> 7:48 PM </span>
+              </div>
             </v-list-item-title>
             <v-list-item-subtitle>
-              <span class="font-weight-bold">Basti Sent a message</span>
-              <span class="mx-1">·</span> 7:48 PM</v-list-item-subtitle
-            >
+              {{ previewMessage(room.recentChat) }}
+            </v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
       </template>
@@ -31,8 +33,12 @@
 </template>
 
 <script>
+import customUtilities from "../common/customUtilities";
+
 export default {
   name: "joined-room-list",
+
+  mixins: [customUtilities],
 
   computed: {
     currentAccount() {
@@ -46,13 +52,31 @@ export default {
   },
 
   methods: {
-    viewMessages() {
+    goToRoom(roomId) {
       this.$router.push({
         name: "chat-list",
         params: {
-          chatId: "1002323230909vhuh93232",
+          roomId,
         },
       });
+    },
+
+    previewMessage({ type, message, account }) {
+      const gotFirstName = this.getFirstName(account.name);
+      let customMessage = "";
+      switch (type) {
+        case "regular":
+          customMessage = `${gotFirstName}: ${message}`;
+          break;
+
+        case "system":
+          customMessage = message;
+          break;
+
+        default:
+          customMessage = "Something went wrong.";
+      }
+      return customMessage;
     },
   },
 };

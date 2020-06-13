@@ -145,6 +145,14 @@ const roomModel = {
                     chat.message = result3[0].message;
                     chat.type = result3[0].type;
                     chat.createdAt = result3[0].created_at;
+                    chat.account = await knex("account")
+                      .select(["name"])
+                      .where("id", result3[0].account_id)
+                      .then((result4) => {
+                        const account = {};
+                        account.name = result4[0].name;
+                        return account;
+                      });
                     return chat;
                   });
                 return room;
