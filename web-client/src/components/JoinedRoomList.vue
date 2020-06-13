@@ -19,7 +19,10 @@
             <v-list-item-title>
               <div class="d-flex align-center">
                 <span class="title font-weight-bold">{{ room.name }}</span>
-                <span> <span class="mx-1">·</span> 7:48 PM </span>
+                <span>
+                  <span class="mx-1">·</span>
+                  {{ formatTimestamp(room.recentChat.createdAt) }}
+                </span>
               </div>
             </v-list-item-title>
             <v-list-item-subtitle>

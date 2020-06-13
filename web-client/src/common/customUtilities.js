@@ -19,7 +19,7 @@ export default {
     },
 
     formatTimestamp(timestamp) {
-      return moment(new Date(timestamp)).format("MMM Do YY, h:mm:ss a");
+      return moment(new Date(timestamp)).format("MMM Do  h:mm A");
     },
 
     getFirstName(name) {
