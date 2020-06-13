@@ -1,15 +1,15 @@
 const chatController = require("./controller");
 
 const chatSocket = (io, socket) => {
-  socket.on("send_chat", async ({ roomId, accountId, message }) => {
+  socket.on("chat_send", async ({ roomId, accountId, message }) => {
     const type = "regular";
-    const chatDetails = await chatController.save({
+    const savedChat = await chatController.save({
       roomId,
       accountId,
       message,
       type,
     });
-    console.log(chatDetails);
+    io.to(savedChat.room.id).emit("chat_send_single", savedChat);
   });
 };
 

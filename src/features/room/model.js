@@ -54,11 +54,11 @@ const roomModel = {
               .select(["id", "name", "avatar_url"])
               .where("id", rawInformation.account_id)
               .then((result2) => {
-                const adminInformation = {};
-                adminInformation.id = result2[0].id;
-                adminInformation.name = result2[0].name;
-                adminInformation.avatarUrl = result2[0].avatar_url;
-                return adminInformation;
+                const admin = {};
+                admin.id = result2[0].id;
+                admin.name = result2[0].name;
+                admin.avatarUrl = result2[0].avatar_url;
+                return admin;
               });
             room.members = await knex("room_member")
               .count("id")
@@ -88,11 +88,11 @@ const roomModel = {
           .select(["id", "name", "avatar_url"])
           .where("id", rawInformation.account_id)
           .then((result2) => {
-            const adminInformation = {};
-            adminInformation.id = result2[0].id;
-            adminInformation.name = result2[0].name;
-            adminInformation.avatarUrl = result2[0].avatar_url;
-            return adminInformation;
+            const admin = {};
+            admin.id = result2[0].id;
+            admin.name = result2[0].name;
+            admin.avatarUrl = result2[0].avatar_url;
+            return admin;
           });
         return room;
       });
@@ -109,12 +109,12 @@ const roomModel = {
               .select(["id", "username", "name", "avatar_url"])
               .where("id", rawInformation.account_id)
               .then((result2) => {
-                const accountInformation = {};
-                accountInformation.id = result2[0].id;
-                accountInformation.username = result2[0].username;
-                accountInformation.name = result2[0].name;
-                accountInformation.avatarUrl = result2[0].avatar_url;
-                return accountInformation;
+                const account = {};
+                account.id = result2[0].id;
+                account.username = result2[0].username;
+                account.name = result2[0].name;
+                account.avatarUrl = result2[0].avatar_url;
+                return account;
               });
           })
         );

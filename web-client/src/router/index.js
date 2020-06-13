@@ -58,7 +58,7 @@ const routes = [
       {
         path: "chats/:roomId",
         name: "chat-list",
-        component: () => import("../pages/room/ChatList"),
+        component: () => import("../pages/room/ChatWindow"),
       },
     ],
   },

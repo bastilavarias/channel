@@ -122,7 +122,7 @@ export default {
           message: this.message,
           accountId: this.currentAccount.id,
         };
-        this.$socket.client.emit("send_chat", chatOptions);
+        this.$socket.client.emit("chat_send", chatOptions);
         this.message = "";
       }
     },
