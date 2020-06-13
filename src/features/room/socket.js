@@ -7,10 +7,10 @@ const roomSocket = (io, socket) => {
     io.emit("room_members", roomMembers);
   });
 
-  // socket.on("room_members", async (roomId) => {
-  //   const roomMembers = await roomController.getMembers(roomId);
-  //   io.emit("room_members", roomMembers);
-  // });
+  socket.on("room_joined", async (accountId) => {
+    const gotJoinedRooms = await roomController.getJoined(accountId);
+    // console.log(gotJoinedRooms);
+  });
 };
 
 module.exports = roomSocket;

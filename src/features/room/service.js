@@ -1,6 +1,8 @@
 const adorableIOService = require("../adorable-io/service");
 const roomModel = require("./model");
 const utilityService = require("../utility/service");
+const chatService = require("../chat/service");
+const helperService = require("../helper/service");
 
 const roomService = {
   create: async ({ name, description, type, password, accountId }) => {
@@ -18,6 +20,19 @@ const roomService = {
       createdAt,
     });
     await roomService.addMember(createdRoomId, accountId);
+    const gotRawAccount = await helperService.getSingle(
+      "account",
+      "id",
+      accountId,
+      ["name"]
+    );
+    const firstChatDetails = {
+      roomId: createdRoomId,
+      accountId,
+      message: `${gotRawAccount.name} created this group.`,
+      type: "system",
+    };
+    await chatService.save(firstChatDetails);
     return {
       error: {},
       id: createdRoomId,
@@ -35,6 +50,13 @@ const roomService = {
     const members = await roomModel.getMembers(roomId);
     return {
       members,
+    };
+  },
+
+  getJoined: async (accountId) => {
+    const rooms = await roomModel.getJoined(accountId);
+    return {
+      rooms,
     };
   },
 };

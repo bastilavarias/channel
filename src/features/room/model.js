@@ -120,6 +120,40 @@ const roomModel = {
         );
       });
   },
+
+  getJoined: async (accountId) => {
+    return await knex(`${roomModel.tableName}_member`)
+      .select(["account_id", "room_id"])
+      .where("account_id", accountId)
+      .then((result) => {
+        return Promise.all(
+          result.map(async (rawInformation) => {
+            const rooms = await knex("room")
+              .select(["id", "name", "avatar_url"])
+              .where("id", rawInformation.room_id)
+              .then(async (result2) => {
+                const room = {};
+                room.id = result2[0].id;
+                room.name = result2[0].name;
+                room.avatarUrl = result2[0].avatar_url;
+                room.recentChat = await knex("chat")
+                  .select(["account_id", "message", "type", "created_at"])
+                  .where("room_id", room.id)
+                  .orderBy("created_at", "desc")
+                  .then(async (result3) => {
+                    const chat = {};
+                    chat.message = result3[0].message;
+                    chat.type = result3[0].type;
+                    chat.createdAt = result3[0].created_at;
+                    return chat;
+                  });
+                return room;
+              });
+            return rooms;
+          })
+        );
+      });
+  },
 };
 
 module.exports = roomModel;

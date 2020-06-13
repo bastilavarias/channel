@@ -52,6 +52,17 @@ const roomController = {
     }
     return members;
   },
+
+  getJoined: async (accountId) => {
+    let rooms = [];
+    try {
+      const result = await roomService.getJoined(accountId);
+      rooms = result.rooms;
+    } catch (error) {
+      console.log(error);
+    }
+    return rooms;
+  },
 };
 
 module.exports = roomController;

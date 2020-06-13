@@ -1,6 +1,9 @@
 <template>
   <div class="mb-5">
-    <div class="d-flex justify-space-between" v-if="isAuthorAndUserSame">
+    <div
+      class="d-flex justify-space-between"
+      v-if="isCurrentAccountAndSenderSame"
+    >
       <div class="flex-grow-1"></div>
       <div>
         <v-card color="primary" flat min-width="200" max-width="600" shaped>
@@ -54,11 +57,6 @@ export default {
   mixins: [customUtilities],
 
   props: {
-    isAuthorAndUserSame: {
-      type: Boolean,
-      required: false,
-    },
-
     sender: {
       type: Object,
       required: true,
@@ -77,6 +75,17 @@ export default {
     createdAt: {
       type: String,
       required: true,
+    },
+  },
+
+  computed: {
+    currentAccount() {
+      const account = this.$store.state.account.current;
+      return account ? account : {};
+    },
+
+    isCurrentAccountAndSenderSame() {
+      return this.currentAccount.id === this.sender.id;
     },
   },
 };
