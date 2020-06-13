@@ -47,7 +47,7 @@ export default {
 
     joinedRooms() {
       const rooms = this.$store.state.room.joined;
-      return rooms;
+      return rooms ? rooms : [];
     },
   },
 

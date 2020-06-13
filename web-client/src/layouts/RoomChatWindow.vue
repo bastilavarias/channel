@@ -46,5 +46,16 @@ export default {
   name: "main-layout",
 
   components: { DashboardAppBarMenu, ProfileListItem, JoinedRoomList },
+
+  computed: {
+    currentAccount() {
+      const account = this.$store.state.account.current;
+      return account ? account : {};
+    },
+  },
+
+  created() {
+    this.$socket.client.emit("room_joined", this.currentAccount.id);
+  },
 };
 </script>
