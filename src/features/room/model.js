@@ -78,43 +78,49 @@ const roomModel = {
     return await knex(`${roomModel.tableName}_member as rm`)
       .join(`${roomModel.tableName} as r`, "rm.room_id", "=", "r.id")
       .join("chat as c", "rm.room_id", "=", "c.room_id")
-      .select(
-        knex.raw(
-          "(coalesce(count(rm.account_id), 0) + coalesce(count(c.id), 0)) as relevance"
-        )
-      )
+      .select([
+        {
+          relevance: knex.raw(
+            "(coalesce(count(rm.account_id), 0) + coalesce(count(c.id), 0))"
+          ),
+        },
+        "r.id",
+        "r.name",
+        "r.type",
+        "r.avatar_url",
+        "r.account_id",
+      ])
       .offset(offset)
       .orderBy("relevance", "desc")
+      .groupBy("r.id")
       .limit(20)
       .then(async (result) => {
-        console.log(result);
-        return [];
-        // return Promise.all(
-        //   result.map(async (rawInformation) => {
-        //     const room = {};
-        //     room.id = rawInformation.id;
-        //     room.name = rawInformation.name;
-        //     room.type = rawInformation.type;
-        //     room.avatarUrl = rawInformation.avatar_url;
-        //     room.admin = await knex("account")
-        //       .select(["id", "name", "avatar_url"])
-        //       .where("id", rawInformation.account_id)
-        //       .then((result2) => {
-        //         const admin = {};
-        //         admin.id = result2[0].id;
-        //         admin.name = result2[0].name;
-        //         admin.avatarUrl = result2[0].avatar_url;
-        //         return admin;
-        //       });
-        //     room.members = await knex("room_member")
-        //       .count("id")
-        //       .where("room_id", rawInformation.id)
-        //       .then((result3) =>
-        //         result3[0].count ? parseInt(result3[0].count) : 0
-        //       );
-        //     return room;
-        //   })
-        // );
+        return Promise.all(
+          result.map(async (rawInformation) => {
+            const room = {};
+            room.id = rawInformation.id;
+            room.name = rawInformation.name;
+            room.type = rawInformation.type;
+            room.avatarUrl = rawInformation.avatar_url;
+            room.admin = await knex("account")
+              .select(["id", "name", "avatar_url"])
+              .where("id", rawInformation.account_id)
+              .then((result2) => {
+                const admin = {};
+                admin.id = result2[0].id;
+                admin.name = result2[0].name;
+                admin.avatarUrl = result2[0].avatar_url;
+                return admin;
+              });
+            room.members = await knex("room_member")
+              .count("id")
+              .where("room_id", rawInformation.id)
+              .then((result3) =>
+                result3[0].count ? parseInt(result3[0].count) : 0
+              );
+            return room;
+          })
+        );
       });
   },
 

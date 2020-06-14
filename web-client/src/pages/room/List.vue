@@ -21,18 +21,20 @@
         autofocus
         v-model="keyword"
       ></v-text-field>
-      <v-skeleton-loader
-        type="list-item-avatar-three-line"
-        v-if="isSearchRoomsStart"
-      ></v-skeleton-loader>
+      <div class="text-center" v-if="isSearchRoomsStart">
+        <v-progress-circular
+          color="primary"
+          indeterminate
+        ></v-progress-circular>
+      </div>
     </v-card-text>
     <template v-if="shouldShowFeaturedRooms">
       <v-card-title>Featured Rooms</v-card-title>
     </template>
     <v-card-text v-else>
-      <v-row dense>
-        <v-col cols="12" sm="6" md="3">
-          <template v-for="(room, index) in rooms" v-if="!isSearchRoomsStart">
+      <v-row>
+        <template v-for="(room, index) in rooms" v-if="!isSearchRoomsStart">
+          <v-col cols="12" sm="6" md="3">
             <room-list-item
               :key="index"
               :avatar-url="room.avatarUrl"
@@ -41,8 +43,8 @@
               :members="room.members"
               :admin="room.admin"
             ></room-list-item>
-          </template>
-        </v-col>
+          </v-col>
+        </template>
       </v-row>
       <v-subheader v-if="isSearchRoomNoResults">
         <div class="flex-grow-1"></div>
@@ -151,7 +153,7 @@ export default {
     },
 
     async getFeaturedRooms() {
-      await this.$store.dispatch(ROOM_GET_FEATURED, this.offset);
+      this.rooms = await this.$store.dispatch(ROOM_GET_FEATURED, this.offset);
     },
   },
 
