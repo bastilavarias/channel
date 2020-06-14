@@ -88,6 +88,7 @@
 import CustomPasswordTextField from "./custom/PasswordTextField";
 import { ROOM_JOIN } from "../store/types/room";
 import customUtilities from "../common/customUtilities";
+
 export default {
   name: "room-list-item",
 
@@ -125,11 +126,6 @@ export default {
       type: Object,
       required: true,
     },
-
-    isAccountAlreadyJoined: {
-      type: Boolean,
-      required: true,
-    },
   },
 
   data() {
@@ -149,6 +145,20 @@ export default {
 
     isPrivatePasswordValid() {
       return this.type === "private" && this.password;
+    },
+
+    joinedRooms() {
+      const rooms = this.$store.state.room.joined;
+      return rooms ? rooms : [];
+    },
+
+    isAccountAlreadyJoined() {
+      let isJoined = false;
+      const foundRoom = this.joinedRooms.find(
+        (room) => room.id === this.roomId
+      );
+      if (foundRoom) isJoined = true;
+      return isJoined;
     },
   },
 
