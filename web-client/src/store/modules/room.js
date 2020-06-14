@@ -1,6 +1,7 @@
 import { Room } from "../../common/apiService";
 import {
   ROOM_CREATE,
+  ROOM_GET_FEATURED,
   ROOM_GET_INFORMATION,
   ROOM_SEARCH,
   SOCKET_ROOM_JOINED,
@@ -40,6 +41,15 @@ export default {
     [ROOM_SEARCH]: async ({ commit }, { keyword, offset }) => {
       try {
         const result = await Room.search(keyword, offset);
+        return result.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    [ROOM_GET_FEATURED]: async ({ commit }, offset) => {
+      try {
+        const result = await Room.getFeatured(offset);
         return result.data;
       } catch (error) {
         console.log(error);

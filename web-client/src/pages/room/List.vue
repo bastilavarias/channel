@@ -25,6 +25,11 @@
         type="list-item-avatar-three-line"
         v-if="isSearchRoomsStart"
       ></v-skeleton-loader>
+    </v-card-text>
+    <template v-if="shouldShowFeaturedRooms">
+      <v-card-title>Featured Rooms</v-card-title>
+    </template>
+    <v-card-text v-else>
       <v-row dense>
         <v-col cols="12" sm="6" md="3">
           <template v-for="(room, index) in rooms" v-if="!isSearchRoomsStart">
@@ -89,7 +94,7 @@
 
 <script>
 import CustomBreadcrumbs from "../../components/custom/Breadcrumbs";
-import { ROOM_SEARCH } from "../../store/types/room";
+import { ROOM_GET_FEATURED, ROOM_SEARCH } from "../../store/types/room";
 import RoomListItem from "../../components/RoomListItem";
 
 export default {
@@ -124,7 +129,10 @@ export default {
 
   watch: {
     async keyword(val) {
-      await this.searchRooms();
+      if (this.keyword) {
+        return await this.searchRooms();
+      }
+      await this.getFeaturedRooms();
     },
   },
 
@@ -141,6 +149,14 @@ export default {
       }
       this.isSearchRoomsStart = false;
     },
+
+    async getFeaturedRooms() {
+      await this.$store.dispatch(ROOM_GET_FEATURED, this.offset);
+    },
+  },
+
+  async created() {
+    await this.getFeaturedRooms();
   },
 };
 </script>

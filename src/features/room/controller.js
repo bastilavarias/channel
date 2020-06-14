@@ -32,6 +32,17 @@ const roomController = {
     }
   },
 
+  getFeatured: async (req, res) => {
+    try {
+      const offset = parseInt(req.params.offset);
+      const result = await roomService.getFeatured(offset);
+      res.status(200).json(result);
+    } catch (error) {
+      console.log(error);
+      res.status(400).json(error);
+    }
+  },
+
   getInformation: async (req, res) => {
     try {
       const roomId = req.params.roomId;

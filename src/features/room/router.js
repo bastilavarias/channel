@@ -21,4 +21,10 @@ router.get(
   roomController.search
 );
 
+router.get(
+  "/featured/:offset",
+  passport.authenticate("jwt", { session: false }),
+  roomController.getFeatured
+);
+
 module.exports = router;

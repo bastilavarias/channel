@@ -47,6 +47,8 @@ const roomService = {
   search: async (keyword, offset) =>
     await roomModel.search(keyword.trim().toLowerCase(), offset),
 
+  getFeatured: async (offset) => await roomModel.getFeatured(offset),
+
   getInformation: async (roomId) => await roomModel.getInformation(roomId),
 
   getMembers: async (roomId) => {
