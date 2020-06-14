@@ -90,6 +90,17 @@ const roomController = {
       res.status(400).json(error);
     }
   },
+
+  sendJoinMessage: async (roomId, accountId) => {
+    let details = {};
+    try {
+      const result = await roomService.sendJoinMessage(roomId, accountId);
+      details = result.details;
+    } catch (error) {
+      console.log(error);
+    }
+    return details;
+  },
 };
 
 module.exports = roomController;

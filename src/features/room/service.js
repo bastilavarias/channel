@@ -100,6 +100,25 @@ const roomService = {
       },
     };
   },
+
+  sendJoinMessage: async (roomId, accountId) => {
+    const gotRawAccountInformation = await helperService.getSingle(
+      "account",
+      "id",
+      accountId,
+      ["name"]
+    );
+    const chatDetails = {
+      roomId,
+      accountId,
+      message: `${gotRawAccountInformation.name} joined this group.`,
+      type: "system",
+    };
+    const savedChatDetails = await chatService.save(chatDetails);
+    return {
+      details: savedChatDetails,
+    };
+  },
 };
 
 module.exports = roomService;

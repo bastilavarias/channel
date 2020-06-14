@@ -34,7 +34,7 @@
             filled
             rounded
             v-model="message"
-            @keyup.enter="sendMessage"
+            @keyup.enter="sendChat"
             autofocus
           ></v-text-field>
         </v-col>
@@ -43,7 +43,7 @@
             <v-btn
               color="primary"
               fab
-              @click="sendMessage"
+              @click="sendChat"
               :disabled="!isMessageValid"
             >
               <v-icon>mdi-send</v-icon>
@@ -128,12 +128,13 @@ export default {
   },
 
   methods: {
-    sendMessage() {
+    sendChat() {
       if (this.isMessageValid) {
         const chatOptions = {
           roomId: this.roomId,
           message: this.message,
           accountId: this.currentAccount.id,
+          type: "regular",
         };
         this.$socket.client.emit("chat_send", chatOptions);
         this.message = "";
@@ -146,12 +147,12 @@ export default {
 
     async getInformation() {
       this.isGetInformationStart = true;
+      this.$socket.client.emit("room_members", this.roomId);
       this.information = await this.$store.dispatch(
         ROOM_GET_INFORMATION,
         this.roomId
       );
       this.isGetInformationStart = false;
-      this.$socket.client.emit("room_members", this.roomId);
     },
   },
 
@@ -164,8 +165,8 @@ export default {
   },
 
   async created() {
+    this.$socket.client.emit("room_enter", this.roomId);
     await this.getInformation();
-    this.$socket.client.emit("room_join", this.roomId);
   },
 
   sockets: {

@@ -1,4 +1,4 @@
-import { SOCKET_CHAT_SEND_SINGLE } from "../types/chat";
+import { SOCKET_CHAT_SEND } from "../types/chat";
 
 export default {
   state: {
@@ -6,7 +6,7 @@ export default {
   },
 
   mutations: {
-    [SOCKET_CHAT_SEND_SINGLE]: (state, chat) => {
+    [SOCKET_CHAT_SEND]: (state, chat) => {
       state.list = [...state.list, chat];
     },
   },

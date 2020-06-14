@@ -160,6 +160,11 @@ export default {
       if (foundRoom) isJoined = true;
       return isJoined;
     },
+
+    currentAccount() {
+      const account = this.$store.state.account.current;
+      return account ? account : {};
+    },
   },
 
   methods: {
@@ -179,6 +184,11 @@ export default {
         roomDetails
       );
       if (isAuthenticated) {
+        const joinDetails = {
+          accountId: this.currentAccount.id,
+          roomId: this.roomId,
+        };
+        this.$socket.client.emit("room_join", joinDetails);
         await this.$router.push({
           name: "chat-list",
           params: {
