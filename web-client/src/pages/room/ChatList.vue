@@ -151,6 +151,7 @@ export default {
         this.roomId
       );
       this.isGetInformationStart = false;
+      this.$socket.client.emit("room_members", this.roomId);
     },
   },
 
