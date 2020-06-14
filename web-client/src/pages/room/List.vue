@@ -10,7 +10,7 @@
         <span class="font-weight-bold text-capitalize">Create Room</span>
       </v-btn>
     </v-card-title>
-    <v-list rounded dense>
+    <v-card-text>
       <v-text-field
         dense
         rounded
@@ -25,22 +25,26 @@
         type="list-item-avatar-three-line"
         v-if="isSearchRoomsStart"
       ></v-skeleton-loader>
-      <template v-for="(room, index) in rooms" v-if="!isSearchRoomsStart">
-        <room-list-item
-          :key="index"
-          :avatar-url="room.avatarUrl"
-          :name="room.name"
-          :type="room.type"
-          :members="room.members"
-          :admin="room.admin"
-        ></room-list-item>
-      </template>
-      <v-subheader v-if="rooms.length === 0 && !isSearchRoomsStart">
+      <v-row dense>
+        <v-col cols="12" sm="6" md="3">
+          <template v-for="(room, index) in rooms" v-if="!isSearchRoomsStart">
+            <room-list-item
+              :key="index"
+              :avatar-url="room.avatarUrl"
+              :name="room.name"
+              :type="room.type"
+              :members="room.members"
+              :admin="room.admin"
+            ></room-list-item>
+          </template>
+        </v-col>
+      </v-row>
+      <v-subheader v-if="isSearchRoomNoResults">
         <div class="flex-grow-1"></div>
-        <span>No data available.</span>
+        <span>Searched room not found.</span>
         <div class="flex-grow-1"></div>
       </v-subheader>
-    </v-list>
+    </v-card-text>
     <v-dialog width="500" v-model="isRoomDetailsDialogShow">
       <v-card tile>
         <v-card-title class="font-weight-bold">Room Information </v-card-title>
@@ -103,6 +107,18 @@ export default {
   computed: {
     breadcrumbs() {
       return this.$route.meta.breadcrumbs;
+    },
+
+    shouldShowFeaturedRooms() {
+      return (
+        this.rooms.length === 0 && !this.isSearchRoomsStart && !this.keyword
+      );
+    },
+
+    isSearchRoomNoResults() {
+      return (
+        this.rooms.length === 0 && !this.isSearchRoomsStart && this.keyword
+      );
     },
   },
 
