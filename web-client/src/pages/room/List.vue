@@ -29,14 +29,15 @@
       </div>
     </v-card-text>
     <template v-if="shouldShowFeaturedRooms">
-      <v-card-title>Featured Rooms</v-card-title>
+      <v-card-title>Featured Rooms 💯🔥 </v-card-title>
     </template>
-    <v-card-text v-else>
+    <v-card-text>
       <v-row>
         <template v-for="(room, index) in rooms" v-if="!isSearchRoomsStart">
           <v-col cols="12" sm="6" md="3">
             <room-list-item
               :key="index"
+              :room-id="room.id"
               :avatar-url="room.avatarUrl"
               :name="room.name"
               :type="room.type"
@@ -77,9 +78,7 @@ export default {
     },
 
     shouldShowFeaturedRooms() {
-      return (
-        this.rooms.length === 0 && !this.isSearchRoomsStart && !this.keyword
-      );
+      return !this.keyword && this.rooms.length > 0;
     },
 
     isSearchRoomNoResults() {

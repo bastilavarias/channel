@@ -3,6 +3,7 @@ import {
   ROOM_CREATE,
   ROOM_GET_FEATURED,
   ROOM_GET_INFORMATION,
+  ROOM_JOIN,
   ROOM_SEARCH,
   SOCKET_ROOM_JOINED,
   SOCKET_ROOM_MEMBERS,
@@ -63,6 +64,15 @@ export default {
         return information ? information : {};
       } catch (error) {
         console.log(error);
+      }
+    },
+
+    [ROOM_JOIN]: async ({ commit }, { roomId, password }) => {
+      try {
+        const result = await Room.join(roomId, password);
+        return result.data;
+      } catch (error) {
+        return error;
       }
     },
   },

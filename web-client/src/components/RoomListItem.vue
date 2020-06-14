@@ -6,7 +6,7 @@
       </v-list-item-avatar>
       <v-list-item-content>
         <v-list-item-title>
-          <span class="title font-weight-bold text-capitalize">{{ name }}</span>
+          <span class="title font-weight-bold">{{ name }}</span>
         </v-list-item-title>
         <v-list-item-subtitle>
           <span
@@ -40,19 +40,10 @@
     <v-dialog width="500" v-model="isPasswordPromptShow">
       <v-card tile>
         <v-card-title class="font-weight-bold"
-          >Join {{ name }} chat room.
+          >Enter {{ name }}'s room password
         </v-card-title>
         <v-card-text>
           <v-row dense>
-            <v-col cols="12">
-              <v-text-field
-                outlined
-                label="Room Name"
-                :value="name"
-                readonly
-              ></v-text-field>
-            </v-col>
-
             <v-col cols="12">
               <custom-password-text-field
                 label="Password"
@@ -67,7 +58,11 @@
           <v-btn color="black" text @click="isPasswordPromptShow = false">
             <span class="text-capitalize">Cancel</span>
           </v-btn>
-          <v-btn color="primary">
+          <v-btn
+            color="primary"
+            :disabled="!isPrivatePasswordValid"
+            @click="joinRoom"
+          >
             <span class="text-capitalize">
               Join
             </span>
@@ -85,6 +80,11 @@ export default {
   name: "room-list-item",
   components: { CustomPasswordTextField },
   props: {
+    roomId: {
+      type: String,
+      required: true,
+    },
+
     avatarUrl: {
       type: String,
       required: true,
@@ -123,14 +123,21 @@ export default {
       const members = this.members;
       return members > 1 ? `${members} Members` : `${members} Member`;
     },
+
+    isPrivatePasswordValid() {
+      return this.type === "private" && this.password;
+    },
   },
 
   methods: {
-    selectRoom() {
+    async selectRoom() {
       if (this.type === "private") return (this.isPasswordPromptShow = true);
+      await this.joinRoom();
     },
 
-    joinRoom(roomId, password) {},
+    async joinRoom(roomId, password) {
+      console.log(this.roomId, this.password);
+    },
   },
 };
 </script>

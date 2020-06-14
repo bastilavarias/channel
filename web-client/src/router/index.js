@@ -84,12 +84,10 @@ router.beforeEach(async (to, from, next) => {
   );
   if (isProtectedRoute && !isAuthenticated) return next({ name: "login" });
   if (to.name === "login" && isAuthenticated) {
-    const joinedRooms = store.state.room.joined;
-    next({ name: "chat-list", params: { roomId: joinedRooms[0].id } });
+    next({ name: "room-list" });
   }
   if (to.name === "github-login" && isAuthenticated) {
-    const joinedRooms = store.state.room.joined;
-    next({ name: "chat-list", params: { roomId: joinedRooms[0].id } });
+    next({ name: "room-list" });
   }
   next();
 });

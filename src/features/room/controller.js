@@ -75,6 +75,25 @@ const roomController = {
     }
     return rooms;
   },
+
+  join: async (req, res) => {
+    try {
+      const roomId = req.body.roomId;
+      const password = req.body.password;
+      const result = await roomService.join({
+        roomId,
+        password,
+        accountId: req.user.id,
+      });
+      if (Object.keys(result.error).length > 0) {
+        throw result.error;
+      }
+      res.status(200).json(result);
+    } catch (error) {
+      console.log(error);
+      res.status(400).json(error);
+    }
+  },
 };
 
 module.exports = roomController;

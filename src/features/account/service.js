@@ -24,7 +24,7 @@ const accountService = {
     if (isGotAccountEmpty) {
       const createdAt = utilityService.timestamp();
       await accountModel.save({
-        id,
+        id: roomId,
         username: login,
         nodeId: node_id,
         name,

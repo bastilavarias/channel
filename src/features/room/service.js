@@ -6,23 +6,23 @@ const helperService = require("../helper/service");
 
 const roomService = {
   create: async ({ name, description, type, password, accountId }) => {
-    const id = utilityService.uuid();
-    const avatarUrl = adorableIOService.generateAvatarUrl();
-    const createdAt = utilityService.timestamp();
-    const nameSlug = name.toLowerCase().trim();
-    const createdRoomId = await roomModel.create({
-      id,
-      name,
-      nameSlug,
-      description,
+    const roomDetails = {
+      id: utilityService.uuid(),
+      name: name.trim(),
+      nameSlug: name.toLowerCase().trim(),
+      description: description.trim(),
       type,
-      password,
-      avatarUrl,
+      password: "",
+      avatarUrl: adorableIOService.generateAvatarUrl(),
       accountId,
-      createdAt,
-    });
+      createdAt: utilityService.timestamp(),
+    };
+    if (type === "private") {
+      roomDetails.password = await helperService.hashPassword(password);
+    }
+    const createdRoomId = await roomModel.create(roomDetails);
     await roomService.addMember(createdRoomId, accountId);
-    const gotRawAccount = await helperService.getSingle(
+    const gotRawAccountInformation = await helperService.getSingle(
       "account",
       "id",
       accountId,
@@ -31,7 +31,7 @@ const roomService = {
     const firstChatDetails = {
       roomId: createdRoomId,
       accountId,
-      message: `${gotRawAccount.name} created this group.`,
+      message: `${gotRawAccountInformation.name} created this group.`,
       type: "system",
     };
     await chatService.save(firstChatDetails);
@@ -62,6 +62,36 @@ const roomService = {
     const rooms = await roomModel.getJoined(accountId);
     return {
       rooms,
+    };
+  },
+
+  join: async ({ roomId, accountId, password }) => {
+    const error = {};
+    const gotRawRoomInformation = await helperService.getSingle(
+      "room",
+      "id",
+      roomId,
+      ["type, password"]
+    );
+    const type = gotRawRoomInformation.type;
+    let isAuthenticated = false;
+    if (type === "private") {
+      isAuthenticated = await helperService.hashPassword(
+        password,
+        gotRawRoomInformation.password
+      );
+    }
+    if (type === "private" && !isAuthenticated) {
+      error.password = "Password do not match.";
+      return {
+        isAuthenticated: false,
+        error,
+      };
+    }
+    await roomService.addMember(roomId, accountId);
+    return {
+      isAuthenticated: true,
+      error,
     };
   },
 };

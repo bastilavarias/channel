@@ -9,6 +9,12 @@ router.post(
   roomController.create
 );
 
+router.post(
+  "/join-room",
+  passport.authenticate("jwt", { session: false }),
+  roomController.join
+);
+
 router.get(
   "/information/:roomId",
   passport.authenticate("jwt", { session: false }),
