@@ -26,10 +26,16 @@ export default {
       const firstName = name.split(" ")[0];
       return firstName ? firstName : "";
     },
+
+    hasError(error) {
+      return Object.keys(error).length > 0;
+    },
   },
+
   mounted() {
     window.addEventListener("scroll", this.handleScroll);
   },
+
   destroyed() {
     window.removeEventListener("scroll", this.handleScroll);
   },

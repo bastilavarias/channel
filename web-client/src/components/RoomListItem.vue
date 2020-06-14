@@ -49,6 +49,8 @@
                 label="Password"
                 outlined
                 :password.sync="password"
+                :error="hasError(joinError)"
+                :error-messages="joinError.password ? joinError.password : ''"
               ></custom-password-text-field>
             </v-col>
           </v-row>
@@ -78,8 +80,11 @@
 <script>
 import CustomPasswordTextField from "./custom/PasswordTextField";
 import { ROOM_JOIN } from "../store/types/room";
+import customUtilities from "../common/customUtilities";
 export default {
   name: "room-list-item",
+
+  mixins: [customUtilities],
 
   components: { CustomPasswordTextField },
 
@@ -120,6 +125,7 @@ export default {
       isPasswordPromptShow: false,
       password: "",
       isJoiningRoomStart: false,
+      joinError: {},
     };
   },
 
@@ -146,8 +152,19 @@ export default {
         roomId: this.roomId,
         password: this.password,
       };
-      const result = await this.$store.dispatch(ROOM_JOIN, roomDetails);
-      console.log(result);
+      const { isAuthenticated, room, error } = await this.$store.dispatch(
+        ROOM_JOIN,
+        roomDetails
+      );
+      if (isAuthenticated) {
+        await this.$router.push({
+          name: "chat-list",
+          params: {
+            roomId: room.id,
+          },
+        });
+      }
+      this.joinError = error;
       this.isJoiningRoomStart = false;
     },
   },

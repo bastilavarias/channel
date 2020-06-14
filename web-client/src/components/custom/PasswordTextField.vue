@@ -6,6 +6,8 @@
     :outlined="outlined"
     :label="label"
     v-model="passwordLocal"
+    :error="error"
+    :error-messages="errorMessages"
   ></v-text-field>
 </template>
 
@@ -25,6 +27,16 @@ export default {
     },
 
     password: {
+      type: String,
+      required: true,
+    },
+
+    error: {
+      type: Boolean,
+      required: true,
+    },
+
+    errorMessages: {
       type: String,
       required: true,
     },

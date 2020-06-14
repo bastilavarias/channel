@@ -18,7 +18,7 @@ const helperService = {
     return await bcrypt.hash(plainTextPassword, salt);
   },
 
-  compareHashPassword: async (hashedPassword, plainTextPassword) => {
+  compareHashPassword: async (plainTextPassword, hashedPassword) => {
     return await bcrypt.compare(plainTextPassword, hashedPassword);
   },
 };

@@ -81,18 +81,23 @@ const roomService = {
         password,
         hashedPassword
       );
+      console.log(isAuthenticated);
     }
     if (type === "private" && !isAuthenticated) {
       error.password = "Password do not match.";
       return {
         isAuthenticated: false,
         error,
+        room: {},
       };
     }
     await roomService.addMember(roomId, accountId);
     return {
       isAuthenticated: true,
       error,
+      room: {
+        id: gotRawRoomInformation.id,
+      },
     };
   },
 };
