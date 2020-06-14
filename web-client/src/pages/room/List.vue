@@ -52,45 +52,6 @@
         <div class="flex-grow-1"></div>
       </v-subheader>
     </v-card-text>
-    <v-dialog width="500" v-model="isRoomDetailsDialogShow">
-      <v-card tile>
-        <v-card-title class="font-weight-bold">Room Information </v-card-title>
-        <v-card-text>
-          <v-row dense>
-            <v-col cols="12">
-              <v-text-field
-                rounded
-                filled
-                value="Room Name"
-                readonly
-              ></v-text-field>
-            </v-col>
-
-            <v-col cols="12">
-              <v-text-field
-                rounded
-                filled
-                placeholder="Password"
-                append-icon="mdi-eye"
-                type="password"
-              ></v-text-field>
-            </v-col>
-          </v-row>
-        </v-card-text>
-        <v-card-actions>
-          <div class="flex-grow-1"></div>
-          <v-btn color="black" text @click="isRoomDetailsDialogShow = false">
-            <span class="text-capitalize">Cancel</span>
-          </v-btn>
-          <v-btn color="success">
-            <span class="font-weight-bold text-capitalize mr-1">
-              Join
-            </span>
-            <v-icon small>mdi-chevron-right</v-icon>
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
   </v-card>
 </template>
 
@@ -103,7 +64,6 @@ export default {
   components: { RoomListItem, CustomBreadcrumbs },
   data() {
     return {
-      isRoomDetailsDialogShow: false,
       keyword: "",
       offset: 0,
       rooms: [],

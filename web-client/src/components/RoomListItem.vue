@@ -32,18 +32,58 @@
     </v-list-item>
     <v-card-actions>
       <div class="flex-grow-1"></div>
-      <v-btn color="primary" small>
+      <v-btn color="primary" small @click="selectRoom">
         <span class="text-capitalize">Join</span>
         <v-icon small>mdi-chevron-right</v-icon>
       </v-btn>
     </v-card-actions>
+    <v-dialog width="500" v-model="isPasswordPromptShow">
+      <v-card tile>
+        <v-card-title class="font-weight-bold"
+          >Join {{ name }} chat room.
+        </v-card-title>
+        <v-card-text>
+          <v-row dense>
+            <v-col cols="12">
+              <v-text-field
+                outlined
+                label="Room Name"
+                :value="name"
+                readonly
+              ></v-text-field>
+            </v-col>
+
+            <v-col cols="12">
+              <custom-password-text-field
+                label="Password"
+                outlined
+                :password.sync="password"
+              ></custom-password-text-field>
+            </v-col>
+          </v-row>
+        </v-card-text>
+        <v-card-actions>
+          <div class="flex-grow-1"></div>
+          <v-btn color="black" text @click="isPasswordPromptShow = false">
+            <span class="text-capitalize">Cancel</span>
+          </v-btn>
+          <v-btn color="primary">
+            <span class="text-capitalize">
+              Join
+            </span>
+            <v-icon small>mdi-chevron-right</v-icon>
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-card>
 </template>
 
 <script>
+import CustomPasswordTextField from "./custom/PasswordTextField";
 export default {
   name: "room-list-item",
-
+  components: { CustomPasswordTextField },
   props: {
     avatarUrl: {
       type: String,
@@ -71,11 +111,26 @@ export default {
     },
   },
 
+  data() {
+    return {
+      isPasswordPromptShow: false,
+      password: "",
+    };
+  },
+
   computed: {
     membersTitle() {
       const members = this.members;
       return members > 1 ? `${members} Members` : `${members} Member`;
     },
+  },
+
+  methods: {
+    selectRoom() {
+      if (this.type === "private") return (this.isPasswordPromptShow = true);
+    },
+
+    joinRoom(roomId, password) {},
   },
 };
 </script>
