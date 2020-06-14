@@ -23,7 +23,7 @@
           </v-list-item-content>
         </v-list-item>
 
-        <v-list-item>
+        <v-list-item v-if="description">
           <v-list-item-content>
             <v-list-item-subtitle>Description</v-list-item-subtitle>
             <v-list-item-title>{{ description }}</v-list-item-title>

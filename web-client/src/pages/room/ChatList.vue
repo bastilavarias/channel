@@ -119,6 +119,14 @@ export default {
     },
   },
 
+  watch: {
+    async roomId(id) {
+      if (id) {
+        await this.getInformation();
+      }
+    },
+  },
+
   methods: {
     sendMessage() {
       if (this.isMessageValid) {
@@ -135,6 +143,15 @@ export default {
     scrollNewMessage() {
       this.chatsHolderDiv.scrollTop = this.chatsHolderDiv.scrollHeight;
     },
+
+    async getInformation() {
+      this.isGetInformationStart = true;
+      this.information = await this.$store.dispatch(
+        ROOM_GET_INFORMATION,
+        this.roomId
+      );
+      this.isGetInformationStart = false;
+    },
   },
 
   mounted() {
@@ -146,12 +163,7 @@ export default {
   },
 
   async created() {
-    this.isGetInformationStart = true;
-    this.information = await this.$store.dispatch(
-      ROOM_GET_INFORMATION,
-      this.roomId
-    );
-    this.isGetInformationStart = false;
+    await this.getInformation();
     this.$socket.client.emit("room_join", this.roomId);
   },
 
