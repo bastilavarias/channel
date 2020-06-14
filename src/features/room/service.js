@@ -71,14 +71,15 @@ const roomService = {
       "room",
       "id",
       roomId,
-      ["type, password"]
+      ["*"]
     );
     const type = gotRawRoomInformation.type;
     let isAuthenticated = false;
     if (type === "private") {
-      isAuthenticated = await helperService.hashPassword(
+      const hashedPassword = gotRawRoomInformation.password;
+      isAuthenticated = await helperService.compareHashPassword(
         password,
-        gotRawRoomInformation.password
+        hashedPassword
       );
     }
     if (type === "private" && !isAuthenticated) {

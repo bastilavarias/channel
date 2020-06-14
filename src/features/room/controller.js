@@ -85,12 +85,8 @@ const roomController = {
         password,
         accountId: req.user.id,
       });
-      if (Object.keys(result.error).length > 0) {
-        throw result.error;
-      }
       res.status(200).json(result);
     } catch (error) {
-      console.log(error);
       res.status(400).json(error);
     }
   },

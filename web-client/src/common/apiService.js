@@ -45,7 +45,8 @@ export const Room = {
   search: (keyword, offset) =>
     apiService.get(`/room/search/${keyword}/${offset}`),
 
-  join: (roomId, password) => apiService.post(`/room/join-room`),
+  join: (roomId, password) =>
+    apiService.post(`/room/join-room`, { roomId, password }),
 
   getFeatured: (offset) => apiService.get(`/room/featured/${offset}`),
 

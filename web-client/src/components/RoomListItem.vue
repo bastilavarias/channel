@@ -62,6 +62,7 @@
             color="primary"
             :disabled="!isPrivatePasswordValid"
             @click="joinRoom"
+            :loading="isJoiningRoomStart"
           >
             <span class="text-capitalize">
               Join
@@ -76,9 +77,12 @@
 
 <script>
 import CustomPasswordTextField from "./custom/PasswordTextField";
+import { ROOM_JOIN } from "../store/types/room";
 export default {
   name: "room-list-item",
+
   components: { CustomPasswordTextField },
+
   props: {
     roomId: {
       type: String,
@@ -115,6 +119,7 @@ export default {
     return {
       isPasswordPromptShow: false,
       password: "",
+      isJoiningRoomStart: false,
     };
   },
 
@@ -136,7 +141,14 @@ export default {
     },
 
     async joinRoom(roomId, password) {
-      console.log(this.roomId, this.password);
+      this.isJoiningRoomStart = true;
+      const roomDetails = {
+        roomId: this.roomId,
+        password: this.password,
+      };
+      const result = await this.$store.dispatch(ROOM_JOIN, roomDetails);
+      console.log(result);
+      this.isJoiningRoomStart = false;
     },
   },
 };

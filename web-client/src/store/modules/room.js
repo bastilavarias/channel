@@ -72,7 +72,7 @@ export default {
         const result = await Room.join(roomId, password);
         return result.data;
       } catch (error) {
-        return error;
+        console.log(error);
       }
     },
   },
