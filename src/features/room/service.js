@@ -9,9 +9,11 @@ const roomService = {
     const id = utilityService.uuid();
     const avatarUrl = adorableIOService.generateAvatarUrl();
     const createdAt = utilityService.timestamp();
+    const nameSlug = name.toLowerCase().trim();
     const createdRoomId = await roomModel.create({
       id,
       name,
+      nameSlug,
       description,
       type,
       password,
@@ -42,7 +44,8 @@ const roomService = {
   addMember: async (createdRoomId, accountId) =>
     await roomModel.addMember(createdRoomId, accountId),
 
-  search: async (keyword, offset) => await roomModel.search(keyword, offset),
+  search: async (keyword, offset) =>
+    await roomModel.search(keyword.trim().toLowerCase(), offset),
 
   getInformation: async (roomId) => await roomModel.getInformation(roomId),
 

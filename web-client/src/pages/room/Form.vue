@@ -118,10 +118,13 @@ export default {
     async createRoom() {
       this.isLoading = true;
       const createdRoomId = await this.$store.dispatch(ROOM_CREATE, this.form);
-      await this.$router.push({
-        name: "chat-list",
-        params: { roomId: createdRoomId },
-      });
+      if (createdRoomId) {
+        await this.$router.push({
+          name: "chat-list",
+          params: { roomId: createdRoomId },
+        });
+        return;
+      }
       this.isLoading = false;
     },
   },

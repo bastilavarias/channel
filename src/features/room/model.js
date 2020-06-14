@@ -6,6 +6,7 @@ const roomModel = {
   create: async ({
     id,
     name,
+    nameSlug,
     description,
     type,
     password,
@@ -17,6 +18,7 @@ const roomModel = {
       .insert({
         id,
         name,
+        name_slug: nameSlug,
         description,
         type,
         password,
@@ -38,7 +40,7 @@ const roomModel = {
   search: async (keyword, offset) => {
     return await knex(roomModel.tableName)
       .select(["id", "name", "type", "avatar_url", "account_id"])
-      .where("name", "like", `%${keyword}%`)
+      .where("name_slug", "like", `%${keyword}%`)
       .offset(offset)
       .limit(20)
       .orderBy("name", "asc")

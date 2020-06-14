@@ -2,6 +2,7 @@ exports.up = function (knex) {
   return knex.schema.createTable("room", function (table) {
     table.uuid("id").primary().notNullable();
     table.string("name").notNullable();
+    table.string("name_slug").notNullable();
     table.string("description");
     table.string("type").notNullable();
     table.string("password");
