@@ -43,6 +43,7 @@
               :type="room.type"
               :members="room.members"
               :admin="room.admin"
+              :is-account-already-joined="true"
             ></room-list-item>
           </v-col>
         </template>

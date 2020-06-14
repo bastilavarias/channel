@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card :disabled="isAccountAlreadyJoined">
     <v-list-item>
       <v-list-item-avatar :size="45">
         <v-img :src="avatarUrl" :lazy-src="avatarUrl"></v-img>
@@ -32,8 +32,15 @@
     </v-list-item>
     <v-card-actions>
       <div class="flex-grow-1"></div>
-      <v-btn color="primary" small @click="selectRoom">
-        <span class="text-capitalize">Join</span>
+      <v-btn
+        color="primary"
+        small
+        @click="selectRoom"
+        :disabled="isAccountAlreadyJoined"
+      >
+        <span class="text-capitalize">
+          {{ isAccountAlreadyJoined ? "Already Joined" : "Join" }}
+        </span>
         <v-icon small>mdi-chevron-right</v-icon>
       </v-btn>
     </v-card-actions>
@@ -116,6 +123,11 @@ export default {
 
     admin: {
       type: Object,
+      required: true,
+    },
+
+    isAccountAlreadyJoined: {
+      type: Boolean,
       required: true,
     },
   },
