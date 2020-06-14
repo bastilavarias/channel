@@ -43,7 +43,9 @@
               :type="room.type"
               :members="room.members"
               :admin="room.admin"
-              :is-account-already-joined="true"
+              :is-account-already-joined="
+                checkIfAccountIsAlreadyJoined(room.id)
+              "
             ></room-list-item>
           </v-col>
         </template>
@@ -114,6 +116,11 @@ export default {
 
     async getFeaturedRooms() {
       this.rooms = await this.$store.dispatch(ROOM_GET_FEATURED, this.offset);
+    },
+
+    checkIfAccountIsAlreadyJoined(roomId) {
+      const foundRoom = this.rooms.find((room) => room.id === roomId);
+      return Object.keys(foundRoom).length > 0;
     },
   },
 

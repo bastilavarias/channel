@@ -83,12 +83,6 @@ router.beforeEach(async (to, from, next) => {
     (record) => record.meta.requiresAuth
   );
   if (isProtectedRoute && !isAuthenticated) return next({ name: "login" });
-  if (to.name === "login" && isAuthenticated) {
-    next({ name: "room-list" });
-  }
-  if (to.name === "github-login" && isAuthenticated) {
-    next({ name: "room-list" });
-  }
   next();
 });
 
