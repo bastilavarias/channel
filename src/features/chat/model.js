@@ -77,6 +77,14 @@ const chatModel = {
         );
       });
   },
+
+  fetch: async (roomId, offset) => {
+    return await knex(chatModel.tableName)
+      .select(["id", "message", "type", "account_id", "created_at"])
+      .where("room_id", roomId)
+      .limit(20)
+      .orderBy("id", "desc");
+  },
 };
 
 module.exports = chatModel;

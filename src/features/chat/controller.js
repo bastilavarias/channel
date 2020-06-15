@@ -27,6 +27,17 @@ const chatController = {
     }
     return chats;
   },
+
+  fetch: async (req, res) => {
+    try {
+      const roomId = parseInt(req.params.roomId);
+      const offset = parseInt(req.params.offset);
+      const result = await chatService.fetch(roomId, offset);
+      res.status(200).json(result);
+    } catch (error) {
+      res.status(400).json(error);
+    }
+  },
 };
 
 module.exports = chatController;

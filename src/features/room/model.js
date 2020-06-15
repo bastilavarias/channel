@@ -154,6 +154,7 @@ const roomModel = {
     return await knex(`${roomModel.tableName}_member`)
       .select("account_id")
       .where("room_id", roomId)
+      .orderBy("id", "asc")
       .then(async (result) => {
         return Promise.all(
           result.map(async (rawInformation) => {

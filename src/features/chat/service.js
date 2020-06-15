@@ -22,6 +22,8 @@ const chatService = {
       chats,
     };
   },
+
+  fetch: async (roomId, offset) => await chatModel.fetch(roomId, offset),
 };
 
 module.exports = chatService;
