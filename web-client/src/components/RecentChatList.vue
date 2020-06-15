@@ -1,6 +1,13 @@
 <template>
   <v-card flat color="white">
-    <v-card-title class="font-weight-bold">Recent Chats</v-card-title>
+    <v-card-title class="font-weight-bold">
+      <span>Recent Chats</span>
+      <div class="flex-grow-1"></div>
+      <v-btn color="primary" :to="{ name: 'room-list' }">
+        <v-icon class="mr-1">mdi-magnify</v-icon>
+        <span class="text-capitalize">Discover Rooms</span>
+      </v-btn>
+    </v-card-title>
     <v-list rounded dense>
       <v-text-field
         dense

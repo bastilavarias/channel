@@ -14,23 +14,6 @@
       <profile-list-item></profile-list-item>
       <v-divider></v-divider>
       <recent-chat-list></recent-chat-list>
-      <template v-slot:append>
-        <div class="pa-2">
-          <v-btn
-            color="primary"
-            rounded
-            outlined
-            block
-            :to="{ name: 'room-list' }"
-            exact
-          >
-            <v-icon class="mr-1">mdi-magnify</v-icon>
-            <span class="text-capitalize font-weight-bold">
-              Discover more room
-            </span>
-          </v-btn>
-        </div>
-      </template>
     </v-navigation-drawer>
     <v-content>
       <router-view></router-view>
