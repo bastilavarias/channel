@@ -176,55 +176,12 @@ const roomModel = {
   getJoined: async (accountId) => {
     return await knex
       .raw(
-        `select * from (select distinct on (rm.room_id) rm.room_id as "rmRoomId", c.created_at as createdAt from chat c join room_member rm on c.room_id = rm.room_id where rm.account_id = ?) p order by createdAt desc;`,
+        `select rm.id as room_id, c.message, c.created_at from chat c join room_member rm on c.room_id = rm.room_id where c.id in (select max(c2.id) from room_member as rm2 join chat as c2 on rm2.room_id = c2.room_id where rm2.account_id = ? group by c2.room_id) order by c.created_at desc;`,
         [accountId]
       )
       .then((result) => {
-        return Promise.all(
-          result.rows.map(async (rawInformation) => {
-            return await knex("room")
-              .select(["id", "name", "avatar_url"])
-              .where("id", rawInformation.rmRoomId)
-              .then(async (result2) => {
-                const room = {};
-                room.id = result2[0].id;
-                room.name = result2[0].name;
-                room.avatarUrl = result2[0].avatar_url;
-                room.recentChat = await knex("chat")
-                  .select(["account_id", "message", "type", "created_at"])
-                  .where("room_id", room.id)
-                  .orderBy("created_at", "desc")
-                  .then(async (result3) => {
-                    const chat = {};
-                    chat.message = result3[0].message;
-                    chat.type = result3[0].type;
-                    chat.createdAt = result3[0].created_at;
-                    chat.account = await knex("account")
-                      .select(["name"])
-                      .where("id", result3[0].account_id)
-                      .then((result4) => {
-                        const account = {};
-                        account.name = result4[0].name;
-                        return account;
-                      });
-                    return chat;
-                  });
-                return room;
-              });
-          })
-        );
+        console.log(result.rows);
       });
-    // return await knex("room_member as rm")
-    //   .join("chat as c", "rm.room_id", "=", "c.room_id")
-    //   .select(
-    //     knex.raw(
-    //       `distinct on (c.room_id) c.created_at, rm.room_id as "rmRoomId"`
-    //     )
-    //   )
-    //   .orderBy("c.created_at", "desc")
-    //   .then((result) => {
-    //     console.log(result);
-    //   });
   },
 };
 
