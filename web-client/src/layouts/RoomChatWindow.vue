@@ -53,9 +53,5 @@ export default {
       return account ? account : {};
     },
   },
-
-  created() {
-    this.$socket.client.emit("chat_recent", this.currentAccount.id);
-  },
 };
 </script>

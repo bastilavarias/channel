@@ -58,13 +58,6 @@ const roomService = {
     };
   },
 
-  getJoined: async (accountId) => {
-    const rooms = await roomModel.getJoined(accountId);
-    return {
-      rooms,
-    };
-  },
-
   join: async ({ roomId, accountId, password }) => {
     const error = {};
     const gotRawRoomInformation = await helperService.getSingle(

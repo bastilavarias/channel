@@ -35,6 +35,16 @@
         </v-list-item>
       </template>
     </v-list>
+    <div class="text-center" v-if="recentChats.length === 0">
+      <v-avatar :size="100">
+        <v-img
+          src="../assets/icons8/chat-messages.png"
+          lazy-src="../assets/icons8/chat-messages.png"
+        ></v-img>
+      </v-avatar>
+      <h1 class="title mb-1">No recent chats</h1>
+      <h2 class="subtitle-2">Lorem ipsum dolor sit amet.</h2>
+    </div>
   </v-card>
 </template>
 
