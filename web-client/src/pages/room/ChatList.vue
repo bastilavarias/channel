@@ -123,7 +123,9 @@ export default {
   watch: {
     async roomId(id) {
       if (id) {
+        this.$socket.client.emit("room_enter", id);
         await this.getInformation();
+        await this.fetchChats();
       }
     },
   },
@@ -155,6 +157,13 @@ export default {
       );
       this.isGetInformationStart = false;
     },
+
+    async fetchChats() {
+      await this.$store.dispatch(FETCH_CHATS, {
+        roomId: this.roomId,
+        offset: 0,
+      });
+    },
   },
 
   mounted() {
@@ -168,10 +177,7 @@ export default {
   async created() {
     this.$socket.client.emit("room_enter", this.roomId);
     await this.getInformation();
-    await this.$store.dispatch(FETCH_CHATS, {
-      roomId: this.roomId,
-      offset: 0,
-    });
+    await this.fetchChats();
   },
 
   sockets: {

@@ -18,7 +18,7 @@ export default {
     },
 
     [SOCKET_CHAT_RECENT]: (state, chats) => {
-      state.recent = [...chats];
+      state.recent = chats;
     },
 
     [SET_CHATS]: (state, chats) => {

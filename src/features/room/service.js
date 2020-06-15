@@ -108,9 +108,8 @@ const roomService = {
       type: "system",
     };
     const saveChatResult = await chatService.save(chatDetails);
-    const savedChatDetails = saveChatResult.details;
     return {
-      details: savedChatDetails,
+      details: saveChatResult.details,
     };
   },
 };
