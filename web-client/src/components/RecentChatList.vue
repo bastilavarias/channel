@@ -3,7 +3,7 @@
     <v-card-title class="font-weight-bold">
       <span>Recent Chats</span>
       <div class="flex-grow-1"></div>
-      <v-btn color="primary" :to="{ name: 'room-list' }">
+      <v-btn color="primary" rounded :to="{ name: 'room-list' }">
         <v-icon class="mr-1">mdi-magnify</v-icon>
         <span class="text-capitalize">Discover Rooms</span>
       </v-btn>

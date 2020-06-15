@@ -20,14 +20,25 @@
 
 <script>
 import { ACCOUNT_LOGIN } from "../store/types/account";
+import store from "../store";
 
 export default {
+  computed: {
+    recentChats() {
+      const chats = this.$store.state.chat.recent;
+      return chats ? chats : [];
+    },
+  },
+
   async created() {
     const { code } = this.$route.query;
     await this.$store.dispatch(ACCOUNT_LOGIN, code);
-    await this.$router.push({
-      name: "room-list",
-    });
+    const recentChats = store.state.chat.recent;
+    const redirectRouteName =
+      recentChats.length > 0
+        ? { name: "chat-list", params: { roomId: recentChats[0].room.id } }
+        : { name: "room-list" };
+    await this.$router.push(redirectRouteName);
   },
 };
 </script>

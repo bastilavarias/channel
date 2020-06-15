@@ -16,10 +16,6 @@
         currentAccount.username
       }}</v-list-item-subtitle>
     </v-list-item-content>
-
-    <v-list-item-action>
-      <v-btn icon><v-icon>mdi-refresh</v-icon></v-btn>
-    </v-list-item-action>
   </v-list-item>
 </template>
 

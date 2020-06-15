@@ -79,19 +79,25 @@ const router = new VueRouter({
 
 router.beforeEach(async (to, from, next) => {
   await store.dispatch(ACCOUNT_CHECK_AUTHENTICATION);
-  const currentAccount = store.state.account.current;
+  const account = store.state.account;
+  const currentAccount = account.current;
+  const isAuthenticated = account.isAuthenticated;
   $socket.emit("chat_recent", currentAccount.id);
+  const recentChats = store.state.chat.recent;
+  const redirectRouteName =
+    recentChats.length > 0
+      ? { name: "chat-list", params: { roomId: recentChats[0].room.id } }
+      : { name: "room-list" };
   const isProtectedRoute = to.matched.some(
     (record) => record.meta.requiresAuth
   );
-  // if (isProtectedRoute && !currentAccount.isAuthenticated)
-  //   return next({ name: "login" });
-  // if (to.name === "login" && currentAccount.isAuthenticated) {
-  //   next({ name: "room-list" });
-  // }
-  // if (to.name === "github-login" && currentAccount.isAuthenticated) {
-  //   next({ name: "room-list" });
-  // }
+  if (isProtectedRoute && !isAuthenticated) return next({ name: "login" });
+  if (to.name === "login" && isAuthenticated) {
+    next(redirectRouteName);
+  }
+  if (to.name === "github-login" && isAuthenticated) {
+    next(redirectRouteName);
+  }
   next();
 });
 
