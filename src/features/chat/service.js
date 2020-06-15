@@ -11,9 +11,15 @@ const chatService = {
       type,
       createdAt,
     });
-
     return {
       details: chatDetails,
+    };
+  },
+
+  getRecent: async (accountId) => {
+    const chats = await chatModel.getRecent(accountId);
+    return {
+      chats,
     };
   },
 };

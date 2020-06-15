@@ -13,7 +13,7 @@
     <v-navigation-drawer app clipped width="400">
       <profile-list-item></profile-list-item>
       <v-divider></v-divider>
-      <joined-room-list></joined-room-list>
+      <recent-chat-list></recent-chat-list>
       <template v-slot:append>
         <div class="pa-2">
           <v-btn
@@ -39,13 +39,13 @@
 </template>
 
 <script>
-import JoinedRoomList from "../components/JoinedRoomList";
 import ProfileListItem from "../components/ProfileListItem";
 import DashboardAppBarMenu from "../components/DashboardToolbarMenu";
+import RecentChatList from "../components/RecentChatList";
 export default {
   name: "main-layout",
 
-  components: { DashboardAppBarMenu, ProfileListItem, JoinedRoomList },
+  components: { RecentChatList, DashboardAppBarMenu, ProfileListItem },
 
   computed: {
     currentAccount() {
@@ -55,7 +55,7 @@ export default {
   },
 
   created() {
-    this.$socket.client.emit("room_joined", this.currentAccount.id);
+    this.$socket.client.emit("chat_recent", this.currentAccount.id);
   },
 };
 </script>

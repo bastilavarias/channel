@@ -5,7 +5,6 @@ import {
   ROOM_GET_INFORMATION,
   ROOM_JOIN,
   ROOM_SEARCH,
-  SOCKET_ROOM_JOINED,
   SOCKET_ROOM_MEMBERS,
 } from "../types/room";
 
@@ -18,10 +17,6 @@ export default {
   mutations: {
     [SOCKET_ROOM_MEMBERS]: (state, members) => {
       state.members = members;
-    },
-
-    [SOCKET_ROOM_JOINED]: (state, joined) => {
-      state.joined = joined;
     },
   },
 

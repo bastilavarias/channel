@@ -1,13 +1,13 @@
 <template>
   <v-card flat color="white">
-    <v-card-title class="font-weight-bold">Your Rooms</v-card-title>
+    <v-card-title class="font-weight-bold">Recent Chats</v-card-title>
     <v-list rounded dense>
       <v-text-field
         dense
         rounded
         filled
         single-line
-        label="Search Room"
+        label="Search room name"
         prepend-inner-icon="mdi-magnify"
       ></v-text-field>
       <template v-for="(chat, index) in recentChats">
@@ -42,7 +42,7 @@
 import customUtilities from "../common/customUtilities";
 
 export default {
-  name: "joined-room-list",
+  name: "recent-chat-list",
 
   mixins: [customUtilities],
 
@@ -52,8 +52,8 @@ export default {
     },
 
     recentChats() {
-      const rooms = this.$store.state.room.joined;
-      return rooms ? rooms : [];
+      const chats = this.$store.state.chat.recent;
+      return chats ? chats : [];
     },
   },
 

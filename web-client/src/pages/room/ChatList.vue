@@ -170,8 +170,8 @@ export default {
   },
 
   sockets: {
-    room_refresh_joined() {
-      this.$socket.client.emit("room_joined", this.currentAccount.id);
+    chat_recent_refresh() {
+      this.$socket.client.emit("chat_recent", this.currentAccount.id);
     },
   },
 };

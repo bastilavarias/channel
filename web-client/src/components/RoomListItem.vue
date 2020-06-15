@@ -147,14 +147,14 @@ export default {
       return this.type === "private" && this.password;
     },
 
-    joinedRooms() {
-      const rooms = this.$store.state.room.joined;
-      return rooms ? rooms : [];
+    recentChats() {
+      const chats = this.$store.state.chat.recent;
+      return chats ? chats : [];
     },
 
     isAccountAlreadyJoined() {
       let isJoined = false;
-      const foundRoom = this.joinedRooms.find(
+      const foundRoom = this.recentChats.find(
         (chat) => chat.room.id === this.roomId
       );
       if (foundRoom) isJoined = true;

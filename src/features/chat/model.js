@@ -51,7 +51,32 @@ const chatModel = {
       });
   },
 
-  getRecent: (accountId) => {},
+  getRecent: async (accountId) => {
+    return await knex
+      .raw(
+        `select c.room_id, c.account_id, c.message, c.type, c.created_at from chat c  where c.id in (select max(c2.id) from room_member as rm2 join chat as c2 on rm2.room_id = c2.room_id where rm2.account_id = ? group by c2.room_id) order by c.created_at desc;`,
+        [accountId]
+      )
+      .then(async (result) => {
+        return await Promise.all(
+          result.rows.map(async (rawInformation) => {
+            const chat = {};
+            chat.message = rawInformation.message;
+            chat.type = rawInformation.type;
+            chat.createdAt = rawInformation.created_at;
+            chat.room = await knex("room")
+              .select(["id", "name", "avatar_url as avatarUrl"])
+              .where("id", rawInformation.room_id)
+              .then((result2) => result2[0]);
+            chat.account = await knex("account")
+              .select(["name"])
+              .where("id", rawInformation.account_id)
+              .then((result3) => result3[0]);
+            return chat;
+          })
+        );
+      });
+  },
 };
 
 module.exports = chatModel;

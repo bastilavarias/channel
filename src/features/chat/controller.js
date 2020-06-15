@@ -16,6 +16,17 @@ const chatController = {
     }
     return chatDetails;
   },
+
+  getRecent: async (accountId) => {
+    let chats = [];
+    try {
+      const result = await chatService.getRecent(accountId);
+      chats = result.chats;
+    } catch (error) {
+      console.log(error);
+    }
+    return chats;
+  },
 };
 
 module.exports = chatController;
