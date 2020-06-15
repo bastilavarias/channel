@@ -33,12 +33,12 @@ export default {
 
     error: {
       type: Boolean,
-      required: true,
+      required: false,
     },
 
     errorMessages: {
       type: String,
-      required: true,
+      required: false,
     },
   },
 
