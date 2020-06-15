@@ -52,3 +52,7 @@ export const Room = {
 
   getInformation: (roomId) => apiService.get(`/room/information/${roomId}`),
 };
+
+export const Chat = {
+  fetch: (roomId, offset) => apiService.get(`/chat/${roomId}/${offset}`),
+};

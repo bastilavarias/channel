@@ -68,6 +68,7 @@
 import ChatItem from "../../components/ChatItem";
 import { ROOM_GET_INFORMATION } from "../../store/types/room";
 import ChatListInformationDrawer from "../../components/ChatListInformationDrawer";
+import { FETCH_CHATS } from "../../store/types/chat";
 export default {
   components: { ChatListInformationDrawer, ChatItem },
 
@@ -167,6 +168,10 @@ export default {
   async created() {
     this.$socket.client.emit("room_enter", this.roomId);
     await this.getInformation();
+    await this.$store.dispatch(FETCH_CHATS, {
+      roomId: this.roomId,
+      offset: 0,
+    });
   },
 
   sockets: {

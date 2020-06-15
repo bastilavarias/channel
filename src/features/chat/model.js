@@ -28,25 +28,13 @@ const chatModel = {
         chat.type = rawInformation.type;
         chat.createdAt = rawInformation.created_at;
         chat.sender = await knex("account")
-          .select(["id", "username", "name", "avatar_url"])
+          .select(["id", "username", "name", "avatar_url as avatarUrl"])
           .where("id", rawInformation.account_id)
-          .then((result2) => {
-            const sender = {};
-            sender.id = result2[0].id;
-            sender.username = result2[0].username;
-            sender.name = result2[0].name;
-            sender.avatarUrl = result2[0].avatar_url;
-            return sender;
-          });
+          .then((result2) => result2[0]);
         chat.room = await knex("room")
           .select("id", "name")
           .where("id", rawInformation.room_id)
-          .then((result3) => {
-            const room = {};
-            room.id = result3[0].id;
-            room.name = result3[0].name;
-            return room;
-          });
+          .then((result3) => result3[0]);
         return chat;
       });
   },
@@ -80,10 +68,30 @@ const chatModel = {
 
   fetch: async (roomId, offset) => {
     return await knex(chatModel.tableName)
-      .select(["id", "message", "type", "account_id", "created_at"])
+      .select(["id", "message", "type", "account_id", "room_id", "created_at"])
       .where("room_id", roomId)
       .limit(20)
-      .orderBy("id", "desc");
+      .orderBy("created_at", "asc")
+      .then(async (result) => {
+        return await Promise.all(
+          result.map(async (rawInformation) => {
+            const chat = {};
+            chat.id = rawInformation.id;
+            chat.message = rawInformation.message;
+            chat.type = rawInformation.type;
+            chat.createdAt = rawInformation.created_at;
+            chat.sender = await knex("account")
+              .select(["id", "username", "name", "avatar_url as avatarUrl"])
+              .where("id", rawInformation.account_id)
+              .then((result2) => result2[0]);
+            chat.room = await knex("room")
+              .select("id", "name")
+              .where("id", rawInformation.room_id)
+              .then((result3) => result3[0]);
+            return chat;
+          })
+        );
+      });
   },
 };
 

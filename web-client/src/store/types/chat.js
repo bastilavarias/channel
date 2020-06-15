@@ -1,2 +1,4 @@
 export const SOCKET_CHAT_SEND = "SOCKET_CHAT_SEND";
 export const SOCKET_CHAT_RECENT = "SOCKET_CHAT_RECENT";
+export const FETCH_CHATS = "FETCH_CHATS";
+export const SET_CHATS = "SET_CHATS";

@@ -107,7 +107,8 @@ const roomService = {
       message: `${gotRawAccountInformation.name} joined this group.`,
       type: "system",
     };
-    const savedChatDetails = await chatService.save(chatDetails);
+    const saveChatResult = await chatService.save(chatDetails);
+    const savedChatDetails = saveChatResult.details;
     return {
       details: savedChatDetails,
     };
