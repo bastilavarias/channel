@@ -50,6 +50,8 @@ const chatModel = {
         return chat;
       });
   },
+
+  getRecent: (accountId) => {},
 };
 
 module.exports = chatModel;

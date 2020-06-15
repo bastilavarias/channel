@@ -10,23 +10,26 @@
         label="Search Room"
         prepend-inner-icon="mdi-magnify"
       ></v-text-field>
-      <template v-for="(room, index) in joinedRooms">
-        <v-list-item :key="index" @click="goToRoom(room.id)">
+      <template v-for="(chat, index) in recentChats">
+        <v-list-item :key="index" @click="goToRoom(chat.room.id)">
           <v-list-item-avatar :size="45">
-            <v-img :src="room.avatarUrl" :lazy-src="room.avatarUrl"></v-img>
+            <v-img
+              :src="chat.room.avatarUrl"
+              :lazy-src="chat.room.avatarUrl"
+            ></v-img>
           </v-list-item-avatar>
           <v-list-item-content>
             <v-list-item-title>
               <div class="d-flex align-center">
-                <span class="title font-weight-bold">{{ room.name }}</span>
+                <span class="title font-weight-bold">{{ chat.room.name }}</span>
                 <span>
                   <span class="mx-1">·</span>
-                  {{ formatTimestamp(room.recentChat.createdAt) }}
+                  {{ formatTimestamp(chat.createdAt) }}
                 </span>
               </div>
             </v-list-item-title>
             <v-list-item-subtitle>
-              {{ previewMessage(room.recentChat) }}
+              {{ previewMessage(chat) }}
             </v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
@@ -48,7 +51,7 @@ export default {
       return this.$store.state.account.current;
     },
 
-    joinedRooms() {
+    recentChats() {
       const rooms = this.$store.state.room.joined;
       return rooms ? rooms : [];
     },

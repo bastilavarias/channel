@@ -21,7 +21,6 @@ export default {
     },
 
     [SOCKET_ROOM_JOINED]: (state, joined) => {
-      console.log(joined);
       state.joined = joined;
     },
   },

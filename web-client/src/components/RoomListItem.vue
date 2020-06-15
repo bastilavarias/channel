@@ -155,7 +155,7 @@ export default {
     isAccountAlreadyJoined() {
       let isJoined = false;
       const foundRoom = this.joinedRooms.find(
-        (room) => room.id === this.roomId
+        (chat) => chat.room.id === this.roomId
       );
       if (foundRoom) isJoined = true;
       return isJoined;
