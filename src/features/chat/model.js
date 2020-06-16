@@ -39,6 +39,14 @@ const chatModel = {
       });
   },
 
+  addRecent: async ({ chatId, accountId, roomId }) => {
+    return await knex(`${chatModel.tableName}_recent`).insert({
+      chat_id: chatId,
+      account_id: accountId,
+      room_id: roomId,
+    });
+  },
+
   getRecent: async (accountId) => {
     return await knex
       .raw(

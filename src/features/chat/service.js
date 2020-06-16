@@ -1,5 +1,6 @@
 const chatModel = require("./model");
 const utilityService = require("../utility/service");
+const roomModel = require("../room/model");
 
 const chatService = {
   save: async ({ roomId, accountId, message, type }) => {
@@ -10,6 +11,14 @@ const chatService = {
       message,
       type,
       createdAt,
+    });
+    const roomMembers = await roomModel.getMembers(chatDetails.room.id);
+    roomMembers.map(async (member) => {
+      await chatModel.addRecent({
+        accountId: member.id,
+        chatId: chatDetails.id,
+        roomId: chatDetails.room.id,
+      });
     });
     return {
       details: chatDetails,
