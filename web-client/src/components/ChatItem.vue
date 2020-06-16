@@ -67,6 +67,11 @@ export default {
   mixins: [customUtilities],
 
   props: {
+    chatId: {
+      type: Number,
+      required: true,
+    },
+
     sender: {
       type: Object,
       required: true,
@@ -101,6 +106,26 @@ export default {
     isSystemMessage() {
       return this.type === "system";
     },
+
+    roomId() {
+      const roomId = this.$route.params.roomId;
+      return roomId ? roomId : "";
+    },
+  },
+
+  methods: {
+    readRecentChat() {
+      const readRecentChatParams = {
+        chatId: this.chatId,
+        roomId: this.roomId,
+        accountId: this.currentAccount.id,
+      };
+      this.$socket.client.emit("chat_read_recent", readRecentChatParams);
+    },
+  },
+
+  mounted() {
+    this.readRecentChat();
   },
 };
 </script>

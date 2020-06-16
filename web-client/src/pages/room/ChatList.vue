@@ -16,6 +16,7 @@
         <template v-for="(chat, index) in chats">
           <chat-item
             :key="index"
+            :chat-id="chat.id"
             :sender="chat.sender"
             :type="chat.type"
             :message="chat.message"
@@ -36,7 +37,6 @@
             v-model="message"
             @keyup.enter="sendChat"
             autofocus
-            @click="touchMessageTextField"
           ></v-text-field>
         </v-col>
         <v-col cols="1">
@@ -129,12 +129,6 @@ export default {
         await this.fetchChats();
       }
     },
-
-    message(string) {
-      if (string) {
-        this.readRecentChat();
-      }
-    },
   },
 
   methods: {
@@ -170,20 +164,6 @@ export default {
         roomId: this.roomId,
         offset: 0,
       });
-    },
-
-    touchMessageTextField() {
-      this.readRecentChat();
-    },
-
-    readRecentChat() {
-      const recentChat = this.chats[this.chats.length - 1];
-      const readRecentChatParams = {
-        chatId: recentChat.id,
-        roomId: this.roomId,
-        accountId: this.currentAccount.id,
-      };
-      this.$socket.client.emit("chat_read_recent", readRecentChatParams);
     },
   },
 
