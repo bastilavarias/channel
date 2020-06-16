@@ -72,7 +72,7 @@
 import ChatItem from "../../components/ChatItem";
 import { ROOM_GET_INFORMATION } from "../../store/types/room";
 import ChatListInformationDrawer from "../../components/ChatListInformationDrawer";
-import { FETCH_CHATS } from "../../store/types/chat";
+import { FETCH_CHATS, SET_TYPING_ACCOUNTS } from "../../store/types/chat";
 export default {
   components: { ChatListInformationDrawer, ChatItem },
 
@@ -137,6 +137,7 @@ export default {
         await this.fetchChats();
         this.textFieldAutofocus();
         this.removeAccountTypingIndicator();
+        this.clearTypingAccounts();
       }
     },
 
@@ -201,6 +202,10 @@ export default {
         accountId: this.currentAccount.id,
       });
     },
+
+    clearTypingAccounts() {
+      this.$store.commit(SET_TYPING_ACCOUNTS, []);
+    },
   },
 
   mounted() {
@@ -216,6 +221,7 @@ export default {
     this.$socket.client.emit("room_enter", this.roomId);
     await this.getInformation();
     await this.fetchChats();
+    this.clearTypingAccounts();
   },
 
   sockets: {
