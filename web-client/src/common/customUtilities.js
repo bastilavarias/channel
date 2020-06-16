@@ -24,7 +24,7 @@ export default {
 
     getFirstName(name) {
       const firstName = name.split(" ")[0];
-      return firstName ? firstName : "";
+      return firstName ? firstName : name;
     },
 
     hasError(error) {

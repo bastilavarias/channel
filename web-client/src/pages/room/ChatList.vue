@@ -24,7 +24,7 @@
             class-name="mb-5"
           ></chat-item>
         </template>
-        <template v-for="account in typingAccounts">
+        <template v-for="account in selectedTypingAccounts">
           <chat-list-account-typing-indicator
             :name="account.name"
             :avatar-url="account.avatarUrl"
@@ -135,6 +135,10 @@ export default {
     typingAccounts() {
       const accounts = this.$store.state.chat.typingAccounts;
       return accounts ? accounts : [];
+    },
+
+    selectedTypingAccounts() {
+      return this.typingAccounts.slice(0, 3);
     },
   },
 
