@@ -17,8 +17,8 @@
         {{ previewMessage(chat) }}
       </v-list-item-subtitle>
     </v-list-item-content>
-    <v-list-item-action-text v-if="isNewChat">
-      <v-icon color="primary" x-small>mdi-moon-new</v-icon>
+    <v-list-item-action-text v-if="!chat.isRead">
+      <v-icon color="primary" x-small>mdi-moon-full</v-icon>
     </v-list-item-action-text>
   </v-list-item>
 </template>
@@ -38,12 +38,6 @@ export default {
     },
   },
 
-  data() {
-    return {
-      isNewChat: false,
-    };
-  },
-
   computed: {
     currentAccount() {
       return this.$store.state.account.current;
@@ -57,7 +51,6 @@ export default {
 
   methods: {
     goToRoom(roomId) {
-      this.isNewChat = false;
       this.$router.push({
         name: "chat-list",
         params: {
@@ -83,10 +76,6 @@ export default {
       }
       return customMessage;
     },
-  },
-
-  updated() {
-    this.isNewChat = true;
   },
 };
 </script>

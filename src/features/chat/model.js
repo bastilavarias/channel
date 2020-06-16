@@ -50,7 +50,7 @@ const chatModel = {
   getRecent: async (accountId) => {
     return await knex
       .raw(
-        `select c.room_id, c.account_id, c.message, c.type, c.created_at from chat c  where c.id in (select max(c2.id) from room_member as rm2 join chat as c2 on rm2.room_id = c2.room_id where rm2.account_id = ? group by c2.room_id) order by c.created_at desc;`,
+        `select c.id, c.account_id, c.room_id, c.message, c.type, c.created_at from chat c where c.id in (select max(cr2.chat_id) from chat_recent cr2 where cr2.account_id = ? group by cr2.room_id) order by c.created_at desc;`,
         [accountId]
       )
       .then(async (result) => {
@@ -68,6 +68,9 @@ const chatModel = {
               .select(["name"])
               .where("id", rawInformation.account_id)
               .then((result3) => result3[0]);
+            chat.isRead = await knex("chat_recent")
+              .select(["is_read as isRead"])
+              .then((result4) => result4[0].isRead);
             return chat;
           })
         );
