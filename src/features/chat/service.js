@@ -4,13 +4,12 @@ const roomModel = require("../room/model");
 
 const chatService = {
   save: async ({ roomId, accountId, message, type }) => {
-    const createdAt = utilityService.timestamp();
     const chatDetails = await chatModel.save({
       roomId,
       accountId,
       message,
       type,
-      createdAt,
+      createdAt: utilityService.timestamp(),
     });
     const roomMembers = await roomModel.getMembers(chatDetails.room.id);
     roomMembers.map(async (member) => {

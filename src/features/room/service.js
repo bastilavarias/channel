@@ -33,8 +33,17 @@ const roomService = {
       accountId,
       message: `${gotRawAccountInformation.name} created this group.`,
       type: "system",
+      createdAt: utilityService.timestamp(),
     };
-    await chatModel.save(firstChatDetails);
+    const savedFirstChatDetails = await chatModel.save(firstChatDetails);
+    const gotRoomMembers = await roomModel.getMembers(createdRoomId);
+    gotRoomMembers.map(async (member) => {
+      await chatModel.addRecent({
+        accountId: member.id,
+        chatId: savedFirstChatDetails.id,
+        roomId: createdRoomId,
+      });
+    });
     return {
       error: {},
       id: createdRoomId,
@@ -106,10 +115,19 @@ const roomService = {
       accountId,
       message: `${gotRawAccountInformation.name} joined this group.`,
       type: "system",
+      createdAt: utilityService.timestamp(),
     };
-    const saveChatDetails = await chatModel.save(chatDetails);
+    const savedChatDetails = await chatModel.save(chatDetails);
+    const gotRoomMembers = await roomModel.getMembers(savedChatDetails.room.id);
+    gotRoomMembers.map(async (member) => {
+      await chatModel.addRecent({
+        accountId: member.id,
+        chatId: savedChatDetails.id,
+        roomId: savedChatDetails.room.id,
+      });
+    });
     return {
-      details: saveChatDetails,
+      details: savedChatDetails,
     };
   },
 };
