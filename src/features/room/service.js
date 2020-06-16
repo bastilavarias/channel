@@ -1,7 +1,7 @@
 const adorableIOService = require("../adorable-io/service");
 const roomModel = require("./model");
 const utilityService = require("../utility/service");
-const chatService = require("../chat/service");
+const chatModel = require("../chat/model");
 const helperService = require("../helper/service");
 
 const roomService = {
@@ -34,7 +34,7 @@ const roomService = {
       message: `${gotRawAccountInformation.name} created this group.`,
       type: "system",
     };
-    await chatService.save(firstChatDetails);
+    await chatModel.save(firstChatDetails);
     return {
       error: {},
       id: createdRoomId,
@@ -107,9 +107,9 @@ const roomService = {
       message: `${gotRawAccountInformation.name} joined this group.`,
       type: "system",
     };
-    const saveChatResult = await chatService.save(chatDetails);
+    const saveChatDetails = await chatModel.save(chatDetails);
     return {
-      details: saveChatResult.details,
+      details: saveChatDetails,
     };
   },
 };
