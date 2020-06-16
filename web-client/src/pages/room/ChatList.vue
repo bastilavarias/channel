@@ -24,6 +24,9 @@
             :is-author-and-user-same="index % 2 === 1"
           ></chat-item>
         </template>
+        <template v-for="account in typingAccounts">
+          <span :key="account.id">{{ account.name }} is typing</span>
+        </template>
       </v-container>
     </div>
     <div>
@@ -119,6 +122,11 @@ export default {
       const account = this.$store.state.account.current;
       return account ? account : {};
     },
+
+    typingAccounts() {
+      const accounts = this.$store.state.chat.typingAccounts;
+      return accounts ? accounts : [];
+    },
   },
 
   watch: {
@@ -128,6 +136,15 @@ export default {
         await this.getInformation();
         await this.fetchChats();
         this.textFieldAutofocus();
+        this.removeAccountTypingIndicator();
+      }
+    },
+
+    message(value) {
+      if (value.length > 0) {
+        this.showAccountTypingIndicator();
+      } else {
+        this.removeAccountTypingIndicator();
       }
     },
   },
@@ -169,6 +186,20 @@ export default {
 
     textFieldAutofocus() {
       document.getElementById("message-text-field").focus();
+    },
+
+    showAccountTypingIndicator() {
+      this.$socket.client.emit("chat_add_typing_account_indicator", {
+        roomId: this.roomId,
+        account: this.currentAccount,
+      });
+    },
+
+    removeAccountTypingIndicator() {
+      this.$socket.client.emit("chat_remove_typing_account_indicator", {
+        roomId: this.roomId,
+        accountId: this.currentAccount.id,
+      });
     },
   },
 

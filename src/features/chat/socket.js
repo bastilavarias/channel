@@ -22,6 +22,20 @@ const chatSocket = (io, socket) => {
     const recentChats = await chatController.getRecent(accountId);
     socket.emit("chat_recent", recentChats);
   });
+
+  socket.on(
+    "chat_add_typing_account_indicator",
+    async ({ roomId, account }) => {
+      socket.to(roomId).emit("chat_add_typing_account_indicator", account);
+    }
+  );
+
+  socket.on(
+    "chat_remove_typing_account_indicator",
+    async ({ roomId, accountId }) => {
+      socket.to(roomId).emit("chat_remove_typing_account_indicator", accountId);
+    }
+  );
 };
 
 module.exports = chatSocket;
