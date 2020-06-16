@@ -14,7 +14,9 @@
         </div>
       </v-list-item-title>
       <v-list-item-subtitle>
-        {{ previewMessage(chat) }}
+        <span :class="`${!chat.isRead ? 'font-weight-bold black--text' : ''}`">
+          {{ previewMessage(chat) }}
+        </span>
       </v-list-item-subtitle>
     </v-list-item-content>
     <v-list-item-action-text v-if="!chat.isRead">
