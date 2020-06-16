@@ -84,7 +84,6 @@ const chatModel = {
   },
 
   readRecent: async ({ chatId, accountId, roomId }) => {
-    console.log({ chatId, accountId, roomId });
     return await knex(`${chatModel.tableName}_recent`)
       .update("is_read", true)
       .where({

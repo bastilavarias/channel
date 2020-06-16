@@ -167,21 +167,17 @@ export default {
     },
 
     touchMessageTextField() {
-      const lastChat = this.chats[this.chats.length - 1];
+      this.readRecentChat();
+    },
+
+    readRecentChat() {
+      const recentChat = this.chats[this.chats.length - 1];
       const readRecentChatParams = {
-        chatId: lastChat.id,
+        chatId: recentChat.id,
         roomId: this.roomId,
         accountId: this.currentAccount.id,
       };
-      this.readRecentChat(readRecentChatParams);
-    },
-
-    readRecentChat({ chatId, accountId, roomId }) {
-      this.$socket.client.emit("chat_read_recent", {
-        chatId,
-        accountId,
-        roomId,
-      });
+      this.$socket.client.emit("chat_read_recent", readRecentChatParams);
     },
   },
 
