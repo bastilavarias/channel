@@ -18,7 +18,6 @@
         single-line
         label="Search Room"
         prepend-inner-icon="mdi-magnify"
-        autofocus
         v-model="keyword"
       ></v-text-field>
       <div class="text-center" v-if="isSearchRoomsStart">

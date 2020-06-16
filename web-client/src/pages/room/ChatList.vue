@@ -36,7 +36,7 @@
             rounded
             v-model="message"
             @keyup.enter="sendChat"
-            autofocus
+            id="message-text-field"
           ></v-text-field>
         </v-col>
         <v-col cols="1">
@@ -127,6 +127,7 @@ export default {
         this.$socket.client.emit("room_enter", id);
         await this.getInformation();
         await this.fetchChats();
+        this.textFieldAutofocus();
       }
     },
   },
@@ -165,10 +166,15 @@ export default {
         offset: 0,
       });
     },
+
+    textFieldAutofocus() {
+      document.getElementById("message-text-field").focus();
+    },
   },
 
   mounted() {
     this.scrollNewMessage();
+    this.textFieldAutofocus();
   },
 
   updated() {
