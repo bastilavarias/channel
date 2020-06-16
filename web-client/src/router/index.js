@@ -61,6 +61,12 @@ const routes = [
         name: "chat-list",
         component: () => import("../pages/room/ChatList"),
       },
+
+      {
+        path: "profile/:username",
+        name: "profile",
+        component: () => import("../pages/Profile"),
+      },
     ],
   },
 

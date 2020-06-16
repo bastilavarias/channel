@@ -11,7 +11,7 @@
       </v-btn>
     </template>
     <v-list>
-      <v-list-item>Profile</v-list-item>
+      <v-list-item @click="goToProfile">Profile</v-list-item>
       <v-list-item @click="logout">Logout</v-list-item>
     </v-list>
   </v-menu></template
@@ -33,6 +33,11 @@ export default {
     async logout() {
       await this.$store.commit(ACCOUNT_PURGE_AUTHENTICATION);
       await this.$router.push({ name: "login" });
+    },
+
+    goToProfile() {
+      const { username } = this.currentAccount;
+      this.$router.push({ name: "profile", params: { username } });
     },
   },
 };

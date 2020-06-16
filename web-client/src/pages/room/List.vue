@@ -1,58 +1,58 @@
 <template>
-  <v-card flat color="white">
-    <v-card-text>
-      <custom-breadcrumbs :routes="breadcrumbs"></custom-breadcrumbs>
-    </v-card-text>
-    <v-card-title>
-      <span class="display-1 font-weight-bold">Rooms</span>
-      <div class="flex-grow-1"></div>
-      <v-btn outlined color="primary" rounded :to="{ name: 'room-form' }">
-        <span class="font-weight-bold text-capitalize">Create Room</span>
-      </v-btn>
-    </v-card-title>
-    <v-card-text>
-      <v-text-field
-        dense
-        rounded
-        filled
-        single-line
-        label="Search Room"
-        prepend-inner-icon="mdi-magnify"
-        v-model="keyword"
-      ></v-text-field>
-      <div class="text-center" v-if="isSearchRoomsStart">
-        <v-progress-circular
-          color="primary"
-          indeterminate
-        ></v-progress-circular>
-      </div>
-    </v-card-text>
-    <template v-if="shouldShowFeaturedRooms">
-      <v-card-title>Featured Rooms 💯🔥 </v-card-title>
-    </template>
-    <v-card-text>
-      <v-row>
-        <template v-for="(room, index) in rooms" v-if="!isSearchRoomsStart">
-          <v-col cols="12" sm="6" md="3">
-            <room-list-item
-              :key="index"
-              :room-id="room.id"
-              :avatar-url="room.avatarUrl"
-              :name="room.name"
-              :type="room.type"
-              :members="room.members"
-              :admin="room.admin"
-            ></room-list-item>
-          </v-col>
-        </template>
-      </v-row>
-      <v-subheader v-if="isSearchRoomNoResults">
+  <v-container>
+    <custom-breadcrumbs :routes="breadcrumbs"></custom-breadcrumbs>
+    <v-card flat color="white">
+      <v-card-title>
+        <span class="display-1 font-weight-bold">Rooms</span>
         <div class="flex-grow-1"></div>
-        <span>Searched room not found.</span>
-        <div class="flex-grow-1"></div>
-      </v-subheader>
-    </v-card-text>
-  </v-card>
+        <v-btn outlined color="primary" rounded :to="{ name: 'room-form' }">
+          <span class="font-weight-bold text-capitalize">Create Room</span>
+        </v-btn>
+      </v-card-title>
+      <v-card-text>
+        <v-text-field
+          dense
+          rounded
+          filled
+          single-line
+          label="Search Room"
+          prepend-inner-icon="mdi-magnify"
+          v-model="keyword"
+        ></v-text-field>
+        <div class="text-center" v-if="isSearchRoomsStart">
+          <v-progress-circular
+            color="primary"
+            indeterminate
+          ></v-progress-circular>
+        </div>
+      </v-card-text>
+      <template v-if="shouldShowFeaturedRooms">
+        <v-card-title>Featured Rooms 💯🔥 </v-card-title>
+      </template>
+      <v-card-text>
+        <v-row>
+          <template v-for="(room, index) in rooms" v-if="!isSearchRoomsStart">
+            <v-col cols="12" sm="6" md="3">
+              <room-list-item
+                :key="index"
+                :room-id="room.id"
+                :avatar-url="room.avatarUrl"
+                :name="room.name"
+                :type="room.type"
+                :members="room.members"
+                :admin="room.admin"
+              ></room-list-item>
+            </v-col>
+          </template>
+        </v-row>
+        <v-subheader v-if="isSearchRoomNoResults">
+          <div class="flex-grow-1"></div>
+          <span>Searched room not found.</span>
+          <div class="flex-grow-1"></div>
+        </v-subheader>
+      </v-card-text>
+    </v-card>
+  </v-container>
 </template>
 
 <script>
