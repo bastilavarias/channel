@@ -36,6 +36,7 @@
             v-model="message"
             @keyup.enter="sendChat"
             autofocus
+            @click="touchMessageTextField"
           ></v-text-field>
         </v-col>
         <v-col cols="1">
@@ -162,6 +163,24 @@ export default {
       await this.$store.dispatch(FETCH_CHATS, {
         roomId: this.roomId,
         offset: 0,
+      });
+    },
+
+    touchMessageTextField() {
+      const lastChat = this.chats[this.chats.length - 1];
+      const readRecentChatParams = {
+        chatId: lastChat.id,
+        roomId: this.roomId,
+        accountId: this.currentAccount.id,
+      };
+      this.readRecentChat(readRecentChatParams);
+    },
+
+    readRecentChat({ chatId, accountId, roomId }) {
+      this.$socket.client.emit("chat_read_recent", {
+        chatId,
+        accountId,
+        roomId,
       });
     },
   },
