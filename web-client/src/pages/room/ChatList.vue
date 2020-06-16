@@ -21,11 +21,15 @@
             :type="chat.type"
             :message="chat.message"
             :createdAt="chat.createdAt"
-            :is-author-and-user-same="index % 2 === 1"
+            class-name="mb-5"
           ></chat-item>
         </template>
         <template v-for="account in typingAccounts">
-          <span :key="account.id">{{ account.name }} is typing</span>
+          <chat-list-account-typing-indicator
+            :name="account.name"
+            :avatar-url="account.avatarUrl"
+            class-name="mb-2"
+          ></chat-list-account-typing-indicator>
         </template>
       </v-container>
     </div>
@@ -73,8 +77,13 @@ import ChatItem from "../../components/ChatItem";
 import { ROOM_GET_INFORMATION } from "../../store/types/room";
 import ChatListInformationDrawer from "../../components/ChatListInformationDrawer";
 import { FETCH_CHATS, SET_TYPING_ACCOUNTS } from "../../store/types/chat";
+import ChatListAccountTypingIndicator from "../../components/ChatIListAccountTypingIndicator";
 export default {
-  components: { ChatListInformationDrawer, ChatItem },
+  components: {
+    ChatListAccountTypingIndicator,
+    ChatListInformationDrawer,
+    ChatItem,
+  },
 
   data() {
     return {

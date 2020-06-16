@@ -1,9 +1,12 @@
 <template>
-  <div class="mb-5">
+  <div :class="className">
     <template v-if="isSystemMessage">
       <div class="text-center">
         <div class="caption mb-1">{{ formatTimestamp(createdAt) }}</div>
         <v-chip>
+          <v-avatar left>
+            <v-img :src="sender.avatarUrl" :lazy-src="sender.avatarUrl"></v-img>
+          </v-avatar>
           <span>{{ message }}</span>
         </v-chip>
       </div>
@@ -88,6 +91,11 @@ export default {
     },
 
     createdAt: {
+      type: String,
+      required: true,
+    },
+
+    className: {
       type: String,
       required: true,
     },
