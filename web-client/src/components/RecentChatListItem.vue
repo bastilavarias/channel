@@ -66,11 +66,9 @@ export default {
         case "regular":
           customMessage = `${gotFirstName}: ${message}`;
           break;
-
         case "system":
           customMessage = message;
           break;
-
         default:
           customMessage = "Something went wrong.";
       }
