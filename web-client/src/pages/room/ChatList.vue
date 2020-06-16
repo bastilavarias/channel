@@ -129,6 +129,12 @@ export default {
         await this.fetchChats();
       }
     },
+
+    message(string) {
+      if (string) {
+        this.readRecentChat();
+      }
+    },
   },
 
   methods: {
