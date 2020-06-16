@@ -16,6 +16,12 @@ const chatSocket = (io, socket) => {
     const recentChats = await chatController.getRecent(accountId);
     socket.emit("chat_recent", recentChats);
   });
+
+  socket.on("chat_read_recent", async ({ chatId, accountId, roomId }) => {
+    await chatController.readRecent({ chatId, accountId, roomId });
+    const recentChats = await chatController.getRecent(accountId);
+    socket.emit("chat_recent", recentChats);
+  });
 };
 
 module.exports = chatSocket;

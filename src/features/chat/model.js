@@ -57,6 +57,7 @@ const chatModel = {
         return await Promise.all(
           result.rows.map(async (rawInformation) => {
             const chat = {};
+            chat.id = rawInformation.id;
             chat.message = rawInformation.message;
             chat.type = rawInformation.type;
             chat.createdAt = rawInformation.created_at;
@@ -70,10 +71,26 @@ const chatModel = {
               .then((result3) => result3[0]);
             chat.isRead = await knex("chat_recent")
               .select(["is_read as isRead"])
+              .where({
+                chat_id: rawInformation.id,
+                account_id: accountId,
+                room_id: rawInformation.room_id,
+              })
               .then((result4) => result4[0].isRead);
             return chat;
           })
         );
+      });
+  },
+
+  readRecent: async ({ chatId, accountId, roomId }) => {
+    console.log({ chatId, accountId, roomId });
+    return await knex(`${chatModel.tableName}_recent`)
+      .update("is_read", true)
+      .where({
+        chat_id: chatId,
+        account_id: accountId,
+        room_id: roomId,
       });
   },
 

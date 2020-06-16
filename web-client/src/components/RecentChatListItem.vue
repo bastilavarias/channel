@@ -1,5 +1,5 @@
 <template>
-  <v-list-item @click="goToRoom(chat.room.id)">
+  <v-list-item @click="openRecentChat">
     <v-list-item-avatar :size="45">
       <v-img :src="chat.room.avatarUrl" :lazy-src="chat.room.avatarUrl"></v-img>
     </v-list-item-avatar>
@@ -50,12 +50,31 @@ export default {
   },
 
   methods: {
-    goToRoom(roomId) {
-      this.$router.push({
+    async openRecentChat() {
+      const { id, room } = this.chat;
+      await this.goToRoom(room.id);
+      const readRecentChatParams = {
+        chatId: id,
+        roomId: room.id,
+        accountId: this.currentAccount.id,
+      };
+      this.readRecentChat(readRecentChatParams);
+    },
+
+    async goToRoom(roomId) {
+      await this.$router.push({
         name: "chat-list",
         params: {
           roomId,
         },
+      });
+    },
+
+    readRecentChat({ chatId, accountId, roomId }) {
+      this.$socket.client.emit("chat_read_recent", {
+        chatId,
+        accountId,
+        roomId,
       });
     },
 

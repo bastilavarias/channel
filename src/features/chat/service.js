@@ -31,6 +31,9 @@ const chatService = {
     };
   },
 
+  readRecent: async ({ chatId, accountId, roomId }) =>
+    await chatModel.readRecent({ chatId, accountId, roomId }),
+
   fetch: async (roomId, offset) => await chatModel.fetch(roomId, offset),
 };
 

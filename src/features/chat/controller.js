@@ -28,6 +28,14 @@ const chatController = {
     return chats;
   },
 
+  readRecent: async ({ chatId, accountId, roomId }) => {
+    try {
+      await chatService.readRecent({ chatId, accountId, roomId });
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
   fetch: async (req, res) => {
     try {
       const roomId = req.params.roomId;
