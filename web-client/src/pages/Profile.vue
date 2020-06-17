@@ -51,13 +51,10 @@
             <div v-else>
               <div class="mb-5">
                 <custom-label icon="mdi-source-repository"
-                  >Repositories</custom-label
+                  >Repositories({{ repositoryCount }})</custom-label
                 >
                 <v-slide-group v-model="repositoriesSlidGroupState">
-                  <template
-                    v-for="(repository,
-                    index) in githubInformation.repositories"
-                  >
+                  <template v-for="(repository, index) in sortedRepositories">
                     <profile-repository-list-slide-group-item
                       :key="index"
                       class-name="ma-1"
@@ -71,11 +68,21 @@
               </div>
               <div class="mb-5">
                 <custom-label icon="mdi-account-multiple-check"
-                  >Followers(6)</custom-label
+                  >Followers({{ followingCount }})</custom-label
                 >
                 <v-slide-group v-model="followersSlidGroupState">
-                  <template v-for="n in 3">
-                    <profile-account-list-slide-group-item class-name="ma-1">
+                  <template
+                    v-for="(account, index) in githubInformation.following"
+                  >
+                    <profile-account-list-slide-group-item
+                      class-name="ma-1"
+                      :key="index"
+                      :name="account.name"
+                      :username="account.username"
+                      :avatar-url="account.avatarUrl"
+                      :websiteUrl="account.websiteUrl"
+                      :githubUrl="account.githubUrl"
+                    >
                     </profile-account-list-slide-group-item>
                   </template>
                 </v-slide-group>
@@ -85,8 +92,18 @@
                   >Following(6)</custom-label
                 >
                 <v-slide-group v-model="followersSlidGroupState">
-                  <template v-for="n in 3">
-                    <profile-account-list-slide-group-item class-name="ma-1">
+                  <template
+                    v-for="(account, index) in githubInformation.followers"
+                  >
+                    <profile-account-list-slide-group-item
+                      class-name="ma-1"
+                      :key="index"
+                      :name="account.name"
+                      :username="account.username"
+                      :avatar-url="account.avatarUrl"
+                      :websiteUrl="account.websiteUrl"
+                      :githubUrl="account.githubUrl"
+                    >
                     </profile-account-list-slide-group-item>
                   </template>
                 </v-slide-group>
@@ -154,6 +171,23 @@ export default {
 
     breadcrumbs() {
       return this.$route.meta.breadcrumbs;
+    },
+
+    sortedRepositories() {
+      // For the mean time ...
+      return this.githubInformation.repositories;
+    },
+
+    repositoryCount() {
+      return this.githubInformation.repositories.length;
+    },
+
+    followingCount() {
+      return this.githubInformation.following.length;
+    },
+
+    followersCount() {
+      return this.githubInformation.followers.length;
     },
   },
 
