@@ -174,8 +174,11 @@ export default {
     },
 
     sortedRepositories() {
-      // For the mean time ...
-      return this.githubInformation.repositories;
+      const repositories = this.githubInformation.repositories.sort(
+        (current, next) =>
+          new Date(next.createdAt) - new Date(current.createdAt)
+      );
+      return repositories ? repositories : [];
     },
 
     repositoryCount() {
