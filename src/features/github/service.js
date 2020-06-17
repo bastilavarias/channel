@@ -38,11 +38,13 @@ const githubService = {
     const gotGithubRepositories = result.data ? result.data : [];
     return gotGithubRepositories.map((repository) => {
       return {
-        name: repository.name,
-        description: repository.description,
-        githubUrl: repository.html_url,
-        stars: repository.stargazers_count,
-        createdAt: repository.created_at,
+        name: repository.name ? repository.name : "",
+        description: repository.description ? repository.description : "",
+        githubUrl: repository.html_url ? repository.html_url : "",
+        stars: repository.stargazers_count
+          ? parseInt(repository.stargazers_count)
+          : 0,
+        createdAt: repository.created_at ? repository.created_at : "",
       };
     });
   },

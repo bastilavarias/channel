@@ -2,10 +2,10 @@
   <v-card :class="`${className}`">
     <div class="d-flex justify-space-between">
       <div>
-        <v-card-title>Repository Item ...</v-card-title>
+        <v-card-title class="text-capitalize">{{ name }}</v-card-title>
         <v-card-text>
-          <span class="d-block mb-3">
-            Repository description here ...
+          <span class="d-block mb-3 text-capitalize">
+            {{ description ? description : "No description." }}
           </span>
         </v-card-text>
       </div>
@@ -18,7 +18,7 @@
     </div>
     <v-card-actions>
       <div class="flex-grow-1"></div>
-      <v-btn small color="primary">
+      <v-btn small color="primary" :href="githubUrl" target="_blank">
         <span class="text-capitalize mr-1">Source Code</span>
         <v-icon small>mdi-xml</v-icon>
       </v-btn>
@@ -34,6 +34,26 @@ export default {
     className: {
       type: String,
       required: false,
+    },
+
+    name: {
+      type: String,
+      required: true,
+    },
+
+    description: {
+      type: String,
+      required: true,
+    },
+
+    githubUrl: {
+      type: String,
+      required: true,
+    },
+
+    stars: {
+      type: Number,
+      required: true,
     },
   },
 };

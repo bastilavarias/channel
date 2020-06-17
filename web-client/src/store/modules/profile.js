@@ -20,7 +20,6 @@ export default {
       try {
         const result = await Profile.getGithubInformation(username);
         const { information } = result.data;
-        console.log(information);
         return information;
       } catch (error) {
         console.log(error);

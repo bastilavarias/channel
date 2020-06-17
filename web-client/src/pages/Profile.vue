@@ -42,40 +42,55 @@
         </v-tabs>
         <v-tabs-items v-model="tab">
           <div class="py-10">
-            <div class="mb-5">
-              <custom-label icon="mdi-source-repository"
-                >Repositories</custom-label
-              >
-              <v-slide-group v-model="repositoriesSlidGroupState">
-                <template v-for="n in 3">
-                  <profile-repository-list-slide-group-item
-                    class="ma-1"
-                    class-name="ma-1"
-                  ></profile-repository-list-slide-group-item>
-                </template>
-              </v-slide-group>
+            <div class="text-center" v-if="isGetGithubProfileInformationStart">
+              <v-progress-circular
+                color="primary"
+                indeterminate
+              ></v-progress-circular>
             </div>
-            <div class="mb-5">
-              <custom-label icon="mdi-account-multiple-check"
-                >Followers(6)</custom-label
-              >
-              <v-slide-group v-model="followersSlidGroupState">
-                <template v-for="n in 3">
-                  <profile-account-list-slide-group-item class-name="ma-1">
-                  </profile-account-list-slide-group-item>
-                </template>
-              </v-slide-group>
-            </div>
-            <div>
-              <custom-label icon="mdi-account-multiple-plus"
-                >Following(6)</custom-label
-              >
-              <v-slide-group v-model="followersSlidGroupState">
-                <template v-for="n in 3">
-                  <profile-account-list-slide-group-item class-name="ma-1">
-                  </profile-account-list-slide-group-item>
-                </template>
-              </v-slide-group>
+            <div v-else>
+              <div class="mb-5">
+                <custom-label icon="mdi-source-repository"
+                  >Repositories</custom-label
+                >
+                <v-slide-group v-model="repositoriesSlidGroupState">
+                  <template
+                    v-for="(repository,
+                    index) in githubInformation.repositories"
+                  >
+                    <profile-repository-list-slide-group-item
+                      :key="index"
+                      class-name="ma-1"
+                      :name="repository.name"
+                      :description="repository.description"
+                      :githubUrl="repository.githubUrl"
+                      :stars="repository.stars"
+                    ></profile-repository-list-slide-group-item>
+                  </template>
+                </v-slide-group>
+              </div>
+              <div class="mb-5">
+                <custom-label icon="mdi-account-multiple-check"
+                  >Followers(6)</custom-label
+                >
+                <v-slide-group v-model="followersSlidGroupState">
+                  <template v-for="n in 3">
+                    <profile-account-list-slide-group-item class-name="ma-1">
+                    </profile-account-list-slide-group-item>
+                  </template>
+                </v-slide-group>
+              </div>
+              <div>
+                <custom-label icon="mdi-account-multiple-plus"
+                  >Following(6)</custom-label
+                >
+                <v-slide-group v-model="followersSlidGroupState">
+                  <template v-for="n in 3">
+                    <profile-account-list-slide-group-item class-name="ma-1">
+                    </profile-account-list-slide-group-item>
+                  </template>
+                </v-slide-group>
+              </div>
             </div>
           </div>
         </v-tabs-items>
@@ -118,7 +133,15 @@ export default {
         avatarUrl: "",
       },
       isGetBasicProfileInformationStart: false,
-      githubInformation: {},
+      githubInformation: {
+        bio: "",
+        email: "",
+        followers: [],
+        following: [],
+        githubUrl: "",
+        repositories: [],
+        websiteUrl: "",
+      },
       isGetGithubProfileInformationStart: false,
     };
   },
@@ -145,12 +168,12 @@ export default {
     },
 
     async getGithubInformation() {
-      this.isGetGitHubProfileInformationStart = true;
+      this.isGetGithubProfileInformationStart = true;
       this.githubInformation = await this.$store.dispatch(
         GET_GITHUB_PROFILE_INFORMATION,
         this.username
       );
-      this.isGetGitHubProfileInformationStart = false;
+      this.isGetGithubProfileInformationStart = false;
     },
   },
 
