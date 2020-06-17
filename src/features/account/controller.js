@@ -15,7 +15,10 @@ const accountController = {
   checkCurrent: async (req, res) => {
     try {
       const account = req.user;
-      const result = await accountService.checkCurrent(account);
+      const result = await accountService.checkCurrent(
+        account.id,
+        account.githubToken
+      );
       res.status(200).json(result);
     } catch (error) {
       console.log(error);

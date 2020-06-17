@@ -45,7 +45,7 @@ const accountService = {
     };
   },
 
-  checkCurrent: async ({ id, githubToken }) => {
+  checkCurrent: async (id, githubToken) => {
     const getRawAccountParams = {
       tableName: "account",
       columnName: "id",
