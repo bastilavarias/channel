@@ -50,6 +50,27 @@
             </div>
             <div v-else>
               <div class="mb-5">
+                <custom-label icon="mdi-web">Website</custom-label>
+                <h1 class="body-2 primary--text">
+                  <a
+                    :href="githubInformation.websiteUrl"
+                    v-if="githubInformation.websiteUrl"
+                    >{{ githubInformation.websiteUrl }}</a
+                  >
+                  <span v-else>No website included.</span>
+                </h1>
+              </div>
+              <div class="mb-5">
+                <custom-label>Bio</custom-label>
+                <h1 class="body-2 primary--text">
+                  {{
+                    githubInformation.bio
+                      ? githubInformation.bio
+                      : "No bio included."
+                  }}
+                </h1>
+              </div>
+              <div class="mb-5">
                 <custom-label icon="mdi-source-repository"
                   >Repositories({{ repositoryCount }})</custom-label
                 >
