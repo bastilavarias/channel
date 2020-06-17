@@ -45,7 +45,7 @@
 
 <script>
 export default {
-  name: "profile-github-account-list-slide-group-item",
+  name: "profile-account-list-slide-group-item",
 
   props: {
     className: {

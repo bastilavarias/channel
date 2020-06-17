@@ -64,20 +64,17 @@ const routes = [
 
       {
         path: "profile/:username",
-        component: () => import("../pages/profile/index"),
-        children: [
-          {
-            path: "",
-            name: "profile-github",
-            component: () => import("../pages/profile/GitHub"),
-          },
-
-          {
-            path: "about",
-            name: "profile-about",
-            component: () => import("../pages/profile/About"),
-          },
-        ],
+        name: "profile",
+        component: () => import("../pages/Profile"),
+        meta: {
+          breadcrumbs: [
+            {
+              text: "Profile",
+              icon: "mdi-github",
+              to: { name: "profile" },
+            },
+          ],
+        },
       },
     ],
   },

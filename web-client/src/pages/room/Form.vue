@@ -14,7 +14,6 @@
               v-model="form.name"
             ></v-text-field>
           </v-col>
-
           <v-col cols="12">
             <v-textarea
               label="Room Description"
