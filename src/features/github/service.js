@@ -35,21 +35,54 @@ const githubService = {
     const url = `https://api.github.com/users/${username}/repos`;
     axios.defaults.headers.common["Authorization"] = `token ${token}`;
     const result = await axios.get(url);
-    return result.data;
+    const gotGithubRepositories = result.data ? result.data : [];
+    return gotGithubRepositories.map((repository) => {
+      return {
+        name: repository.name,
+        description: repository.description,
+        githubUrl: repository.html_url,
+        stars: repository.stargazers_count,
+        createdAt: repository.created_at,
+      };
+    });
   },
 
   getUserFollowing: async (username, token) => {
     const url = `https://api.github.com/users/${username}/following`;
     axios.defaults.headers.common["Authorization"] = `token ${token}`;
     const result = await axios.get(url);
-    return result.data;
+    const gotGithubFollowings = result.data ? result.data : [];
+    return await Promise.all(
+      gotGithubFollowings.map(async (account) => {
+        const gotGithubUser = await githubService.getUser(account.login, token);
+        return {
+          name: gotGithubUser.name ? gotGithubUser.name : "",
+          username: gotGithubUser.login ? gotGithubUser.login : "",
+          avatarUrl: gotGithubUser.avatar_url ? gotGithubUser.avatar_url : "",
+          websiteUrl: gotGithubUser.blog ? gotGithubUser.blog : "",
+          githubUrl: gotGithubUser.html_url ? gotGithubUser.html_url : "",
+        };
+      })
+    );
   },
 
   getUserFollowers: async (username, token) => {
     const url = `https://api.github.com/users/${username}/followers`;
     axios.defaults.headers.common["Authorization"] = `token ${token}`;
     const result = await axios.get(url);
-    return result.data;
+    const gotGithubFollowers = result.data ? result.data : [];
+    return await Promise.all(
+      gotGithubFollowers.map(async (account) => {
+        const gotGithubUser = await githubService.getUser(account.login, token);
+        return {
+          name: gotGithubUser.name ? gotGithubUser.name : "",
+          username: gotGithubUser.login ? gotGithubUser.login : "",
+          avatarUrl: gotGithubUser.avatar_url ? gotGithubUser.avatar_url : "",
+          websiteUrl: gotGithubUser.blog ? gotGithubUser.blog : "",
+          githubUrl: gotGithubUser.html_url ? gotGithubUser.html_url : "",
+        };
+      })
+    );
   },
 };
 
