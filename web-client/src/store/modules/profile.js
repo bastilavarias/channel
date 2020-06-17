@@ -1,4 +1,7 @@
-import { GET_BASIC_PROFILE_INFORMATION } from "../types/profile";
+import {
+  GET_BASIC_PROFILE_INFORMATION,
+  GET_GITHUB_PROFILE_INFORMATION,
+} from "../types/profile";
 import { Profile } from "../../common/apiService";
 
 export default {
@@ -7,6 +10,17 @@ export default {
       try {
         const result = await Profile.getBasicInformation(username);
         const { information } = result.data;
+        return information;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    [GET_GITHUB_PROFILE_INFORMATION]: async ({ commit }, username) => {
+      try {
+        const result = await Profile.getGithubInformation(username);
+        const { information } = result.data;
+        console.log(information);
         return information;
       } catch (error) {
         console.log(error);

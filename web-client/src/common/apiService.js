@@ -60,4 +60,7 @@ export const Chat = {
 export const Profile = {
   getBasicInformation: (username) =>
     apiService.get(`/profile/basic-information/${username}`),
+
+  getGithubInformation: (username) =>
+    apiService.get(`/profile/github-information/${username}`),
 };

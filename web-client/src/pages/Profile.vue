@@ -89,7 +89,10 @@ import ProfileRepositoryListSlideGroupItem from "../components/ProfileRepository
 import ProfileAccountListSlideGroupItem from "../components/ProfileAccountListSlideGroupItem";
 import CustomBreadcrumbs from "../components/custom/Breadcrumbs";
 import CustomLabel from "../components/custom/Label";
-import { GET_BASIC_PROFILE_INFORMATION } from "../store/types/profile";
+import {
+  GET_BASIC_PROFILE_INFORMATION,
+  GET_GITHUB_PROFILE_INFORMATION,
+} from "../store/types/profile";
 
 export default {
   components: {
@@ -115,6 +118,8 @@ export default {
         avatarUrl: "",
       },
       isGetBasicProfileInformationStart: false,
+      githubInformation: {},
+      isGetGithubProfileInformationStart: false,
     };
   },
 
@@ -138,10 +143,20 @@ export default {
       );
       this.isGetBasicProfileInformationStart = false;
     },
+
+    async getGithubInformation() {
+      this.isGetGitHubProfileInformationStart = true;
+      this.githubInformation = await this.$store.dispatch(
+        GET_GITHUB_PROFILE_INFORMATION,
+        this.username
+      );
+      this.isGetGitHubProfileInformationStart = false;
+    },
   },
 
   async created() {
     await this.getBasicInformation();
+    await this.getGithubInformation();
   },
 };
 </script>

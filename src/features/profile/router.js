@@ -9,4 +9,10 @@ router.get(
   profileController.getBasicInformation
 );
 
+router.get(
+  "/github-information/:username",
+  passport.authenticate("jwt", { session: false }),
+  profileController.getGithubInformation
+);
+
 module.exports = router;
