@@ -85,7 +85,7 @@
                 <custom-label icon="mdi-source-repository"
                   >Repositories({{ repositoryCount }})</custom-label
                 >
-                <v-slide-group v-model="repositoriesSlidGroupState">
+                <v-slide-group v-model="repositoriesSlidGroupState" show-arrows>
                   <template v-for="(repository, index) in sortedRepositories">
                     <profile-repository-list-slide-group-item
                       :key="index"
@@ -102,7 +102,7 @@
                 <custom-label icon="mdi-account-multiple-check"
                   >Followers({{ followingCount }})</custom-label
                 >
-                <v-slide-group v-model="followersSlidGroupState">
+                <v-slide-group v-model="followersSlidGroupState" show-arrows>
                   <template
                     v-for="(account, index) in githubInformation.following"
                   >
@@ -123,7 +123,7 @@
                 <custom-label icon="mdi-account-multiple-plus"
                   >Following(6)</custom-label
                 >
-                <v-slide-group v-model="followersSlidGroupState">
+                <v-slide-group v-model="followersSlidGroupState" show-arrows>
                   <template
                     v-for="(account, index) in githubInformation.followers"
                   >

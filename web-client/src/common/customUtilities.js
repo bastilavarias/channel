@@ -32,7 +32,7 @@ export default {
     },
 
     truncate(string) {
-      const truncatedString = string.slice(0, 50);
+      const truncatedString = string.slice(0, 100);
       return truncatedString
         ? `${truncatedString}...`
         : "Something went wrong.";

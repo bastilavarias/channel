@@ -1,8 +1,10 @@
 <template>
-  <v-card :class="`${className}`">
+  <v-card :class="`${className}`" min-width="400">
     <div class="d-flex justify-space-between">
       <div>
-        <v-card-title class="text-capitalize">{{ name }}</v-card-title>
+        <v-card-title class="text-capitalize">{{
+          name ? name : "No name."
+        }}</v-card-title>
         <v-card-text>
           <span class="d-block mb-3 text-capitalize">
             {{ description ? truncate(description) : "No description." }}
