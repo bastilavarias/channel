@@ -46,7 +46,11 @@
               <v-progress-circular
                 color="primary"
                 indeterminate
+                class="mb-3"
               ></v-progress-circular>
+              <h1 class="caption primary--text">
+                Fetching data from GitHub server, Please wait...
+              </h1>
             </div>
             <div v-else>
               <div class="mb-5">
