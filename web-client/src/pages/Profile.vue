@@ -54,10 +54,21 @@
                 <h1 class="body-2 primary--text">
                   <a
                     :href="githubInformation.websiteUrl"
+                    target="_blank"
                     v-if="githubInformation.websiteUrl"
                     >{{ githubInformation.websiteUrl }}</a
                   >
                   <span v-else>No website included.</span>
+                </h1>
+              </div>
+              <div class="mb-5">
+                <custom-label icon="mdi-email">E-Mail</custom-label>
+                <h1 class="body-2 primary--text">
+                  {{
+                    githubInformation.email
+                      ? githubInformation.email
+                      : "No E-Mail included."
+                  }}
                 </h1>
               </div>
               <div class="mb-5">
