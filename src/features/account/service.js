@@ -10,14 +10,16 @@ const accountService = {
     const gotGithubAuthenticatedUser = await githubService.getAuthenticatedUser(
       gotGithubToken
     );
-    const getRawAccountParams = {
+    const getSingleAccountParams = {
       tableName: "account",
       columnName: "username",
       columnValue: gotGithubAuthenticatedUser.login,
       targetColumns: ["*"],
     };
-    const gotRawAccount = await helperService.getSingle(getRawAccountParams);
-    const isGotAccountEmpty = Object.keys(gotRawAccount).length === 0;
+    const gotSingleAccount = await helperService.getSingle(
+      getSingleAccountParams
+    );
+    const isGotAccountEmpty = Object.keys(gotSingleAccount).length === 0;
     if (isGotAccountEmpty) {
       await accountModel.save({
         id: gotGithubAuthenticatedUser.id,
@@ -46,15 +48,17 @@ const accountService = {
   },
 
   checkCurrent: async (id, githubToken) => {
-    const getRawAccountParams = {
+    const getSingleAccountParams = {
       tableName: "account",
       columnName: "id",
       columnValue: id,
       targetColumns: ["id", "name", "username", "avatar_url as avatarUrl"],
     };
-    const gotRawAccount = await helperService.getSingle(getRawAccountParams);
+    const gotSingleAccount = await helperService.getSingle(
+      getSingleAccountParams
+    );
     const tokenCredentials = {
-      ...gotRawAccount,
+      ...gotSingleAccount,
       githubToken,
     };
     const jsonToken = jsonWebToken.sign(
