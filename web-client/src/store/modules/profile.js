@@ -3,9 +3,9 @@ import { Profile } from "../../common/apiService";
 
 export default {
   actions: {
-    [GET_BASIC_PROFILE_INFORMATION]: ({ commit }, username) => {
+    [GET_BASIC_PROFILE_INFORMATION]: async ({ commit }, username) => {
       try {
-        const result = Profile.getBasicInformation(username);
+        const result = await Profile.getBasicInformation(username);
         const { information } = result.data;
         return information;
       } catch (error) {

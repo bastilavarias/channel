@@ -4,7 +4,6 @@ const profileController = {
   getBasicInformation: async (req, res) => {
     try {
       const username = req.params.username;
-      console.log(username);
       const result = await profileService.getBasicInformation(username);
       res.status(200).json(result);
     } catch (error) {

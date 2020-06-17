@@ -11,6 +11,9 @@ const profileService = {
     const gotSingleAccount = await helperService.getSingle(
       getSingleAccountParams
     );
+    return {
+      information: gotSingleAccount,
+    };
   },
 };
 

@@ -4,10 +4,14 @@
     <v-row>
       <v-col cols="12" md="2">
         <div class="mb-10">
-          <v-avatar color="primary" tile size="100%" height="100%">
+          <v-skeleton-loader
+            type="image"
+            v-if="isGetBasicProfileInformationStart"
+          ></v-skeleton-loader>
+          <v-avatar color="primary" tile size="100%" height="100%" v-else>
             <v-img
-              :src="currentAccount.avatarUrl"
-              :lazy-src="currentAccount.avatarUrl"
+              :src="basicInformation.avatarUrl"
+              :lazy-src="basicInformation.avatarUrl"
             ></v-img>
           </v-avatar>
         </div>
@@ -15,10 +19,14 @@
       </v-col>
       <v-col cols="12" md="9">
         <div class="flex-grow-1 mb-10">
-          <div>
-            <h2>{{ currentAccount.name }}</h2>
+          <v-skeleton-loader
+            type="list-item-two-line"
+            v-if="isGetBasicProfileInformationStart"
+          ></v-skeleton-loader>
+          <div v-else>
+            <h2>{{ basicInformation.name }}</h2>
             <h3 class="primary--text font-weight-bold">
-              {{ currentAccount.username }}
+              {{ basicInformation.username }}
             </h3>
           </div>
         </div>
@@ -82,6 +90,7 @@ import ProfileAccountListSlideGroupItem from "../components/ProfileAccountListSl
 import CustomBreadcrumbs from "../components/custom/Breadcrumbs";
 import CustomLabel from "../components/custom/Label";
 import { GET_BASIC_PROFILE_INFORMATION } from "../store/types/profile";
+
 export default {
   components: {
     CustomLabel,
@@ -100,15 +109,16 @@ export default {
       ],
       repositoriesSlidGroupState: null,
       followersSlidGroupState: null,
+      basicInformation: {
+        name: "",
+        username: "",
+        avatarUrl: "",
+      },
+      isGetBasicProfileInformationStart: false,
     };
   },
 
   computed: {
-    currentAccount() {
-      const account = this.$store.state.account.current;
-      return account ? account : {};
-    },
-
     username() {
       const username = this.$route.params.username;
       return username ? username : "";
@@ -119,8 +129,19 @@ export default {
     },
   },
 
-  created() {
-    this.$store.dispatch(GET_BASIC_PROFILE_INFORMATION, this.username);
+  methods: {
+    async getBasicInformation() {
+      this.isGetBasicProfileInformationStart = true;
+      this.basicInformation = await this.$store.dispatch(
+        GET_BASIC_PROFILE_INFORMATION,
+        this.username
+      );
+      this.isGetBasicProfileInformationStart = false;
+    },
+  },
+
+  async created() {
+    await this.getBasicInformation();
   },
 };
 </script>
