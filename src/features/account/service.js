@@ -7,36 +7,33 @@ const jsonWebToken = require("jsonwebtoken");
 const accountService = {
   login: async (code) => {
     const gotGithubToken = await githubService.getToken(code);
-    const {
-      id,
-      login,
-      node_id,
-      name,
-      avatar_url,
-    } = await githubService.getAuthenticatedUser(gotGithubToken);
-    const gotRawAccount = await helperService.getSingle(
-      "account",
-      "username",
-      login,
-      ["*"]
+    const gotGithubAuthenticatedUser = await githubService.getAuthenticatedUser(
+      gotGithubToken
     );
+    const getRawAccountParams = {
+      tableName: "account",
+      columnName: "username",
+      columnValue: gotGithubAuthenticatedUser.login,
+      targetColumns: ["*"],
+    };
+    const gotRawAccount = await helperService.getSingle(getRawAccountParams);
     const isGotAccountEmpty = Object.keys(gotRawAccount).length === 0;
     if (isGotAccountEmpty) {
       await accountModel.save({
-        id,
-        username: login,
-        nodeId: node_id,
-        name,
-        avatarUrl: avatar_url,
+        id: gotGithubAuthenticatedUser.id,
+        username: gotGithubAuthenticatedUser.login,
+        nodeId: gotGithubAuthenticatedUser.node_id,
+        name: gotGithubAuthenticatedUser.name,
+        avatarUrl: gotGithubAuthenticatedUser.avatar_url,
         createdAt: utilityService.timestamp(),
       });
     }
     const tokenCredentials = {
-      id,
-      username: login,
-      nodeId: node_id,
-      name,
-      avatarUrl: avatar_url,
+      id: gotGithubAuthenticatedUser.id,
+      username: gotGithubAuthenticatedUser.login,
+      nodeId: gotGithubAuthenticatedUser.node_id,
+      name: gotGithubAuthenticatedUser.name,
+      avatarUrl: gotGithubAuthenticatedUser.avatar_url,
       githubToken: gotGithubToken,
     };
     const jsonToken = jsonWebToken.sign(
@@ -49,15 +46,15 @@ const accountService = {
   },
 
   checkCurrent: async ({ id, githubToken }) => {
-    const gotRawAccount = await helperService.getSingle("account", "id", id, [
-      "*",
-    ]);
+    const getRawAccountParams = {
+      tableName: "account",
+      columnName: "id",
+      columnValue: id,
+      targetColumns: ["id", "name", "username", "avatar_url as avatarUrl"],
+    };
+    const gotRawAccount = await helperService.getSingle(getRawAccountParams);
     const tokenCredentials = {
-      id: gotRawAccount.id,
-      username: gotRawAccount.username,
-      nodeId: gotRawAccount.node_id,
-      name: gotRawAccount.name,
-      avatarUrl: gotRawAccount.avatar_url,
+      ...gotRawAccount,
       githubToken,
     };
     const jsonToken = jsonWebToken.sign(

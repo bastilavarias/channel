@@ -2,7 +2,7 @@ const knex = require("../../db/knex");
 const bcrypt = require("bcryptjs");
 
 const helperService = {
-  getSingle: async (tableName, columnName, columnValue, targetColumns) => {
+  getSingle: async ({ tableName, columnName, columnValue, targetColumns }) => {
     return await knex
       .select(targetColumns)
       .from(tableName)
