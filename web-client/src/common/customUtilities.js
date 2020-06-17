@@ -30,6 +30,13 @@ export default {
     hasError(error) {
       return Object.keys(error).length > 0;
     },
+
+    truncate(string) {
+      const truncatedString = string.slice(0, 50);
+      return truncatedString
+        ? `${truncatedString}...`
+        : "Something went wrong.";
+    },
   },
 
   mounted() {

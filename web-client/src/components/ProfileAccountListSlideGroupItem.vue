@@ -11,7 +11,7 @@
               username
             }}</v-list-item-subtitle>
             <v-list-item-title class="text-capitalize">{{
-              name
+              name ? name : username
             }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>

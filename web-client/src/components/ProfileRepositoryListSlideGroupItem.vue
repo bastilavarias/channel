@@ -5,7 +5,7 @@
         <v-card-title class="text-capitalize">{{ name }}</v-card-title>
         <v-card-text>
           <span class="d-block mb-3 text-capitalize">
-            {{ description ? description : "No description." }}
+            {{ description ? truncate(description) : "No description." }}
           </span>
         </v-card-text>
       </div>
@@ -27,6 +27,8 @@
 </template>
 
 <script>
+import customUtilities from "../common/customUtilities";
+
 export default {
   name: "profile-repository-list-slide-group-item",
 
@@ -56,5 +58,7 @@ export default {
       required: true,
     },
   },
+
+  mixins: [customUtilities],
 };
 </script>
