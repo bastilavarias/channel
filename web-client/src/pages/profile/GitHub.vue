@@ -10,14 +10,23 @@
         </template>
       </v-slide-group>
     </div>
-
-    <div>
-      <custom-label icon="mdi-account-multiple-check">Followers</custom-label>
+    <div class="mb-5">
+      <custom-label icon="mdi-account-multiple-check"
+        >Followers(6)</custom-label
+      >
       <v-slide-group v-model="followersSlidGroupState">
         <template v-for="n in 3">
-          <profile-github-follower-list-slide-group-item
-            class-name="ma-1"
-          ></profile-github-follower-list-slide-group-item>
+          <profile-github-account-list-slide-group-item class-name="ma-1">
+          </profile-github-account-list-slide-group-item>
+        </template>
+      </v-slide-group>
+    </div>
+    <div>
+      <custom-label icon="mdi-account-multiple-plus">Following(6)</custom-label>
+      <v-slide-group v-model="followersSlidGroupState">
+        <template v-for="n in 3">
+          <profile-github-account-list-slide-group-item class-name="ma-1">
+          </profile-github-account-list-slide-group-item>
         </template>
       </v-slide-group>
     </div>
@@ -27,10 +36,10 @@
 <script>
 import CustomLabel from "../../components/custom/Label";
 import ProfileGithubRepositoryListSlideGroupItem from "../../components/ProfileGitHubRepositoryListSlideGroupItem";
-import ProfileGithubFollowerListSlideGroupItem from "../../components/ProfileGitHubFollowerListSlideGroupItem";
+import ProfileGithubAccountListSlideGroupItem from "../../components/ProfileGitHubAccountListSlideGroupItem";
 export default {
   components: {
-    ProfileGithubFollowerListSlideGroupItem,
+    ProfileGithubAccountListSlideGroupItem,
     ProfileGithubRepositoryListSlideGroupItem,
     CustomLabel,
   },
