@@ -28,7 +28,7 @@
 
 <script>
 export default {
-  name: "profile-github-repository-item",
+  name: "profile-github-repository-list-slide-group-item",
 
   props: {
     className: {
