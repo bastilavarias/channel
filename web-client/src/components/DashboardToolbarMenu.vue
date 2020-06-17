@@ -37,7 +37,7 @@ export default {
 
     goToProfile() {
       const { username } = this.currentAccount;
-      this.$router.push({ name: "profile", params: { username } });
+      this.$router.push({ name: "profile-github", params: { username } });
     },
   },
 };

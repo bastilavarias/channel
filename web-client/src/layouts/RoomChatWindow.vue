@@ -36,5 +36,11 @@ export default {
       return account ? account : {};
     },
   },
+
+  sockets: {
+    chat_recent_refresh() {
+      this.$socket.client.emit("chat_recent", this.currentAccount.id);
+    },
+  },
 };
 </script>

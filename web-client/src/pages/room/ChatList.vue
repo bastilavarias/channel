@@ -236,12 +236,6 @@ export default {
     await this.fetchChats();
     this.clearTypingAccounts();
   },
-
-  sockets: {
-    chat_recent_refresh() {
-      this.$socket.client.emit("chat_recent", this.currentAccount.id);
-    },
-  },
 };
 </script>
 
