@@ -81,6 +81,7 @@ import ProfileRepositoryListSlideGroupItem from "../components/ProfileRepository
 import ProfileAccountListSlideGroupItem from "../components/ProfileAccountListSlideGroupItem";
 import CustomBreadcrumbs from "../components/custom/Breadcrumbs";
 import CustomLabel from "../components/custom/Label";
+import { GET_BASIC_PROFILE_INFORMATION } from "../store/types/profile";
 export default {
   components: {
     CustomLabel,
@@ -108,9 +109,18 @@ export default {
       return account ? account : {};
     },
 
+    username() {
+      const username = this.$route.params.username;
+      return username ? username : "";
+    },
+
     breadcrumbs() {
       return this.$route.meta.breadcrumbs;
     },
+  },
+
+  created() {
+    this.$store.dispatch(GET_BASIC_PROFILE_INFORMATION, this.username);
   },
 };
 </script>

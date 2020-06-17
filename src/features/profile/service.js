@@ -1,7 +1,7 @@
 const helperService = require("../helper/service");
 
 const profileService = {
-  getInformation: async (username) => {
+  getBasicInformation: async (username) => {
     const getSingleAccountParams = {
       tableName: "account",
       columnName: "username",
@@ -13,3 +13,5 @@ const profileService = {
     );
   },
 };
+
+module.exports = profileService;
