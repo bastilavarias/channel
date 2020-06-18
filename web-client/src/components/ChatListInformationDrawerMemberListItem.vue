@@ -1,5 +1,5 @@
 <template>
-  <v-list-item>
+  <v-list-item two-line>
     <v-list-item-avatar :size="45">
       <v-img :src="avatarUrl" :lazy-src="avatarUrl"></v-img>
     </v-list-item-avatar>
@@ -9,9 +9,20 @@
           name ? name : username
         }}</span>
       </v-list-item-title>
-      <v-list-item-subtitle>{{
-        username ? username : ""
-      }}</v-list-item-subtitle>
+      <v-list-item-subtitle
+        >{{ username ? username : "" }}
+        <span
+          :title="`${admin.name} is the admin of this room.`"
+          v-if="isMemberAdmin"
+        >
+          <v-avatar :size="35">
+            <v-img
+              src="../assets/icons8/shield.png"
+              lazy-src="../assets/icons8/shield.png"
+            ></v-img>
+          </v-avatar>
+        </span>
+      </v-list-item-subtitle>
     </v-list-item-content>
     <v-list-item-action>
       <v-menu offset-y>
@@ -22,6 +33,7 @@
         </template>
         <v-list dense>
           <v-list-item @click="goToProfile">Profile</v-list-item>
+          <v-list-item v-if="!isCurrentAccountAdmin">Remove</v-list-item>
         </v-list>
       </v-menu>
     </v-list-item-action>
@@ -33,6 +45,11 @@ export default {
   name: "chat-list-information-drawer-member-list-item",
 
   props: {
+    admin: {
+      type: Object,
+      required: true,
+    },
+
     memberId: {
       type: Number,
       required: true,
@@ -51,6 +68,26 @@ export default {
     avatarUrl: {
       type: String,
       required: true,
+    },
+  },
+
+  computed: {
+    currentAccount() {
+      const account = this.$store.state.account.current;
+      return account ? account : {};
+    },
+
+    isMemberAdmin() {
+      return this.admin.id === this.memberId;
+    },
+
+    isCurrentAccountAdmin() {
+      let isCurrentAccountAdmin = false;
+      const isMemberAdmin = this.memberId === this.admin.id;
+      if (isMemberAdmin) {
+        isCurrentAccountAdmin = this.memberId === this.currentAccount.id;
+      }
+      return isCurrentAccountAdmin;
     },
   },
 

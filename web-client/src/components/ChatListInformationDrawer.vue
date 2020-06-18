@@ -44,23 +44,6 @@
             </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-
-        <v-list-item>
-          <v-list-item-content>
-            <v-list-item-subtitle class="mb-1">Admin</v-list-item-subtitle>
-            <v-list-item-title>
-              <div class="d-flex align-center">
-                <v-avatar :size="30" class="mr-2">
-                  <v-img
-                    :src="admin.avatarUrl"
-                    :lazy-src="admin.avatarUrl"
-                  ></v-img>
-                </v-avatar>
-                <span class="text-capitalize">{{ admin.name }}</span>
-              </div>
-            </v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
       </v-list>
 
       <v-card-title class="font-weight-bold">Members</v-card-title>
@@ -69,6 +52,7 @@
         <template v-for="(member, index) in members">
           <chat-list-information-drawer-member-list-item
             :key="index"
+            :admin="admin"
             :member-id="member.id"
             :name="member.name"
             :username="member.username"
