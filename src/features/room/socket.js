@@ -24,6 +24,8 @@ const roomSocket = (io, socket) => {
     });
     io.to(sentBotChatDetails.room.id).emit("chat_send", sentBotChatDetails);
     io.emit("chat_recent_refresh");
+    const roomMembers = await roomController.getMembers(roomId);
+    io.to(roomId).emit("room_members", roomMembers);
   });
 
   socket.on("room_members", async (roomId) => {
@@ -45,6 +47,8 @@ const roomSocket = (io, socket) => {
     socket.to(roomId).emit("room_remove", accountId);
     io.to(sentBotChatDetails.room.id).emit("chat_send", sentBotChatDetails);
     io.emit("chat_recent_refresh");
+    const roomMembers = await roomController.getMembers(roomId);
+    io.to(roomId).emit("room_members", roomMembers);
   });
 };
 

@@ -213,7 +213,6 @@ export default {
           accountId: this.currentAccount.id,
         };
         this.$socket.client.emit("room_leave", roomLeavePayload);
-        this.$socket.client.emit("room_members", this.roomId);
         await this.$router.push({ name: "room-list" });
       }
     },
