@@ -54,6 +54,11 @@ export default {
       required: true,
     },
 
+    roomId: {
+      type: String,
+      required: true,
+    },
+
     memberId: {
       type: Number,
       required: true,
@@ -99,7 +104,11 @@ export default {
     },
 
     removeMember() {
-      console.log(this.memberId);
+      const roomRemovePayload = {
+        roomId: this.roomId,
+        accountId: this.memberId,
+      };
+      this.$socket.client.emit("room_remove", roomRemovePayload);
     },
   },
 };

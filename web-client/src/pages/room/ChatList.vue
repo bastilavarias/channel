@@ -85,6 +85,21 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <v-dialog width="500" v-model="isRemovedAlertDialogShow">
+      <v-card>
+        <v-card-title>You've been removed</v-card-title>
+        <v-card-text>
+          <v-alert text type="error">
+            Sorry, {{ information.admin.name }} removed you in
+            {{ information.name }} room.
+          </v-alert>
+        </v-card-text>
+        <v-card-actions>
+          <div class="flex-grow-1"></div>
+          <v-btn color="error" :to="{ name: 'room-list' }">Ok</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </section>
 </template>
 
@@ -117,6 +132,7 @@ export default {
       },
       isGetInformationStart: false,
       isDestroyedRoomAlertDialogShow: false,
+      isRemovedAlertDialogShow: false,
     };
   },
 
@@ -261,6 +277,16 @@ export default {
         this.isDestroyedRoomAlertDialogShow = false;
         this.$router.push({ name: "room-list" });
       }, 5000);
+    },
+
+    room_remove(accountId) {
+      if (this.currentAccount.id === accountId) {
+        this.isRemovedAlertDialogShow = true;
+        setTimeout(() => {
+          this.isRemovedAlertDialogShow = false;
+          this.$router.push({ name: "room-list" });
+        }, 5000);
+      }
     },
   },
 };

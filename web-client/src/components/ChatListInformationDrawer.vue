@@ -53,6 +53,7 @@
           <chat-list-information-drawer-member-list-item
             :key="index"
             :admin="admin"
+            :room-id="roomId"
             :member-id="member.id"
             :name="member.name"
             :username="member.username"

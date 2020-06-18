@@ -36,6 +36,12 @@ const roomSocket = (io, socket) => {
     socket.to(roomId).emit("room_destroy");
     io.emit("chat_recent_refresh");
   });
+
+  socket.on("room_remove", async ({ roomId, accountId }) => {
+    console.log({ roomId, accountId });
+    socket.to(roomId).emit("room_remove", accountId);
+    io.emit("chat_recent_refresh");
+  });
 };
 
 module.exports = roomSocket;
