@@ -1,5 +1,6 @@
 const { serverInstance } = require("./application");
 
-serverInstance.listen(3000 || process.env.PORT, () =>
-  console.log(`Server is running...`)
+const PORT = process.env.PORT || 3000;
+serverInstance.listen(PORT, () =>
+  console.log(`Server is running at PORT ${PORT}`)
 );
