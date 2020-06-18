@@ -67,27 +67,12 @@
       <v-card-subtitle>{{ membersTitle }} </v-card-subtitle>
       <v-list>
         <template v-for="(member, index) in members">
-          <v-list-item :key="index">
-            <v-list-item-avatar :size="45">
-              <v-img
-                :src="member.avatarUrl"
-                :lazy-src="member.avatarUrl"
-              ></v-img>
-            </v-list-item-avatar>
-            <v-list-item-content>
-              <v-list-item-title>
-                <span class="font-weight-bold text-capitalize">{{
-                  member.name
-                }}</span>
-              </v-list-item-title>
-              <v-list-item-subtitle>{{ member.username }}</v-list-item-subtitle>
-            </v-list-item-content>
-            <v-list-item-action>
-              <v-btn icon>
-                <v-icon>mdi-dots-vertical</v-icon>
-              </v-btn>
-            </v-list-item-action>
-          </v-list-item>
+          <chat-list-information-drawer-member-list-item
+            :key="index"
+            :name="member.name"
+            :username="member.username"
+            :avatar-url="member.avatarUrl"
+          ></chat-list-information-drawer-member-list-item>
         </template>
       </v-list>
     </v-card>
@@ -106,9 +91,10 @@
 </template>
 
 <script>
+import ChatListInformationDrawerMemberListItem from "./ChatListInformationDrawerMemberListItem";
 export default {
   name: "chat-list-information-drawer",
-
+  components: { ChatListInformationDrawerMemberListItem },
   props: {
     name: {
       type: String,
