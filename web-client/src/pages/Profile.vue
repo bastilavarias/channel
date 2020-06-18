@@ -104,7 +104,7 @@
               </div>
               <div class="mb-5">
                 <custom-label icon="mdi-account-multiple-check"
-                  >Followers({{ followingCount }})</custom-label
+                  >Followers({{ followersCount }})</custom-label
                 >
                 <v-slide-group v-model="followersSlidGroupState" show-arrows>
                   <template
@@ -125,7 +125,7 @@
               </div>
               <div>
                 <custom-label icon="mdi-account-multiple-plus"
-                  >Following(6)</custom-label
+                  >Following({{ followingCount }})</custom-label
                 >
                 <v-slide-group v-model="followersSlidGroupState" show-arrows>
                   <template
