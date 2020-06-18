@@ -69,6 +69,7 @@
         <template v-for="(member, index) in members">
           <chat-list-information-drawer-member-list-item
             :key="index"
+            :member-id="member.id"
             :name="member.name"
             :username="member.username"
             :avatar-url="member.avatarUrl"
