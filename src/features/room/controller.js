@@ -108,6 +108,17 @@ const roomController = {
       res.status(400).json(error);
     }
   },
+
+  destroy: async (req, res) => {
+    try {
+      const roomId = req.body.roomId;
+      const result = await roomService.destroy(roomId);
+      res.status(200).json(result);
+    } catch (error) {
+      console.log(error);
+      res.status(400).json(error);
+    }
+  },
 };
 
 module.exports = roomController;

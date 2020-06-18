@@ -39,4 +39,10 @@ router.post(
   roomController.leave
 );
 
+router.delete(
+  "/destroy",
+  passport.authenticate("jwt", { session: false }),
+  roomController.destroy
+);
+
 module.exports = router;

@@ -174,10 +174,22 @@ const roomModel = {
       });
   },
 
+  delete: async (roomId) => {
+    return await knex(roomModel.tableName).del().where({
+      room_id: roomId,
+    });
+  },
+
   removeMember: async (roomId, accountId) => {
     return await knex(`${roomModel.tableName}_member`).del().where({
       room_id: roomId,
       account_id: accountId,
+    });
+  },
+
+  removeAllMembers: async (roomId) => {
+    return await knex(`${roomModel.tableName}_member`).del().where({
+      room_id: roomId,
     });
   },
 };

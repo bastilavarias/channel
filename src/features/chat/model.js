@@ -121,10 +121,22 @@ const chatModel = {
       });
   },
 
-  deleteRecent: async (roomId, accountId) => {
+  deleteAll: async (roomId) => {
+    return knex(chatModel.tableName).del().where({
+      room_id: roomId,
+    });
+  },
+
+  removeAccountRecent: async (roomId, accountId) => {
     return await knex(`${chatModel.tableName}_recent`).del().where({
       room_id: roomId,
       account_id: accountId,
+    });
+  },
+
+  removeAllRecent: async (roomId) => {
+    return await knex(`${chatModel.tableName}_recent`).del().where({
+      room_id: roomId,
     });
   },
 };

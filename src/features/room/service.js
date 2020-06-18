@@ -139,10 +139,20 @@ const roomService = {
   },
 
   leave: async (roomId, accountId) => {
-    await chatModel.deleteRecent(roomId, accountId);
+    await chatModel.removeAccountRecent(roomId, accountId);
     await roomModel.removeMember(roomId, accountId);
     return {
       isLeft: true,
+    };
+  },
+
+  destroy: async (roomId) => {
+    await chatModel.removeAllRecent(roomId);
+    await chatModel.deleteAll(roomId);
+    await roomModel.removeAllMembers(roomId);
+    await roomModel.delete(roomId);
+    return {
+      isDestroyed: true,
     };
   },
 };
