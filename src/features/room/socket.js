@@ -17,7 +17,6 @@ const roomSocket = (io, socket) => {
   });
 
   socket.on("room_leave", async ({ roomId, accountId }) => {
-    await roomController.leave(roomId, accountId);
     const sentBotChatDetails = await roomController.sendBotChat({
       roomId,
       accountId,
@@ -29,7 +28,7 @@ const roomSocket = (io, socket) => {
 
   socket.on("room_members", async (roomId) => {
     const roomMembers = await roomController.getMembers(roomId);
-    io.emit("room_members", roomMembers);
+    io.to(roomId).emit("room_members", roomMembers);
   });
 };
 

@@ -139,12 +139,23 @@ export default {
         ? `You're the only member in this chat group`
         : `${members.length} Members in this chat group`;
     },
+
+    currentAccount() {
+      const account = this.$store.state.account.current;
+      return account ? account : {};
+    },
   },
 
   methods: {
     async leaveRoom() {
       const isLeft = await this.$store.dispatch(ROOM_LEAVE, this.roomId);
       if (isLeft) {
+        const roomLeaveParams = {
+          roomId: this.roomId,
+          accountId: this.currentAccount.id,
+        };
+        this.$socket.client.emit("room_leave", roomLeaveParams);
+        this.$socket.client.emit("room_members", this.roomId);
         await this.$router.push({ name: "room-list" });
       }
     },
