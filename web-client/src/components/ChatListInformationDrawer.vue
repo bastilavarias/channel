@@ -64,7 +64,12 @@
     <v-card flat color="white"> </v-card>
     <template v-slot:append>
       <div class="px-2 pb-5">
-        <v-btn color="error" block v-if="isAccountAdmin">
+        <v-btn
+          color="error"
+          block
+          @click="isDestroyRoomWarningDialogShow = true"
+          v-if="isAccountAdmin"
+        >
           <span class="text-capitalize font-weight-bold mr-1">
             Destroy Room
           </span>
@@ -85,6 +90,33 @@
         </v-btn>
       </div>
     </template>
+    <v-dialog v-model="isDestroyRoomWarningDialogShow" width="700">
+      <v-card>
+        <v-card-title>
+          Destroy Room
+        </v-card-title>
+        <v-card-text>
+          <v-alert type="error"
+            >Destroying this room will delete chat data and room members, click
+            destroy if you'are sure.</v-alert
+          >
+        </v-card-text>
+        <v-card-actions>
+          <div class="flex-grow-1"></div>
+          <v-btn
+            text
+            class="text-capitalize"
+            @click="isDestroyRoomWarningDialogShow = false"
+          >
+            Cancel
+          </v-btn>
+          <v-btn color="error">
+            <span class="text-capitalize mr-1">Destroy</span>
+            <v-icon>mdi-trash-can</v-icon>
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-navigation-drawer>
 </template>
 
@@ -142,6 +174,7 @@ export default {
   data() {
     return {
       isLeaveRoomStart: false,
+      isDestroyRoomWarningDialogShow: false,
     };
   },
 
