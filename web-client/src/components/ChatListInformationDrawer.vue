@@ -64,12 +64,19 @@
     <v-card flat color="white"> </v-card>
     <template v-slot:append>
       <div class="px-2 pb-5">
+        <v-btn color="error" block v-if="isAccountAdmin">
+          <span class="text-capitalize font-weight-bold mr-1">
+            Destroy Room
+          </span>
+          <v-icon>mdi-trash-can</v-icon>
+        </v-btn>
         <v-btn
           color="error"
-          outlined
           block
           @click="leaveRoom"
           :disabled="!roomId"
+          :loading="isLeaveRoomStart"
+          v-else
         >
           <span class="text-capitalize font-weight-bold mr-1">
             Leave Room
@@ -132,6 +139,12 @@ export default {
     },
   },
 
+  data() {
+    return {
+      isLeaveRoomStart: false,
+    };
+  },
+
   computed: {
     membersTitle() {
       const members = this.members;
@@ -144,11 +157,17 @@ export default {
       const account = this.$store.state.account.current;
       return account ? account : {};
     },
+
+    isAccountAdmin() {
+      return this.currentAccount.id === this.admin.id;
+    },
   },
 
   methods: {
     async leaveRoom() {
+      this.isLeaveRoomStart = true;
       const isLeft = await this.$store.dispatch(ROOM_LEAVE, this.roomId);
+      this.isLeaveRoomStart = false;
       if (isLeft) {
         const roomLeaveParams = {
           roomId: this.roomId,
