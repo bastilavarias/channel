@@ -70,6 +70,21 @@
       :isGetInformationStart="isGetInformationStart"
       :members="members"
     ></chat-list-information-drawer>
+    <v-dialog width="500" v-model="isDestroyedRoomAlertDialogShow">
+      <v-card>
+        <v-card-title>Oops</v-card-title>
+        <v-card-text>
+          <v-alert text type="info">
+            It seems {{ information.admin.name }} destroyed this room. You will
+            be redirected to room list.
+          </v-alert>
+        </v-card-text>
+        <v-card-actions>
+          <div class="flex-grow-1"></div>
+          <v-btn color="info" :to="{ name: 'room-list' }">Ok</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </section>
 </template>
 
@@ -101,6 +116,7 @@ export default {
         },
       },
       isGetInformationStart: false,
+      isDestroyedRoomAlertDialogShow: false,
     };
   },
 
@@ -240,9 +256,11 @@ export default {
 
   sockets: {
     room_destroy() {
-      this.$router.push({
-        name: "room-list",
-      });
+      this.isDestroyedRoomAlertDialogShow = true;
+      setTimeout(() => {
+        this.isDestroyedRoomAlertDialogShow = false;
+        this.$router.push({ name: "room-list" });
+      }, 5000);
     },
   },
 };

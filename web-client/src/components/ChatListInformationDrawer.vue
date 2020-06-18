@@ -96,7 +96,7 @@
           Destroy Room
         </v-card-title>
         <v-card-text>
-          <v-alert type="error"
+          <v-alert text type="error"
             >Destroying this room will delete chat data and room members, click
             destroy if you'are sure.</v-alert
           >
@@ -222,10 +222,7 @@ export default {
       const isDestroyed = await this.$store.dispatch(ROOM_DESTROY, this.roomId);
       if (isDestroyed) {
         this.$socket.client.emit("room_destroy", this.roomId);
-        await this.$router.push({
-          name: "profile",
-          params: { username: "bastilavarias" },
-        });
+        await this.$router.push({ name: "room-list" });
       }
       this.isDestroyRoomStart = false;
     },
