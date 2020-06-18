@@ -162,7 +162,11 @@ export default {
   watch: {
     async roomId(id) {
       if (id) {
-        this.$socket.client.emit("room_enter", id);
+        const roomEnterPayload = {
+          roomId: id,
+          accountId: this.currentAccount.id,
+        };
+        this.$socket.client.emit("room_enter", roomEnterPayload);
         await this.getInformation();
         await this.fetchChats();
         this.textFieldAutofocus();
@@ -248,7 +252,11 @@ export default {
   },
 
   async created() {
-    this.$socket.client.emit("room_enter", this.roomId);
+    const roomEnterPayload = {
+      roomId: this.roomId,
+      accountId: this.currentAccount.id,
+    };
+    this.$socket.client.emit("room_enter", roomEnterPayload);
     await this.getInformation();
     await this.fetchChats();
     this.clearTypingAccounts();

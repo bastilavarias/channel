@@ -33,7 +33,9 @@
         </template>
         <v-list dense>
           <v-list-item @click="goToProfile">Profile</v-list-item>
-          <v-list-item v-if="!isMemberAdmin && isAccountAdmin"
+          <v-list-item
+            @click="removeMember"
+            v-if="!isMemberAdmin && isAccountAdmin"
             >Remove</v-list-item
           >
         </v-list>
@@ -94,6 +96,10 @@ export default {
         name: "profile",
         params: { username: this.username },
       });
+    },
+
+    removeMember() {
+      console.log(this.memberId);
     },
   },
 };
