@@ -1,7 +1,21 @@
 <template>
   <v-container>
     <custom-breadcrumbs :routes="breadcrumbs"></custom-breadcrumbs>
-    <v-row>
+    <div v-if="isProfileNotFound">
+      <div class="mt-10">
+        <v-avatar :size="100" class="mb-10">
+          <v-img
+            src="../assets/icons8/404.png"
+            lazy-src="../assets/icons8/404.png"
+          ></v-img>
+        </v-avatar>
+        <h1 class="display-2 primary--text text-uppercase mb-5">
+          PAGE NOT FOUND
+        </h1>
+        <p class="subtitle-1">Sorry, {{ username }} profile was not found.</p>
+      </div>
+    </div>
+    <v-row v-else>
       <v-col cols="12" md="2">
         <div class="mb-10">
           <v-skeleton-loader
@@ -15,7 +29,6 @@
             ></v-img>
           </v-avatar>
         </div>
-        <custom-label>Joined Rooms</custom-label>
       </v-col>
       <v-col cols="12" md="9">
         <div class="flex-grow-1 mb-10">
@@ -196,10 +209,16 @@ export default {
         websiteUrl: "",
       },
       isGetGithubProfileInformationStart: false,
+      isProfileNotFound: false,
     };
   },
 
   computed: {
+    currentAccount() {
+      const account = this.$store.state.account.current;
+      return account ? account : {};
+    },
+
     username() {
       const username = this.$route.params.username;
       return username ? username : "";
@@ -237,6 +256,9 @@ export default {
         GET_BASIC_PROFILE_INFORMATION,
         this.username
       );
+      if (Object.keys(this.basicInformation).length === 0) {
+        this.isProfileNotFound = true;
+      }
       this.isGetBasicProfileInformationStart = false;
     },
 
