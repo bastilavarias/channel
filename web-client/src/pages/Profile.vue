@@ -108,7 +108,7 @@
                 >
                 <v-slide-group v-model="followersSlidGroupState" show-arrows>
                   <template
-                    v-for="(account, index) in githubInformation.following"
+                    v-for="(account, index) in githubInformation.followers"
                   >
                     <profile-account-list-slide-group-item
                       class-name="ma-1"
@@ -129,7 +129,7 @@
                 >
                 <v-slide-group v-model="followersSlidGroupState" show-arrows>
                   <template
-                    v-for="(account, index) in githubInformation.followers"
+                    v-for="(account, index) in githubInformation.following"
                   >
                     <profile-account-list-slide-group-item
                       class-name="ma-1"

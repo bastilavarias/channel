@@ -22,16 +22,19 @@ const roomService = {
     }
     const createdRoomId = await roomModel.create(roomDetails);
     await roomService.addMember(createdRoomId, accountId);
-    const gotRawAccountInformation = await helperService.getSingle(
-      "account",
-      "id",
-      accountId,
-      ["name"]
+    const getSingleAccountParams = {
+      tableName: "account",
+      columnName: "id",
+      columnValue: accountId,
+      targetColumns: ["name"],
+    };
+    const gotSingleAccount = await helperService.getSingle(
+      getSingleAccountParams
     );
     const firstChatDetails = {
       roomId: createdRoomId,
       accountId,
-      message: `${gotRawAccountInformation.name} created this group.`,
+      message: `${gotSingleAccount.name} created this group.`,
       type: "system",
       createdAt: utilityService.timestamp(),
     };
