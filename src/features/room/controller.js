@@ -119,6 +119,18 @@ const roomController = {
       res.status(400).json(error);
     }
   },
+
+  remove: async (req, res) => {
+    try {
+      const roomId = req.body.roomId;
+      const accountId = req.body.accountId;
+      const result = await roomService.leave(roomId, accountId);
+      res.status(200).json(result);
+    } catch (error) {
+      console.log(error);
+      res.status(400).json(error);
+    }
+  },
 };
 
 module.exports = roomController;

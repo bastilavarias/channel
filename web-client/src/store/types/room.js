@@ -6,3 +6,4 @@ export const ROOM_GET_FEATURED = "ROOM_GET_FEATURED";
 export const ROOM_JOIN = "ROOM_JOIN";
 export const ROOM_LEAVE = "ROOM_LEAVE";
 export const ROOM_DESTROY = "ROOM_DESTROY";
+export const ROOM_REMOVE = "ROOM_REMOVE";

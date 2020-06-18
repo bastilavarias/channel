@@ -55,6 +55,9 @@ export const Room = {
   leave: (roomId) => apiService.post("/room/leave", { roomId }),
 
   destroy: (roomId) => apiService.delete(`/room/destroy/${roomId}`),
+
+  remove: (roomId, accountId) =>
+    apiService.post("/room/remove", { roomId, accountId }),
 };
 
 export const Chat = {

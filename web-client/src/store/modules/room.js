@@ -6,6 +6,7 @@ import {
   ROOM_GET_INFORMATION,
   ROOM_JOIN,
   ROOM_LEAVE,
+  ROOM_REMOVE,
   ROOM_SEARCH,
   SOCKET_ROOM_MEMBERS,
 } from "../types/room";
@@ -87,6 +88,16 @@ export default {
         const result = await Room.destroy(roomId);
         const { isDestroyed } = result.data;
         return isDestroyed;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    [ROOM_REMOVE]: async ({ commit }, { roomId, accountId }) => {
+      try {
+        const result = await Room.remove(roomId, accountId);
+        const { isLeft } = result.data;
+        return isLeft;
       } catch (error) {
         console.log(error);
       }

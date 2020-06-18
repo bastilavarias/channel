@@ -45,6 +45,8 @@
 </template>
 
 <script>
+import { ROOM_REMOVE } from "../store/types/room";
+
 export default {
   name: "chat-list-information-drawer-member-list-item",
 
@@ -80,6 +82,12 @@ export default {
     },
   },
 
+  data() {
+    return {
+      isRemoveMemberStart: false,
+    };
+  },
+
   computed: {
     currentAccount() {
       const account = this.$store.state.account.current;
@@ -103,12 +111,17 @@ export default {
       });
     },
 
-    removeMember() {
+    async removeMember() {
       const roomRemovePayload = {
         roomId: this.roomId,
         accountId: this.memberId,
       };
-      this.$socket.client.emit("room_remove", roomRemovePayload);
+      this.isRemoveMemberStart = true;
+      const isLeft = await this.$store.dispatch(ROOM_REMOVE, roomRemovePayload);
+      this.isRemoveMemberStart = false;
+      if (isLeft) {
+        this.$socket.client.emit("room_remove", roomRemovePayload);
+      }
     },
   },
 };

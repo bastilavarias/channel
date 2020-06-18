@@ -3,7 +3,6 @@ const roomController = require("./controller");
 const roomSocket = (io, socket) => {
   socket.on("room_enter", async (roomId) => {
     socket.join(roomId);
-    // console.log(io.sockets.adapter.rooms[roomId].sockets);
     io.emit("chat_refresh_recent");
   });
 
@@ -38,8 +37,13 @@ const roomSocket = (io, socket) => {
   });
 
   socket.on("room_remove", async ({ roomId, accountId }) => {
-    console.log({ roomId, accountId });
+    const sentBotChatDetails = await roomController.sendBotChat({
+      roomId,
+      accountId,
+      operationType: "remove",
+    });
     socket.to(roomId).emit("room_remove", accountId);
+    io.to(sentBotChatDetails.room.id).emit("chat_send", sentBotChatDetails);
     io.emit("chat_recent_refresh");
   });
 };

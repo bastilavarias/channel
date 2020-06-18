@@ -116,11 +116,13 @@ const roomService = {
     const gotSingleAccount = await helperService.getSingle(
       getSingleAccountParams
     );
-    const operation = operationType === "join" ? "joined" : "leave";
     const chatDetails = {
       roomId,
       accountId,
-      message: `${gotSingleAccount.name} ${operation} this group.`,
+      message: roomService.getBotOperationMessage(
+        operationType,
+        gotSingleAccount
+      ),
       type: "system",
       createdAt: utilityService.timestamp(),
     };
@@ -154,6 +156,24 @@ const roomService = {
     return {
       isDestroyed: true,
     };
+  },
+
+  getBotOperationMessage: (type, account) => {
+    let message = "";
+    switch (type) {
+      case "join":
+        message = `${account.name} joined the room.`;
+        break;
+
+      case "leave":
+        message = `${account.name} left the room.`;
+        break;
+
+      case "remove":
+        message = `${account.name} removed in the room by admin.`;
+        break;
+    }
+    return message;
   },
 };
 
