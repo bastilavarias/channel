@@ -33,7 +33,9 @@
         </template>
         <v-list dense>
           <v-list-item @click="goToProfile">Profile</v-list-item>
-          <v-list-item v-if="!isCurrentAccountAdmin">Remove</v-list-item>
+          <v-list-item v-if="!isMemberAdmin && isAccountAdmin"
+            >Remove</v-list-item
+          >
         </v-list>
       </v-menu>
     </v-list-item-action>
@@ -81,13 +83,8 @@ export default {
       return this.admin.id === this.memberId;
     },
 
-    isCurrentAccountAdmin() {
-      let isCurrentAccountAdmin = false;
-      if (this.isMemberAdmin) {
-        isCurrentAccountAdmin = this.memberId === this.currentAccount.id;
-        return isCurrentAccountAdmin;
-      }
-      return isCurrentAccountAdmin;
+    isAccountAdmin() {
+      return this.currentAccount.id === this.admin.id;
     },
   },
 
