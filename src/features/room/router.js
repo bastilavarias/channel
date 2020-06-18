@@ -40,7 +40,7 @@ router.post(
 );
 
 router.delete(
-  "/destroy",
+  "/destroy/:roomId",
   passport.authenticate("jwt", { session: false }),
   roomController.destroy
 );

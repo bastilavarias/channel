@@ -1,6 +1,7 @@
 import { Room } from "../../common/apiService";
 import {
   ROOM_CREATE,
+  ROOM_DESTROY,
   ROOM_GET_FEATURED,
   ROOM_GET_INFORMATION,
   ROOM_JOIN,
@@ -76,6 +77,16 @@ export default {
         const result = await Room.leave(roomId);
         const { isLeft } = result.data;
         return isLeft;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    [ROOM_DESTROY]: async ({ commit }, roomId) => {
+      try {
+        const result = await Room.destroy(roomId);
+        const { isDestroyed } = result.data;
+        return isDestroyed;
       } catch (error) {
         console.log(error);
       }

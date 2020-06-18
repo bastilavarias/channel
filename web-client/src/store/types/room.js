@@ -5,3 +5,4 @@ export const SOCKET_ROOM_MEMBERS = "SOCKET_ROOM_MEMBERS";
 export const ROOM_GET_FEATURED = "ROOM_GET_FEATURED";
 export const ROOM_JOIN = "ROOM_JOIN";
 export const ROOM_LEAVE = "ROOM_LEAVE";
+export const ROOM_DESTROY = "ROOM_DESTROY";

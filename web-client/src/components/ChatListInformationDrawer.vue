@@ -110,7 +110,11 @@
           >
             Cancel
           </v-btn>
-          <v-btn color="error">
+          <v-btn
+            color="error"
+            @click="destroyRoom"
+            :loading="isDestroyRoomStart"
+          >
             <span class="text-capitalize mr-1">Destroy</span>
             <v-icon>mdi-trash-can</v-icon>
           </v-btn>
@@ -122,7 +126,7 @@
 
 <script>
 import ChatListInformationDrawerMemberListItem from "./ChatListInformationDrawerMemberListItem";
-import { ROOM_LEAVE } from "../store/types/room";
+import { ROOM_DESTROY, ROOM_LEAVE } from "../store/types/room";
 
 export default {
   name: "chat-list-information-drawer",
@@ -175,6 +179,7 @@ export default {
     return {
       isLeaveRoomStart: false,
       isDestroyRoomWarningDialogShow: false,
+      isDestroyRoomStart: false,
     };
   },
 
@@ -210,6 +215,15 @@ export default {
         this.$socket.client.emit("room_members", this.roomId);
         await this.$router.push({ name: "room-list" });
       }
+    },
+
+    async destroyRoom() {
+      this.isDestroyRoomStart = true;
+      const isDestroyed = await this.$store.dispatch(ROOM_DESTROY, this.roomId);
+      if (isDestroyed) {
+        await this.$router.push({ name: "room-list" });
+      }
+      this.isDestroyRoomStart = false;
     },
   },
 };

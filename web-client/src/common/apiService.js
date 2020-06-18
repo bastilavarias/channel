@@ -53,6 +53,8 @@ export const Room = {
   getInformation: (roomId) => apiService.get(`/room/information/${roomId}`),
 
   leave: (roomId) => apiService.post("/room/leave", { roomId }),
+
+  destroy: (roomId) => apiService.delete(`/room/destroy/${roomId}`),
 };
 
 export const Chat = {

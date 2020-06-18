@@ -176,7 +176,7 @@ const roomModel = {
 
   delete: async (roomId) => {
     return await knex(roomModel.tableName).del().where({
-      room_id: roomId,
+      id: roomId,
     });
   },
 

@@ -111,7 +111,7 @@ const roomController = {
 
   destroy: async (req, res) => {
     try {
-      const roomId = req.body.roomId;
+      const roomId = req.params.roomId;
       const result = await roomService.destroy(roomId);
       res.status(200).json(result);
     } catch (error) {
