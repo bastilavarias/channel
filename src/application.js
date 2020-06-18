@@ -24,4 +24,11 @@ application.use("/api", api);
 application.use(passport.initialize());
 jwtPassport(passport);
 
+if (process.env.NODE_ENV === "production") {
+  application.use(express.static(__dirname + "/public/"));
+  application.get(/.*/, (req, res) =>
+    res.sendFile(__dirname + "/public/index.html")
+  );
+}
+
 module.exports = { serverInstance };
