@@ -87,7 +87,6 @@ const roomService = {
         password,
         hashedPassword
       );
-      console.log(isAuthenticated);
     }
     if (type === "private" && !isAuthenticated) {
       error.password = "Password do not match.";
@@ -108,16 +107,19 @@ const roomService = {
   },
 
   sendJoinMessage: async (roomId, accountId) => {
-    const gotRawAccountInformation = await helperService.getSingle(
-      "account",
-      "id",
-      accountId,
-      ["name"]
+    const getSingleAccountParams = {
+      tableName: "account",
+      columnName: "id",
+      columnValue: accountId,
+      targetColumns: ["name"],
+    };
+    const gotSingleAccount = await helperService.getSingle(
+      getSingleAccountParams
     );
     const chatDetails = {
       roomId,
       accountId,
-      message: `${gotRawAccountInformation.name} joined this group.`,
+      message: `${gotSingleAccount.name} joined this group.`,
       type: "system",
       createdAt: utilityService.timestamp(),
     };

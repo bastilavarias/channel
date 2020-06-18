@@ -17,7 +17,9 @@ export default {
   },
 
   mutations: {
-    [SOCKET_CHAT_SEND]: (state, chat) => (state.list = [...state.list, chat]),
+    [SOCKET_CHAT_SEND]: (state, chat) => {
+      state.list = [...state.list, chat];
+    },
 
     [SOCKET_CHAT_RECENT]: (state, chats) => (state.recent = chats),
 
