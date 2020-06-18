@@ -4,6 +4,7 @@ import {
   ROOM_GET_FEATURED,
   ROOM_GET_INFORMATION,
   ROOM_JOIN,
+  ROOM_LEAVE,
   ROOM_SEARCH,
   SOCKET_ROOM_MEMBERS,
 } from "../types/room";
@@ -65,6 +66,16 @@ export default {
       try {
         const result = await Room.join(roomId, password);
         return result.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    [ROOM_LEAVE]: async ({ commit }, roomId) => {
+      try {
+        const result = await Room.leave(roomId);
+        const { isLeft } = result.data;
+        return isLeft;
       } catch (error) {
         console.log(error);
       }

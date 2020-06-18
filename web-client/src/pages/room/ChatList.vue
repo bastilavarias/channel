@@ -61,6 +61,7 @@
       </v-row>
     </div>
     <chat-list-information-drawer
+      :room-id="roomId"
       :name="information.name"
       :avatarUrl="information.avatarUrl"
       :description="information.description"
@@ -76,7 +77,7 @@
 import ChatItem from "../../components/ChatItem";
 import { ROOM_GET_INFORMATION } from "../../store/types/room";
 import ChatListInformationDrawer from "../../components/ChatListInformationDrawer";
-import { FETCH_CHATS, SET_TYPING_ACCOUNTS } from "../../store/types/chat";
+import { CHAT_FETCH, SET_TYPING_ACCOUNTS } from "../../store/types/chat";
 import ChatListAccountTypingIndicator from "../../components/ChatIListAccountTypingIndicator";
 export default {
   components: {
@@ -192,7 +193,7 @@ export default {
     },
 
     async fetchChats() {
-      await this.$store.dispatch(FETCH_CHATS, {
+      await this.$store.dispatch(CHAT_FETCH, {
         roomId: this.roomId,
         offset: 0,
       });

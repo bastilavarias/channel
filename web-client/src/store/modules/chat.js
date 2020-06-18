@@ -1,5 +1,5 @@
 import {
-  FETCH_CHATS,
+  CHAT_FETCH,
   SET_CHATS,
   SOCKET_CHAT_RECENT,
   SOCKET_CHAT_SEND,
@@ -46,7 +46,7 @@ export default {
   },
 
   actions: {
-    [FETCH_CHATS]: async ({ commit }, { roomId, offset }) => {
+    [CHAT_FETCH]: async ({ commit }, { roomId, offset }) => {
       try {
         const result = await Chat.fetch(roomId, offset);
         const chats = result.data;

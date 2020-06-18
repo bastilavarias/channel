@@ -83,9 +83,9 @@ export default {
 
     isCurrentAccountAdmin() {
       let isCurrentAccountAdmin = false;
-      const isMemberAdmin = this.memberId === this.admin.id;
-      if (isMemberAdmin) {
+      if (this.isMemberAdmin) {
         isCurrentAccountAdmin = this.memberId === this.currentAccount.id;
+        return isCurrentAccountAdmin;
       }
       return isCurrentAccountAdmin;
     },

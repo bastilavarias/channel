@@ -173,6 +173,13 @@ const roomModel = {
         );
       });
   },
+
+  removeMember: async (roomId, accountId) => {
+    return await knex(`${roomModel.tableName}_member`).del().where({
+      room_id: roomId,
+      account_id: accountId,
+    });
+  },
 };
 
 module.exports = roomModel;

@@ -33,4 +33,10 @@ router.get(
   roomController.getFeatured
 );
 
+router.post(
+  "/leave",
+  passport.authenticate("jwt", { session: false }),
+  roomController.leave
+);
+
 module.exports = router;

@@ -69,10 +69,11 @@ const roomController = {
     try {
       const roomId = req.body.roomId;
       const password = req.body.password;
+      const accountId = req.user.id;
       const result = await roomService.join({
         roomId,
         password,
-        accountId: req.user.id,
+        accountId,
       });
       res.status(200).json(result);
     } catch (error) {
@@ -81,15 +82,31 @@ const roomController = {
     }
   },
 
-  sendJoinChat: async (roomId, accountId) => {
+  sendBotChat: async ({ roomId, accountId, operationType }) => {
     let details = {};
     try {
-      const result = await roomService.sendJoinChat(roomId, accountId);
+      const result = await roomService.sendBotChat({
+        roomId,
+        accountId,
+        operationType,
+      });
       details = result.details;
     } catch (error) {
       console.log(error);
     }
     return details;
+  },
+
+  leave: async (req, res) => {
+    try {
+      const roomId = req.body.roomId;
+      const accountId = req.user.id;
+      const result = await roomService.leave(roomId, accountId);
+      res.status(200).json(result);
+    } catch (error) {
+      console.log(error);
+      res.status(400).json(error);
+    }
   },
 };
 

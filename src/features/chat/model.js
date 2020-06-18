@@ -120,6 +120,13 @@ const chatModel = {
         );
       });
   },
+
+  deleteRecent: async (roomId, accountId) => {
+    return await knex(`${chatModel.tableName}_recent`).del().where({
+      room_id: roomId,
+      account_id: accountId,
+    });
+  },
 };
 
 module.exports = chatModel;

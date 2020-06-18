@@ -63,8 +63,14 @@
     </v-card>
     <v-card flat color="white"> </v-card>
     <template v-slot:append>
-      <div class="pa-2">
-        <v-btn color="error" outlined block>
+      <div class="px-2 pb-5">
+        <v-btn
+          color="error"
+          outlined
+          block
+          @click="leaveRoom"
+          :disabled="!roomId"
+        >
           <span class="text-capitalize font-weight-bold mr-1">
             Leave Room
           </span>
@@ -77,10 +83,19 @@
 
 <script>
 import ChatListInformationDrawerMemberListItem from "./ChatListInformationDrawerMemberListItem";
+import { ROOM_LEAVE } from "../store/types/room";
+
 export default {
   name: "chat-list-information-drawer",
+
   components: { ChatListInformationDrawerMemberListItem },
+
   props: {
+    roomId: {
+      type: String,
+      required: true,
+    },
+
     name: {
       type: String,
       required: true,
@@ -123,6 +138,16 @@ export default {
       return members.length <= 1
         ? `You're the only member in this chat group`
         : `${members.length} Members in this chat group`;
+    },
+  },
+
+  methods: {
+    async leaveRoom() {
+      const isLeft = await this.$store.dispatch(ROOM_LEAVE, this.roomId);
+      if (isLeft) {
+        console.log(isLeft);
+        await this.$router.push({ name: "room-list" });
+      }
     },
   },
 };

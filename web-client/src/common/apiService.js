@@ -51,6 +51,8 @@ export const Room = {
   getFeatured: (offset) => apiService.get(`/room/featured/${offset}`),
 
   getInformation: (roomId) => apiService.get(`/room/information/${roomId}`),
+
+  leave: (roomId) => apiService.post("/room/leave", { roomId }),
 };
 
 export const Chat = {

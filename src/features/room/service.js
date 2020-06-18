@@ -106,7 +106,7 @@ const roomService = {
     };
   },
 
-  sendJoinChat: async (roomId, accountId) => {
+  sendBotChat: async ({ roomId, accountId, operationType }) => {
     const getSingleAccountParams = {
       tableName: "account",
       columnName: "id",
@@ -116,10 +116,11 @@ const roomService = {
     const gotSingleAccount = await helperService.getSingle(
       getSingleAccountParams
     );
+    const operation = operationType === "join" ? "joined" : "leave";
     const chatDetails = {
       roomId,
       accountId,
-      message: `${gotSingleAccount.name} joined this group.`,
+      message: `${gotSingleAccount.name} ${operation} this group.`,
       type: "system",
       createdAt: utilityService.timestamp(),
     };
@@ -134,6 +135,14 @@ const roomService = {
     });
     return {
       details: savedChatDetails,
+    };
+  },
+
+  leave: async (roomId, accountId) => {
+    await chatModel.deleteRecent(roomId, accountId);
+    await roomModel.removeMember(roomId, accountId);
+    return {
+      isLeft: true,
     };
   },
 };

@@ -7,11 +7,23 @@ const roomSocket = (io, socket) => {
   });
 
   socket.on("room_join", async ({ roomId, accountId }) => {
-    const sentChatDetails = await roomController.sendJoinChat(
+    const sentBotChatDetails = await roomController.sendBotChat({
       roomId,
-      accountId
-    );
-    io.to(sentChatDetails.room.id).emit("chat_send", sentChatDetails);
+      accountId,
+      operationType: "join",
+    });
+    io.to(sentBotChatDetails.room.id).emit("chat_send", sentBotChatDetails);
+    io.emit("chat_recent_refresh");
+  });
+
+  socket.on("room_leave", async ({ roomId, accountId }) => {
+    await roomController.leave(roomId, accountId);
+    const sentBotChatDetails = await roomController.sendBotChat({
+      roomId,
+      accountId,
+      operationType: "leave",
+    });
+    io.to(sentBotChatDetails.room.id).emit("chat_send", sentBotChatDetails);
     io.emit("chat_recent_refresh");
   });
 
