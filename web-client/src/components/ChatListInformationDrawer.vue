@@ -145,7 +145,6 @@ export default {
     async leaveRoom() {
       const isLeft = await this.$store.dispatch(ROOM_LEAVE, this.roomId);
       if (isLeft) {
-        console.log(isLeft);
         await this.$router.push({ name: "room-list" });
       }
     },
