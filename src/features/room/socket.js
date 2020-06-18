@@ -7,7 +7,7 @@ const roomSocket = (io, socket) => {
   });
 
   socket.on("room_join", async ({ roomId, accountId }) => {
-    const sentChatDetails = await roomController.sendJoinMessage(
+    const sentChatDetails = await roomController.sendJoinChat(
       roomId,
       accountId
     );

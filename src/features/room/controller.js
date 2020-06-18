@@ -81,10 +81,10 @@ const roomController = {
     }
   },
 
-  sendJoinMessage: async (roomId, accountId) => {
+  sendJoinChat: async (roomId, accountId) => {
     let details = {};
     try {
-      const result = await roomService.sendJoinMessage(roomId, accountId);
+      const result = await roomService.sendJoinChat(roomId, accountId);
       details = result.details;
     } catch (error) {
       console.log(error);

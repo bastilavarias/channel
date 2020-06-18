@@ -106,7 +106,7 @@ const roomService = {
     };
   },
 
-  sendJoinMessage: async (roomId, accountId) => {
+  sendJoinChat: async (roomId, accountId) => {
     const getSingleAccountParams = {
       tableName: "account",
       columnName: "id",
