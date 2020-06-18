@@ -207,11 +207,11 @@ export default {
       const isLeft = await this.$store.dispatch(ROOM_LEAVE, this.roomId);
       this.isLeaveRoomStart = false;
       if (isLeft) {
-        const roomLeaveParams = {
+        const roomLeavePayload = {
           roomId: this.roomId,
           accountId: this.currentAccount.id,
         };
-        this.$socket.client.emit("room_leave", roomLeaveParams);
+        this.$socket.client.emit("room_leave", roomLeavePayload);
         this.$socket.client.emit("room_members", this.roomId);
         await this.$router.push({ name: "room-list" });
       }

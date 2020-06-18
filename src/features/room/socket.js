@@ -1,8 +1,7 @@
 const roomController = require("./controller");
 
 const roomSocket = (io, socket) => {
-  socket.on("room_enter", async ({ roomId, accountId }) => {
-    socket.id = accountId;
+  socket.on("room_enter", async (roomId) => {
     socket.join(roomId);
     // console.log(io.sockets.adapter.rooms[roomId].sockets);
     io.emit("chat_refresh_recent");
