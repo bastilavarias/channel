@@ -72,16 +72,17 @@ const roomService = {
 
   join: async ({ roomId, accountId, password }) => {
     const error = {};
-    const gotRawRoomInformation = await helperService.getSingle(
-      "room",
-      "id",
-      roomId,
-      ["*"]
-    );
-    const type = gotRawRoomInformation.type;
+    const getSingleRoomParams = {
+      tableName: "room",
+      columnName: "id",
+      columnValue: roomId,
+      targetColumns: ["id", "password", "type"],
+    };
+    const gotSingleRoom = await helperService.getSingle(getSingleRoomParams);
+    const type = gotSingleRoom.type;
     let isAuthenticated = false;
     if (type === "private") {
-      const hashedPassword = gotRawRoomInformation.password;
+      const hashedPassword = gotSingleRoom.password;
       isAuthenticated = await helperService.compareHashPassword(
         password,
         hashedPassword
@@ -101,7 +102,7 @@ const roomService = {
       isAuthenticated: true,
       error,
       room: {
-        id: gotRawRoomInformation.id,
+        id: gotSingleRoom.id,
       },
     };
   },
