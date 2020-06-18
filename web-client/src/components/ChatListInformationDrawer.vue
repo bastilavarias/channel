@@ -221,7 +221,11 @@ export default {
       this.isDestroyRoomStart = true;
       const isDestroyed = await this.$store.dispatch(ROOM_DESTROY, this.roomId);
       if (isDestroyed) {
-        await this.$router.push({ name: "room-list" });
+        this.$socket.client.emit("room_destroy", this.roomId);
+        await this.$router.push({
+          name: "profile",
+          params: { username: "bastilavarias" },
+        });
       }
       this.isDestroyRoomStart = false;
     },

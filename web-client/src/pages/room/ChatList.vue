@@ -237,6 +237,14 @@ export default {
     await this.fetchChats();
     this.clearTypingAccounts();
   },
+
+  sockets: {
+    room_destroy() {
+      this.$router.push({
+        name: "room-list",
+      });
+    },
+  },
 };
 </script>
 
