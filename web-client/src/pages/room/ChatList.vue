@@ -116,7 +116,11 @@
 import ChatItem from "../../components/ChatItem";
 import { ROOM_GET_INFORMATION } from "../../store/types/room";
 import ChatListInformationDrawer from "../../components/ChatListInformationDrawer";
-import { CHAT_FETCH, SET_TYPING_ACCOUNTS } from "../../store/types/chat";
+import {
+  CHAT_FETCH,
+  SET_CHATS,
+  SET_TYPING_ACCOUNTS,
+} from "../../store/types/chat";
 import ChatListAccountTypingIndicator from "../../components/ChatIListAccountTypingIndicator";
 import CustomProgressCircular from "../../components/custom/ProgressCircular";
 export default {
@@ -282,6 +286,11 @@ export default {
     await this.getInformation();
     await this.fetchChats();
     this.clearTypingAccounts();
+  },
+
+  destroyed() {
+    this.$store.commit(SET_CHATS, []);
+    this.$store.commit(SET_TYPING_ACCOUNTS, []);
   },
 
   sockets: {

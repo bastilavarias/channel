@@ -20,10 +20,9 @@
           v-model="keyword"
         ></v-text-field>
         <div class="text-center" v-if="isSearchRoomsStart">
-          <v-progress-circular
-            color="primary"
-            indeterminate
-          ></v-progress-circular>
+          <custom-progress-circular
+            text="Fetching rooms. Please wait..."
+          ></custom-progress-circular>
         </div>
       </v-card-text>
       <template v-if="shouldShowFeaturedRooms">
@@ -59,9 +58,10 @@
 import CustomBreadcrumbs from "../../components/custom/Breadcrumbs";
 import { ROOM_GET_FEATURED, ROOM_SEARCH } from "../../store/types/room";
 import RoomListItem from "../../components/RoomListItem";
+import CustomProgressCircular from "../../components/custom/ProgressCircular";
 
 export default {
-  components: { RoomListItem, CustomBreadcrumbs },
+  components: { CustomProgressCircular, RoomListItem, CustomBreadcrumbs },
   data() {
     return {
       keyword: "",

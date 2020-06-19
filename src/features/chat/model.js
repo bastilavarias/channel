@@ -97,7 +97,6 @@ const chatModel = {
     return await knex(chatModel.tableName)
       .select(["id", "message", "type", "account_id", "room_id", "created_at"])
       .where("room_id", roomId)
-      .limit(20)
       .orderBy("created_at", "asc")
       .then(async (result) => {
         return await Promise.all(

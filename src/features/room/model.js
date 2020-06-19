@@ -93,7 +93,6 @@ const roomModel = {
       .offset(offset)
       .orderBy("relevance", "desc")
       .groupBy("r.id")
-      .limit(20)
       .then(async (result) => {
         return Promise.all(
           result.map(async (rawInformation) => {

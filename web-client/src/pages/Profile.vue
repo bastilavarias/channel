@@ -59,7 +59,12 @@
               text="Fetching data from GitHub server, Please wait..."
               v-if="isGetGithubProfileInformationStart"
             ></custom-progress-circular>
-            <div v-else>
+            <div
+              v-if="
+                !isGetGithubProfileInformationStart &&
+                !isGetBasicProfileInformationStart
+              "
+            >
               <div class="mb-5">
                 <custom-label icon="mdi-web">Website</custom-label>
                 <h1 class="body-2 primary--text">
