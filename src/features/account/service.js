@@ -25,7 +25,9 @@ const accountService = {
         id: gotGithubAuthenticatedUser.id,
         username: gotGithubAuthenticatedUser.login,
         nodeId: gotGithubAuthenticatedUser.node_id,
-        name: gotGithubAuthenticatedUser.name,
+        name: gotGithubAuthenticatedUser.name
+          ? gotGithubAuthenticatedUser.name
+          : gotGithubAuthenticatedUser.login,
         avatarUrl: gotGithubAuthenticatedUser.avatar_url,
         createdAt: utilityService.timestamp(),
       });
