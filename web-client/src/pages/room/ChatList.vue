@@ -19,7 +19,7 @@
           <span class="font-weight-bold">{{ information.name }}</span>
         </v-toolbar-title>
       </v-toolbar>
-      <div id="chat-messages" ref="chatsHolder">
+      <div class="chats-holder">
         <v-container>
           <template v-for="(chat, index) in chats">
             <chat-item
@@ -153,10 +153,6 @@ export default {
   },
 
   computed: {
-    chatsHolderDiv() {
-      return this.$refs.chatsHolder;
-    },
-
     isMessageValid() {
       return this.message;
     },
@@ -227,7 +223,8 @@ export default {
     },
 
     scrollNewMessage() {
-      this.chatsHolderDiv.scrollTop = this.chatsHolderDiv.scrollHeight;
+      let chatsHolder = this.$el.querySelector(".chats-holder");
+      chatsHolder.scrollTop = chatsHolder.scrollHeight;
     },
 
     async getInformation() {
@@ -273,8 +270,8 @@ export default {
   },
 
   mounted() {
-    this.scrollNewMessage();
     this.textFieldAutofocus();
+    this.scrollNewMessage();
   },
 
   updated() {
@@ -316,7 +313,7 @@ export default {
 </script>
 
 <style scoped>
-#chat-messages {
+.chats-holder {
   flex: 1 0 100%;
   overflow: auto;
   height: 78vh;
