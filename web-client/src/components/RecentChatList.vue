@@ -41,7 +41,9 @@
 import RecentChatListItem from "./RecentChatListItem";
 export default {
   name: "recent-chat-list",
+
   components: { RecentChatListItem },
+
   computed: {
     recentChats() {
       const chats = this.$store.state.chat.recent;

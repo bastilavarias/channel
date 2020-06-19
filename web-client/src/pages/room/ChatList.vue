@@ -1,5 +1,6 @@
 <template>
   <section style="height: 78vh;">
+    <vue-headful title="Title from vue-headful"></vue-headful>
     <v-container class="fill-height" v-if="isFetchInitialChatsStart">
       <v-row justify="center" align-content="center">
         <custom-progress-circular
@@ -19,7 +20,7 @@
           <span class="font-weight-bold">{{ information.name }}</span>
         </v-toolbar-title>
       </v-toolbar>
-      <div class="chats-holder">
+      <div class="chats-holder" ref="chatHolder">
         <v-container>
           <template v-for="(chat, index) in chats">
             <chat-item
@@ -185,6 +186,15 @@ export default {
     selectedTypingAccounts() {
       return this.typingAccounts.slice(0, 3);
     },
+
+    recentChats() {
+      const chats = this.$store.state.chat.recent;
+      return chats ? chats : [];
+    },
+
+    titleNotifications() {
+      console.log(this.recentChats);
+    },
   },
 
   watch: {
@@ -223,8 +233,10 @@ export default {
     },
 
     scrollNewMessage() {
-      let chatsHolder = this.$el.querySelector(".chats-holder");
-      chatsHolder.scrollTop = chatsHolder.scrollHeight;
+      const chatsHolder = this.$refs.chatHolder;
+      if (!this.isFetchInitialChatsStart) {
+        chatsHolder.scrollTop = chatsHolder.scrollHeight;
+      }
     },
 
     async getInformation() {
