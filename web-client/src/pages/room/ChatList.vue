@@ -1,6 +1,6 @@
 <template>
   <section style="height: 78vh;">
-    <vue-headful title="Title from vue-headful"></vue-headful>
+    <vue-headful :title="vueHeadTitle"></vue-headful>
     <v-container class="fill-height" v-if="isFetchInitialChatsStart">
       <v-row justify="center" align-content="center">
         <custom-progress-circular
@@ -150,6 +150,7 @@ export default {
       isDestroyedRoomAlertDialogShow: false,
       isRemovedAlertDialogShow: false,
       isFetchInitialChatsStart: false,
+      newChatNotification: "",
     };
   },
 
@@ -192,8 +193,14 @@ export default {
       return chats ? chats : [];
     },
 
-    titleNotifications() {
-      console.log(this.recentChats);
+    unReadRecentChats() {
+      return this.recentChats.filter((chat) => !chat.isRead);
+    },
+
+    vueHeadTitle() {
+      return this.newChatNotification
+        ? this.newChatNotification
+        : this.information.name;
     },
   },
 
@@ -214,6 +221,17 @@ export default {
         this.showAccountTypingIndicator();
       } else {
         this.removeAccountTypingIndicator();
+      }
+    },
+
+    unReadRecentChats(chats) {
+      if (chats.length === 1) {
+        const accountName = chats[0].account.name;
+        this.newChatNotification = `(1) New chat from ${accountName}`;
+      } else if (chats.length > 1) {
+        this.newChatNotification = `(${chats.length}) You have new chats.`;
+      } else {
+        this.newChatNotification = this.information.name;
       }
     },
   },
