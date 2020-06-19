@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <vue-headful title="Login to Channel"></vue-headful>
     <v-app-bar
       :color="isScrolled ? 'white' : 'transparent'"
       :flat="!isScrolled"

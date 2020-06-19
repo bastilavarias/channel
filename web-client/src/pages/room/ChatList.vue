@@ -19,6 +19,14 @@
           </v-list-item-avatar>
           <span class="font-weight-bold">{{ information.name }}</span>
         </v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-app-bar-nav-icon
+          @click="
+            isChatListInformationDrawerShow = !isChatListInformationDrawerShow
+          "
+        >
+          <v-icon>mdi-information</v-icon>
+        </v-app-bar-nav-icon>
       </v-toolbar>
       <div class="chats-holder" ref="chatHolder">
         <v-container>
@@ -79,6 +87,7 @@
       :admin="information.admin"
       :isGetInformationStart="isGetInformationStart"
       :members="members"
+      :is-chat-list-information-drawer-show="isChatListInformationDrawerShow"
     ></chat-list-information-drawer>
     <v-dialog width="500" v-model="isDestroyedRoomAlertDialogShow">
       <v-card>
@@ -151,6 +160,7 @@ export default {
       isRemovedAlertDialogShow: false,
       isFetchInitialChatsStart: false,
       newChatNotification: "",
+      isChatListInformationDrawerShow: true,
     };
   },
 

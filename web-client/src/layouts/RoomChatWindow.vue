@@ -1,6 +1,10 @@
 <template>
   <v-app>
     <v-app-bar app clipped-left clipped-right flat color="primary" dark>
+      <v-app-bar-nav-icon
+        @click="isRecentMessagesDrawerShow = !isRecentMessagesDrawerShow"
+      ></v-app-bar-nav-icon>
+      <v-spacer></v-spacer>
       <v-toolbar-title>
         <div class="d-flex">
           <span class="mr-2 text-uppercase font-weight-bold">Channel</span>
@@ -10,7 +14,12 @@
       <v-spacer></v-spacer>
       <dashboard-app-bar-menu></dashboard-app-bar-menu>
     </v-app-bar>
-    <v-navigation-drawer app clipped width="400">
+    <v-navigation-drawer
+      app
+      clipped
+      width="400"
+      v-model="isRecentMessagesDrawerShow"
+    >
       <profile-list-item></profile-list-item>
       <v-divider></v-divider>
       <recent-chat-list></recent-chat-list>
@@ -29,6 +38,12 @@ export default {
   name: "main-layout",
 
   components: { RecentChatList, DashboardAppBarMenu, ProfileListItem },
+
+  data() {
+    return {
+      isRecentMessagesDrawerShow: true,
+    };
+  },
 
   computed: {
     currentAccount() {

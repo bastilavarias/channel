@@ -1,5 +1,11 @@
 <template>
-  <v-navigation-drawer app right clipped width="400">
+  <v-navigation-drawer
+    app
+    right
+    clipped
+    width="400"
+    v-model="isChatListInformationDrawerShowLocal"
+  >
     <v-card flat color="white">
       <v-card-title>
         <span class="font-weight-bold">
@@ -140,6 +146,11 @@ export default {
       required: true,
     },
 
+    isChatListInformationDrawerShow: {
+      type: Boolean,
+      required: true,
+    },
+
     name: {
       type: String,
       required: true,
@@ -181,6 +192,7 @@ export default {
       isLeaveRoomStart: false,
       isDestroyRoomWarningDialogShow: false,
       isDestroyRoomStart: false,
+      isChatListInformationDrawerShowLocal: false,
     };
   },
 
@@ -199,6 +211,16 @@ export default {
 
     isAccountAdmin() {
       return this.currentAccount.id === this.admin.id;
+    },
+  },
+
+  watch: {
+    isChatListInformationDrawerShow(isShow) {
+      this.isChatListInformationDrawerShowLocal = isShow;
+    },
+
+    isChatListInformationDrawerShowLocal(isShow) {
+      this.$emit("update:isChatListInformationDrawerShow", isShow);
     },
   },
 
@@ -226,6 +248,10 @@ export default {
       }
       this.isDestroyRoomStart = false;
     },
+  },
+
+  created() {
+    this.isChatListInformationDrawerShowLocal = this.isChatListInformationDrawerShow;
   },
 };
 </script>

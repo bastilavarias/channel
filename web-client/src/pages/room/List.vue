@@ -1,5 +1,6 @@
 <template>
   <v-container>
+    <vue-headful title="Rooms"></vue-headful>
     <custom-breadcrumbs :routes="breadcrumbs"></custom-breadcrumbs>
     <v-card flat color="white">
       <v-card-title>

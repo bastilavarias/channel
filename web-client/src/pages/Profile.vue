@@ -1,5 +1,6 @@
 <template>
   <v-container>
+    <vue-headful :title="username"></vue-headful>
     <custom-breadcrumbs :routes="breadcrumbs"></custom-breadcrumbs>
     <div v-if="isProfileNotFound">
       <div class="mt-10">
