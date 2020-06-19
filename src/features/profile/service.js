@@ -38,6 +38,9 @@ const profileService = {
     information.websiteUrl = gotGithubUser.blog ? gotGithubUser.blog : "";
     information.bio = gotGithubUser.bio ? gotGithubUser.bio : "";
     information.email = gotGithubUser.email ? gotGithubUser.email : "";
+    information.twitterUsername = gotGithubUser.twitter_username
+      ? gotGithubUser.twitter_username
+      : "";
     information.repositories = gotGithubRepositories
       ? gotGithubRepositories
       : [];

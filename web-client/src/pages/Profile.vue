@@ -83,6 +83,18 @@
                 </h1>
               </div>
               <div class="mb-5">
+                <custom-label icon="mdi-twitter">Twitter Account</custom-label>
+                <h1 class="body-2 primary--text">
+                  <a
+                    :href="`https://twitter.com/${githubInformation.twitterUsername}`"
+                    target="_blank"
+                    v-if="githubInformation.twitterUsername"
+                    >@{{ githubInformation.twitterUsername }}</a
+                  >
+                  <span v-else>No Twitter included.</span>
+                </h1>
+              </div>
+              <div class="mb-5">
                 <custom-label>Bio</custom-label>
                 <h1 class="body-2 primary--text">
                   {{

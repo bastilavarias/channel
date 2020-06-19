@@ -21,14 +21,14 @@ const githubService = {
     const url = "https://api.github.com/user";
     axios.defaults.headers.common["Authorization"] = `token ${token}`;
     const result = await axios.get(url);
-    return result.data;
+    return result.data ? result.data : {};
   },
 
   getUser: async (username, token) => {
     const url = `https://api.github.com/users/${username}`;
     axios.defaults.headers.common["Authorization"] = `token ${token}`;
     const result = await axios.get(url);
-    return result.data;
+    return result.data ? result.data : {};
   },
 
   getUserRepositories: async (username, token) => {
