@@ -1,64 +1,73 @@
 <template>
-  <section>
-    <v-toolbar flat color="white">
-      <v-toolbar-title>
-        <v-list-item-avatar :size="45">
-          <v-img
-            :src="information.avatarUrl"
-            :lazy-src="information.avatarUrl"
-          ></v-img>
-        </v-list-item-avatar>
-        <span class="font-weight-bold">{{ information.name }}</span>
-      </v-toolbar-title>
-    </v-toolbar>
-    <div id="chat-messages" ref="chatsHolder">
-      <v-container>
-        <template v-for="(chat, index) in chats">
-          <chat-item
-            :key="index"
-            :chat-id="chat.id"
-            :sender="chat.sender"
-            :type="chat.type"
-            :message="chat.message"
-            :createdAt="chat.createdAt"
-            class-name="mb-5"
-          ></chat-item>
-        </template>
-        <template v-for="account in selectedTypingAccounts">
-          <chat-list-account-typing-indicator
-            :name="account.name"
-            :avatar-url="account.avatarUrl"
-            class-name="mb-2"
-          ></chat-list-account-typing-indicator>
-        </template>
-      </v-container>
-    </div>
-    <div>
-      <v-row no-gutters>
-        <v-col cols="11">
-          <v-text-field
-            class="ml-5"
-            placeholder="Write a message..."
-            filled
-            rounded
-            v-model="message"
-            @keyup.enter="sendChat"
-            id="message-text-field"
-          ></v-text-field>
-        </v-col>
-        <v-col cols="1">
-          <div class="text-center">
-            <v-btn
-              color="primary"
-              fab
-              @click="sendChat"
-              :disabled="!isMessageValid"
-            >
-              <v-icon>mdi-send</v-icon>
-            </v-btn>
-          </div>
-        </v-col>
+  <section style="height: 78vh;">
+    <v-container class="fill-height" v-if="isFetchInitialChatsStart">
+      <v-row justify="center" align-content="center">
+        <custom-progress-circular
+          text="Fetching initial chats from Channel server. Please wait..."
+        ></custom-progress-circular>
       </v-row>
+    </v-container>
+    <div v-else>
+      <v-toolbar flat color="white">
+        <v-toolbar-title>
+          <v-list-item-avatar :size="45">
+            <v-img
+              :src="information.avatarUrl"
+              :lazy-src="information.avatarUrl"
+            ></v-img>
+          </v-list-item-avatar>
+          <span class="font-weight-bold">{{ information.name }}</span>
+        </v-toolbar-title>
+      </v-toolbar>
+      <div id="chat-messages" ref="chatsHolder">
+        <v-container>
+          <template v-for="(chat, index) in chats">
+            <chat-item
+              :key="index"
+              :chat-id="chat.id"
+              :sender="chat.sender"
+              :type="chat.type"
+              :message="chat.message"
+              :createdAt="chat.createdAt"
+              class-name="mb-5"
+            ></chat-item>
+          </template>
+          <template v-for="account in selectedTypingAccounts">
+            <chat-list-account-typing-indicator
+              :name="account.name"
+              :avatar-url="account.avatarUrl"
+              class-name="mb-2"
+            ></chat-list-account-typing-indicator>
+          </template>
+        </v-container>
+      </div>
+      <div>
+        <v-row no-gutters>
+          <v-col cols="11">
+            <v-text-field
+              class="ml-5"
+              placeholder="Write a message..."
+              filled
+              rounded
+              v-model="message"
+              @keyup.enter="sendChat"
+              id="message-text-field"
+            ></v-text-field>
+          </v-col>
+          <v-col cols="1">
+            <div class="text-center">
+              <v-btn
+                color="primary"
+                fab
+                @click="sendChat"
+                :disabled="!isMessageValid"
+              >
+                <v-icon>mdi-send</v-icon>
+              </v-btn>
+            </div>
+          </v-col>
+        </v-row>
+      </div>
     </div>
     <chat-list-information-drawer
       :room-id="roomId"
@@ -109,8 +118,10 @@ import { ROOM_GET_INFORMATION } from "../../store/types/room";
 import ChatListInformationDrawer from "../../components/ChatListInformationDrawer";
 import { CHAT_FETCH, SET_TYPING_ACCOUNTS } from "../../store/types/chat";
 import ChatListAccountTypingIndicator from "../../components/ChatIListAccountTypingIndicator";
+import CustomProgressCircular from "../../components/custom/ProgressCircular";
 export default {
   components: {
+    CustomProgressCircular,
     ChatListAccountTypingIndicator,
     ChatListInformationDrawer,
     ChatItem,
@@ -133,6 +144,7 @@ export default {
       isGetInformationStart: false,
       isDestroyedRoomAlertDialogShow: false,
       isRemovedAlertDialogShow: false,
+      isFetchInitialChatsStart: false,
     };
   },
 
@@ -225,10 +237,12 @@ export default {
     },
 
     async fetchChats() {
+      this.isFetchInitialChatsStart = true;
       await this.$store.dispatch(CHAT_FETCH, {
         roomId: this.roomId,
         offset: 0,
       });
+      this.isFetchInitialChatsStart = false;
     },
 
     textFieldAutofocus() {

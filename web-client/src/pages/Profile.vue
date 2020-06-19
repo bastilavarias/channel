@@ -55,16 +55,10 @@
         </v-tabs>
         <v-tabs-items v-model="tab">
           <div class="py-10">
-            <div class="text-center" v-if="isGetGithubProfileInformationStart">
-              <v-progress-circular
-                color="primary"
-                indeterminate
-                class="mb-3"
-              ></v-progress-circular>
-              <h1 class="caption primary--text">
-                Fetching data from GitHub server, Please wait...
-              </h1>
-            </div>
+            <custom-progress-circular
+              text="Fetching data from GitHub server, Please wait..."
+              v-if="isGetGithubProfileInformationStart"
+            ></custom-progress-circular>
             <div v-else>
               <div class="mb-5">
                 <custom-label icon="mdi-web">Website</custom-label>
@@ -174,9 +168,11 @@ import {
   GET_BASIC_PROFILE_INFORMATION,
   GET_GITHUB_PROFILE_INFORMATION,
 } from "../store/types/profile";
+import CustomProgressCircular from "../components/custom/ProgressCircular";
 
 export default {
   components: {
+    CustomProgressCircular,
     CustomLabel,
     CustomBreadcrumbs,
     ProfileAccountListSlideGroupItem,
