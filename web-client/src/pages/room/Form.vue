@@ -21,7 +21,6 @@
               v-model="form.description"
             ></v-textarea>
           </v-col>
-
           <v-col cols="12" :md="isPrivateRoom ? '2' : '12'">
             <v-select
               label="Room Type"
@@ -37,7 +36,6 @@
                   >{{ item }}</span
                 >
               </template>
-
               <template v-slot:selection="{ item }">
                 <span
                   :class="`text-capitalize ${
@@ -48,7 +46,6 @@
               </template>
             </v-select>
           </v-col>
-
           <v-col cols="12" md="10" v-if="isPrivateRoom">
             <custom-password-text-field
               outlined

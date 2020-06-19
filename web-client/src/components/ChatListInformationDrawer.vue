@@ -1,18 +1,18 @@
 <template>
-  <v-navigation-drawer
-    app
-    right
-    clipped
-    width="400"
-    v-model="isChatListInformationDrawerShowLocal"
-  >
+  <div>
     <v-card flat color="white">
       <v-card-title>
         <span class="font-weight-bold">
           Room Information
         </span>
         <div class="flex-grow-1"></div>
-        <v-icon>mdi-information</v-icon>
+        <v-btn
+          icon
+          @click="isRoomInformationFormDialogShow = true"
+          v-if="isAccountAdmin"
+        >
+          <v-icon>mdi-cog</v-icon>
+        </v-btn>
       </v-card-title>
       <div class="text-center">
         <v-avatar :size="95">
@@ -28,14 +28,12 @@
             }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-
         <v-list-item v-if="description">
           <v-list-item-content>
             <v-list-item-subtitle>Description</v-list-item-subtitle>
             <v-list-item-title>{{ description }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-
         <v-list-item>
           <v-list-item-content>
             <v-list-item-subtitle>Room Type</v-list-item-subtitle>
@@ -51,8 +49,22 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
-
-      <v-card-title class="font-weight-bold">Members</v-card-title>
+      <v-card-title class="font-weight-bold">
+        <span>
+          Members
+        </span>
+        <div class="flex-grow-1"></div>
+        <v-btn
+          color="error"
+          icon
+          @click="leaveRoom"
+          :disabled="!roomId"
+          :loading="isLeaveRoomStart"
+          v-if="!isAccountAdmin"
+        >
+          <v-icon>mdi-logout</v-icon>
+        </v-btn>
+      </v-card-title>
       <v-card-subtitle>{{ membersTitle }} </v-card-subtitle>
       <v-list>
         <template v-for="(member, index) in members">
@@ -67,36 +79,57 @@
           ></chat-list-information-drawer-member-list-item>
         </template>
       </v-list>
+      <v-card-actions>
+        <!--        <div class="px-2 pb-5">-->
+        <!--          <v-btn-->
+        <!--            color="error"-->
+        <!--            block-->
+        <!--            @click="isDestroyRoomWarningDialogShow = true"-->
+        <!--            v-if="isAccountAdmin"-->
+        <!--          >-->
+        <!--            <span class="text-capitalize font-weight-bold mr-1">-->
+        <!--              Destroy Room-->
+        <!--            </span>-->
+        <!--            <v-icon>mdi-trash-can</v-icon>-->
+        <!--          </v-btn>-->
+        <!--          <v-btn-->
+        <!--            color="error"-->
+        <!--            block-->
+        <!--            @click="leaveRoom"-->
+        <!--            :disabled="!roomId"-->
+        <!--            :loading="isLeaveRoomStart"-->
+        <!--            v-else-->
+        <!--          >-->
+        <!--            <span class="text-capitalize font-weight-bold mr-1">-->
+        <!--              Leave Room-->
+        <!--            </span>-->
+        <!--            <v-icon>mdi-logout</v-icon>-->
+        <!--          </v-btn>-->
+        <!--        </div>-->
+      </v-card-actions>
     </v-card>
-    <v-card flat color="white"> </v-card>
-    <template v-slot:append>
-      <div class="px-2 pb-5">
-        <v-btn
-          color="error"
-          block
-          @click="isDestroyRoomWarningDialogShow = true"
-          v-if="isAccountAdmin"
-        >
-          <span class="text-capitalize font-weight-bold mr-1">
-            Destroy Room
-          </span>
-          <v-icon>mdi-trash-can</v-icon>
-        </v-btn>
-        <v-btn
-          color="error"
-          block
-          @click="leaveRoom"
-          :disabled="!roomId"
-          :loading="isLeaveRoomStart"
-          v-else
-        >
-          <span class="text-capitalize font-weight-bold mr-1">
-            Leave Room
-          </span>
-          <v-icon>mdi-logout</v-icon>
-        </v-btn>
-      </div>
-    </template>
+    <v-dialog v-model="isRoomInformationFormDialogShow" width="800">
+      <v-card>
+        <v-card-title>Update Room Information</v-card-title>
+        <v-card-text></v-card-text>
+        <v-card-actions>
+          <div class="flex-grow-1"></div>
+          <v-btn
+            text
+            color="black"
+            class="text-capitalize"
+            @click="isRoomInformationFormDialogShow = false"
+            >Cancel</v-btn
+          >
+          <v-btn color="info">
+            <span class="text-capitalize mr-1">
+              Update
+            </span>
+            <v-icon>mdi-pencil</v-icon>
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     <v-dialog v-model="isDestroyRoomWarningDialogShow" width="700">
       <v-card>
         <v-card-title>
@@ -128,7 +161,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-  </v-navigation-drawer>
+  </div>
 </template>
 
 <script>
@@ -143,11 +176,6 @@ export default {
   props: {
     roomId: {
       type: String,
-      required: true,
-    },
-
-    isChatListInformationDrawerShow: {
-      type: Boolean,
       required: true,
     },
 
@@ -192,7 +220,7 @@ export default {
       isLeaveRoomStart: false,
       isDestroyRoomWarningDialogShow: false,
       isDestroyRoomStart: false,
-      isChatListInformationDrawerShowLocal: false,
+      isRoomInformationFormDialogShow: false,
     };
   },
 
@@ -211,16 +239,6 @@ export default {
 
     isAccountAdmin() {
       return this.currentAccount.id === this.admin.id;
-    },
-  },
-
-  watch: {
-    isChatListInformationDrawerShow(isShow) {
-      this.isChatListInformationDrawerShowLocal = isShow;
-    },
-
-    isChatListInformationDrawerShowLocal(isShow) {
-      this.$emit("update:isChatListInformationDrawerShow", isShow);
     },
   },
 
@@ -248,10 +266,6 @@ export default {
       }
       this.isDestroyRoomStart = false;
     },
-  },
-
-  created() {
-    this.isChatListInformationDrawerShowLocal = this.isChatListInformationDrawerShow;
   },
 };
 </script>

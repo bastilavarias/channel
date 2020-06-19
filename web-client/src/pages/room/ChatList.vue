@@ -78,17 +78,25 @@
         </v-row>
       </div>
     </div>
-    <chat-list-information-drawer
-      :room-id="roomId"
-      :name="information.name"
-      :avatarUrl="information.avatarUrl"
-      :description="information.description"
-      :type="information.type"
-      :admin="information.admin"
-      :isGetInformationStart="isGetInformationStart"
-      :members="members"
-      :is-chat-list-information-drawer-show="isChatListInformationDrawerShow"
-    ></chat-list-information-drawer>
+
+    <v-navigation-drawer
+      app
+      right
+      clipped
+      width="400"
+      v-model="isChatListInformationDrawerShow"
+    >
+      <chat-list-information-drawer
+        :room-id="roomId"
+        :name="information.name"
+        :avatarUrl="information.avatarUrl"
+        :description="information.description"
+        :type="information.type"
+        :admin="information.admin"
+        :isGetInformationStart="isGetInformationStart"
+        :members="members"
+      ></chat-list-information-drawer>
+    </v-navigation-drawer>
     <v-dialog width="500" v-model="isDestroyedRoomAlertDialogShow">
       <v-card>
         <v-card-title>Oops</v-card-title>
