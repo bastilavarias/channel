@@ -3,11 +3,9 @@ const roomController = require("./controller");
 const roomSocket = (io, socket) => {
   socket.on("room_enter", async (roomId) => {
     socket.join(roomId);
-    io.emit("chat_refresh_recent");
   });
 
   socket.on("room_join", async ({ roomId, accountId }) => {
-    socket.join(roomId);
     const sentBotChatDetails = await roomController.sendBotChat({
       roomId,
       accountId,

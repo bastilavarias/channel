@@ -208,7 +208,7 @@ export default {
   watch: {
     async roomId(id) {
       if (id) {
-        this.$socket.client.emit("room_enter", id);
+        this.$socket.client.emit("room_enter", this.roomId);
         await this.getInformation();
         await this.fetchChats();
         this.textFieldAutofocus();
