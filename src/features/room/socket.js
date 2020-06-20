@@ -50,6 +50,11 @@ const roomSocket = (io, socket) => {
     const roomMembers = await roomController.getMembers(roomId);
     io.to(roomId).emit("room_members", roomMembers);
   });
+
+  socket.on("room_update", ({ id, name, description, type }) => {
+    io.to(id).emit("room_update", { id, name, description, type });
+    io.emit("chat_recent_refresh");
+  });
 };
 
 module.exports = roomSocket;

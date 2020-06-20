@@ -132,7 +132,10 @@
 
 <script>
 import ChatItem from "../../components/ChatItem";
-import { ROOM_GET_INFORMATION } from "../../store/types/room";
+import {
+  ROOM_GET_INFORMATION,
+  SET_ROOM_INFORMATION,
+} from "../../store/types/room";
 import ChatListInformationDrawer from "../../components/ChatListInformationDrawer";
 import {
   CHAT_FETCH,
@@ -355,6 +358,13 @@ export default {
           this.$router.push({ name: "room-list" });
         }, 5000);
       }
+    },
+
+    room_update(information) {
+      const { name, description, type } = information;
+      this.information.name = name;
+      this.information.description = description;
+      this.information.type = type;
     },
   },
 };

@@ -67,7 +67,12 @@
             >
             <v-icon>mdi-trash-can</v-icon>
           </v-btn>
-          <v-btn color="primary">
+          <v-btn
+            color="primary"
+            :disabled="!isRoomUpdateFormValid"
+            @click="updateRoom"
+            :loading="isUpdateRoomStart"
+          >
             <span class="text-capitalize">
               <span class="mr-1">Update</span>
               <v-icon>mdi-pencil</v-icon>
@@ -196,7 +201,7 @@
 
 <script>
 import ChatListInformationDrawerMemberListItem from "./ChatListInformationDrawerMemberListItem";
-import { ROOM_DESTROY, ROOM_LEAVE } from "../store/types/room";
+import { ROOM_DESTROY, ROOM_LEAVE, ROOM_UPDATE } from "../store/types/room";
 import CustomPasswordTextField from "./custom/PasswordTextField";
 import RoomTypeSelection from "./RoomTypeSelection";
 
@@ -262,6 +267,7 @@ export default {
       roomDescriptionLocal: "",
       roomTypeLocal: "",
       roomPasswordLocal: "",
+      isUpdateRoomStart: false,
     };
   },
 
@@ -288,6 +294,14 @@ export default {
 
     roomTypeLabelColor() {
       return this.roomType === "public" ? "success--text" : "error--text";
+    },
+
+    isRoomUpdateFormValid() {
+      if (this.isRoomTypePrivate)
+        return (
+          this.roomNameLocal && this.roomTypeLocal && this.roomPasswordLocal
+        );
+      return this.roomNameLocal && this.roomTypeLocal;
     },
   },
 
@@ -328,6 +342,26 @@ export default {
         await this.$router.push({ name: "room-list" });
       }
       this.isDestroyRoomStart = false;
+    },
+
+    async updateRoom() {
+      this.isUpdateRoomStart = true;
+      const roomDetails = {
+        id: this.roomId,
+        name: this.roomNameLocal,
+        description: this.roomDescriptionLocal,
+        type: this.roomTypeLocal,
+        password: this.roomPasswordLocal,
+      };
+      const updatedRoomInformation = await this.$store.dispatch(
+        ROOM_UPDATE,
+        roomDetails
+      );
+      this.isUpdateRoomStart = false;
+      if (Object.keys(updatedRoomInformation).length > 0) {
+        this.$socket.client.emit("room_update", updatedRoomInformation);
+      }
+      this.isCustomizeMode = false;
     },
   },
 

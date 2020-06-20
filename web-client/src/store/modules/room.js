@@ -8,7 +8,8 @@ import {
   ROOM_LEAVE,
   ROOM_REMOVE,
   ROOM_SEARCH,
-  ROOM_SET_CURRENT,
+  SET_ROOM_INFORMATION,
+  ROOM_UPDATE,
   SOCKET_ROOM_MEMBERS,
 } from "../types/room";
 
@@ -23,7 +24,8 @@ export default {
       state.members = members;
     },
 
-    [ROOM_SET_CURRENT]: (state, information) => (state.current = information),
+    [SET_ROOM_INFORMATION]: (state, information) =>
+      (state.current = information),
   },
 
   actions: {
@@ -35,6 +37,25 @@ export default {
         const result = await Room.create({ name, description, type, password });
         const { id } = result.data;
         return id;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    [ROOM_UPDATE]: async (
+      { commit },
+      { id, name, description, type, password }
+    ) => {
+      try {
+        const result = await Room.update({
+          id,
+          name,
+          description,
+          type,
+          password,
+        });
+        const { information } = result.data;
+        return information;
       } catch (error) {
         console.log(error);
       }
@@ -62,7 +83,7 @@ export default {
       try {
         const result = await Room.getInformation(roomId);
         const information = result.data;
-        commit(ROOM_SET_CURRENT, information);
+        commit(SET_ROOM_INFORMATION, information);
         return information ? information : {};
       } catch (error) {
         console.log(error);

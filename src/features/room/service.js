@@ -66,9 +66,9 @@ const roomService = {
     if (type === "private") {
       roomDetails.password = await helperService.hashPassword(password);
     }
-    const updatedRoomId = await roomModel.update(roomDetails);
+    const updatedInformation = await roomModel.update(roomDetails);
     return {
-      id: updatedRoomId,
+      information: updatedInformation,
     };
   },
 
