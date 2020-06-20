@@ -7,6 +7,7 @@ const roomSocket = (io, socket) => {
   });
 
   socket.on("room_join", async ({ roomId, accountId }) => {
+    socket.join(roomId);
     const sentBotChatDetails = await roomController.sendBotChat({
       roomId,
       accountId,
