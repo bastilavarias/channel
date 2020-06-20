@@ -50,33 +50,17 @@
           </template>
         </v-container>
       </div>
-      <div>
-        <v-row no-gutters>
-          <v-col cols="10" md="11" lg="10" xl="11">
-            <v-text-field
-              class="ml-5"
-              placeholder="Write a message..."
-              filled
-              rounded
-              v-model="message"
-              @keyup.enter="sendChat"
-              id="message-text-field"
-            ></v-text-field>
-          </v-col>
-          <v-col cols="2" md="1" lg="2" xl="1">
-            <div class="text-center">
-              <v-btn
-                color="primary"
-                fab
-                @click="sendChat"
-                :disabled="!isMessageValid"
-              >
-                <v-icon>mdi-send</v-icon>
-              </v-btn>
-            </div>
-          </v-col>
-        </v-row>
-      </div>
+      <v-text-field
+        class="mx-5"
+        placeholder="Write a message..."
+        filled
+        rounded
+        v-model="message"
+        @keyup.enter="sendChat"
+        id="message-text-field"
+        :append-icon="isMessageValid ? 'mdi-send' : ''"
+        @click:append="sendChat"
+      ></v-text-field>
     </div>
     <v-navigation-drawer
       app
@@ -330,6 +314,7 @@ export default {
     await this.getInformation();
     await this.fetchChats();
     this.clearTypingAccounts();
+    this.textFieldAutofocus();
   },
 
   destroyed() {
