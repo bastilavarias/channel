@@ -16,8 +16,9 @@
         single-line
         label="Search room name"
         prepend-inner-icon="mdi-magnify"
+        v-model="query"
       ></v-text-field>
-      <template v-for="(chat, index) in recentChats">
+      <template v-for="(chat, index) in filteredRecentChats">
         <recent-chat-list-item
           :chat="chat"
           :key="index"
@@ -39,15 +40,35 @@
 
 <script>
 import RecentChatListItem from "./RecentChatListItem";
+
 export default {
   name: "recent-chat-list",
 
   components: { RecentChatListItem },
 
+  data() {
+    return {
+      query: "",
+    };
+  },
+
   computed: {
     recentChats() {
       const chats = this.$store.state.chat.recent;
       return chats ? chats : [];
+    },
+
+    filteredRecentChats() {
+      let chats = [];
+      if (this.query) {
+        return this.recentChats.filter((chat) => {
+          const trimmedQuery = this.query.trim().toLowerCase();
+          const toMatch = chat.room.nameSlug.trim().toLowerCase();
+          return toMatch.indexOf(trimmedQuery) > -1;
+        });
+      }
+      chats = this.recentChats;
+      return chats;
     },
   },
 };

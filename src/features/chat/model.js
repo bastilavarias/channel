@@ -62,7 +62,12 @@ const chatModel = {
             chat.type = rawInformation.type;
             chat.createdAt = rawInformation.created_at;
             chat.room = await knex("room")
-              .select(["id", "name", "avatar_url as avatarUrl"])
+              .select([
+                "id",
+                "name",
+                "avatar_url as avatarUrl",
+                "name_slug as nameSlug",
+              ])
               .where("id", rawInformation.room_id)
               .then((result2) => result2[0]);
             chat.account = await knex("account")
