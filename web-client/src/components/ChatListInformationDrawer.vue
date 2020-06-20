@@ -45,7 +45,7 @@
             <v-col cols="12" v-if="isRoomTypePrivate">
               <custom-password-text-field
                 :password.sync="roomPasswordLocal"
-                label="Room Password"
+                label="New Room Password"
                 outlined
               ></custom-password-text-field>
             </v-col>
