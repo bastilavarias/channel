@@ -8,7 +8,7 @@
         <div class="flex-grow-1"></div>
         <v-btn
           icon
-          @click="isRoomInformationFormDialogShow = true"
+          @click="isChatListInformationUpdateFormDialogShow = true"
           v-if="isAccountAdmin"
         >
           <v-icon>mdi-cog</v-icon>
@@ -108,28 +108,9 @@
         <!--        </div>-->
       </v-card-actions>
     </v-card>
-    <v-dialog v-model="isRoomInformationFormDialogShow" width="800">
-      <v-card>
-        <v-card-title>Update Room Information</v-card-title>
-        <v-card-text></v-card-text>
-        <v-card-actions>
-          <div class="flex-grow-1"></div>
-          <v-btn
-            text
-            color="black"
-            class="text-capitalize"
-            @click="isRoomInformationFormDialogShow = false"
-            >Cancel</v-btn
-          >
-          <v-btn color="info">
-            <span class="text-capitalize mr-1">
-              Update
-            </span>
-            <v-icon>mdi-pencil</v-icon>
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+    <chat-list-information-drawer-update-form
+      :is-show.sync="isChatListInformationUpdateFormDialogShow"
+    ></chat-list-information-drawer-update-form>
     <v-dialog v-model="isDestroyRoomWarningDialogShow" width="700">
       <v-card>
         <v-card-title>
@@ -167,11 +148,15 @@
 <script>
 import ChatListInformationDrawerMemberListItem from "./ChatListInformationDrawerMemberListItem";
 import { ROOM_DESTROY, ROOM_LEAVE } from "../store/types/room";
+import ChatListInformationDrawerUpdateForm from "./ChatListInformationDrawerUpdateForm";
 
 export default {
   name: "chat-list-information-drawer",
 
-  components: { ChatListInformationDrawerMemberListItem },
+  components: {
+    ChatListInformationDrawerUpdateForm,
+    ChatListInformationDrawerMemberListItem,
+  },
 
   props: {
     roomId: {
@@ -220,7 +205,7 @@ export default {
       isLeaveRoomStart: false,
       isDestroyRoomWarningDialogShow: false,
       isDestroyRoomStart: false,
-      isRoomInformationFormDialogShow: false,
+      isChatListInformationUpdateFormDialogShow: false,
     };
   },
 
