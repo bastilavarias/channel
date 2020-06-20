@@ -7,3 +7,4 @@ export const ROOM_JOIN = "ROOM_JOIN";
 export const ROOM_LEAVE = "ROOM_LEAVE";
 export const ROOM_DESTROY = "ROOM_DESTROY";
 export const ROOM_REMOVE = "ROOM_REMOVE";
+export const ROOM_SET_CURRENT = "ROOM_SET_CURRENT";

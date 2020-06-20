@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="isShowLocal" width="600">
+  <v-dialog v-model="isShowLocal" width="800">
     <v-card>
       <v-card-title>Update Room Information</v-card-title>
       <v-card-text>

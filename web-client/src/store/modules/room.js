@@ -8,18 +8,22 @@ import {
   ROOM_LEAVE,
   ROOM_REMOVE,
   ROOM_SEARCH,
+  ROOM_SET_CURRENT,
   SOCKET_ROOM_MEMBERS,
 } from "../types/room";
 
 export default {
   state: {
     members: [],
+    current: {},
   },
 
   mutations: {
     [SOCKET_ROOM_MEMBERS]: (state, members) => {
       state.members = members;
     },
+
+    [ROOM_SET_CURRENT]: (state, information) => (state.current = information),
   },
 
   actions: {
@@ -58,6 +62,7 @@ export default {
       try {
         const result = await Room.getInformation(roomId);
         const information = result.data;
+        commit(ROOM_SET_CURRENT, information);
         return information ? information : {};
       } catch (error) {
         console.log(error);
