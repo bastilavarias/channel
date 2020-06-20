@@ -8,7 +8,6 @@ import {
   ROOM_LEAVE,
   ROOM_REMOVE,
   ROOM_SEARCH,
-  SET_ROOM_INFORMATION,
   ROOM_UPDATE,
   SOCKET_ROOM_MEMBERS,
 } from "../types/room";
@@ -23,9 +22,6 @@ export default {
     [SOCKET_ROOM_MEMBERS]: (state, members) => {
       state.members = members;
     },
-
-    [SET_ROOM_INFORMATION]: (state, information) =>
-      (state.current = information),
   },
 
   actions: {
@@ -83,7 +79,6 @@ export default {
       try {
         const result = await Room.getInformation(roomId);
         const information = result.data;
-        commit(SET_ROOM_INFORMATION, information);
         return information ? information : {};
       } catch (error) {
         throw new Error(`[RWV] ApiService ${error}`);

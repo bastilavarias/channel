@@ -132,10 +132,7 @@
 
 <script>
 import ChatItem from "../../components/ChatItem";
-import {
-  ROOM_GET_INFORMATION,
-  SET_ROOM_INFORMATION,
-} from "../../store/types/room";
+import { ROOM_GET_INFORMATION } from "../../store/types/room";
 import ChatListInformationDrawer from "../../components/ChatListInformationDrawer";
 import {
   CHAT_FETCH,
@@ -171,7 +168,7 @@ export default {
       isRemovedAlertDialogShow: false,
       isFetchInitialChatsStart: false,
       newChatNotification: "",
-      isChatListInformationDrawerShow: true,
+      isChatListInformationDrawerShow: false,
     };
   },
 
