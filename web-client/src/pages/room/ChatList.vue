@@ -28,7 +28,7 @@
           <v-icon>mdi-information</v-icon>
         </v-app-bar-nav-icon>
       </v-toolbar>
-      <div class="chats-holder" ref="chatHolder">
+      <div class="chats-holder mb-5" ref="chatHolder">
         <v-container>
           <template v-for="(chat, index) in chats">
             <chat-item
@@ -52,7 +52,7 @@
       </div>
       <div>
         <v-row no-gutters>
-          <v-col cols="11">
+          <v-col cols="10" md="11">
             <v-text-field
               class="ml-5"
               placeholder="Write a message..."
@@ -63,7 +63,7 @@
               id="message-text-field"
             ></v-text-field>
           </v-col>
-          <v-col cols="1">
+          <v-col cols="2" md="1">
             <div class="text-center">
               <v-btn
                 color="primary"
@@ -78,7 +78,6 @@
         </v-row>
       </div>
     </div>
-
     <v-navigation-drawer
       app
       right
@@ -371,6 +370,6 @@ export default {
 .chats-holder {
   flex: 1 0 100%;
   overflow: auto;
-  height: 78vh;
+  height: 75vh;
 }
 </style>
