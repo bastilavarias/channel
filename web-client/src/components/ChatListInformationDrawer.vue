@@ -359,7 +359,10 @@ export default {
       );
       this.isUpdateRoomStart = false;
       if (Object.keys(updatedRoomInformation).length > 0) {
-        this.$socket.client.emit("room_update", updatedRoomInformation);
+        this.$socket.client.emit("room_update", {
+          ...updatedRoomInformation,
+          accountId: this.admin.id,
+        });
       }
       this.isCustomizeMode = false;
     },

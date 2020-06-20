@@ -49,7 +49,13 @@ const roomModel = {
         updated_at: updatedAt,
       })
       .where({ id })
-      .returning(["id", "name", "description", "type"])
+      .returning([
+        "id",
+        "name",
+        "description",
+        "type",
+        "updated_at as updatedAt",
+      ])
       .then((result) => result[0]);
   },
 

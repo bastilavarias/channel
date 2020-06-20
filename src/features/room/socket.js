@@ -51,10 +51,19 @@ const roomSocket = (io, socket) => {
     io.to(roomId).emit("room_members", roomMembers);
   });
 
-  socket.on("room_update", ({ id, name, description, type }) => {
-    io.to(id).emit("room_update", { id, name, description, type });
-    io.emit("chat_recent_refresh");
-  });
+  socket.on(
+    "room_update",
+    async ({ id, name, description, type, accountId }) => {
+      const sentBotChatDetails = await roomController.sendBotChat({
+        roomId: id,
+        accountId,
+        operationType: "update",
+      });
+      io.to(sentBotChatDetails.room.id).emit("chat_send", sentBotChatDetails);
+      io.to(id).emit("room_update", { name, description, type });
+      io.emit("chat_recent_refresh");
+    }
+  );
 };
 
 module.exports = roomSocket;

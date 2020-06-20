@@ -191,6 +191,10 @@ const roomService = {
       case "remove":
         message = `${account.name} removed in the room by admin.`;
         break;
+
+      case "update":
+        message = `Admin updated room information.`;
+        break;
     }
     return message;
   },
