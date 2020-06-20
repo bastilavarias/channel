@@ -52,7 +52,7 @@
       </div>
       <div>
         <v-row no-gutters>
-          <v-col cols="10" md="11">
+          <v-col cols="10" md="11" lg="10" xl="11">
             <v-text-field
               class="ml-5"
               placeholder="Write a message..."
@@ -63,7 +63,7 @@
               id="message-text-field"
             ></v-text-field>
           </v-col>
-          <v-col cols="2" md="1">
+          <v-col cols="2" md="1" lg="2" xl="1">
             <div class="text-center">
               <v-btn
                 color="primary"
