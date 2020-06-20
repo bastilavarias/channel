@@ -22,29 +22,11 @@
             ></v-textarea>
           </v-col>
           <v-col cols="12" :md="isPrivateRoom ? '2' : '12'">
-            <v-select
+            <room-type-selection
               label="Room Type"
               outlined
-              :items="types"
-              v-model="form.type"
-            >
-              <template v-slot:item="{ item }">
-                <span
-                  :class="`text-capitalize ${
-                    item === 'public' ? 'success--text' : 'error--text'
-                  } font-weight-bold`"
-                  >{{ item }}</span
-                >
-              </template>
-              <template v-slot:selection="{ item }">
-                <span
-                  :class="`text-capitalize ${
-                    item === 'public' ? 'success--text' : 'error--text'
-                  } font-weight-bold`"
-                  >{{ item }}</span
-                >
-              </template>
-            </v-select>
+              :room-type.sync="form.type"
+            ></room-type-selection>
           </v-col>
           <v-col cols="12" md="10" v-if="isPrivateRoom">
             <custom-password-text-field
@@ -77,6 +59,7 @@
 import CustomPasswordTextField from "../../components/custom/PasswordTextField";
 import { ROOM_CREATE } from "../../store/types/room";
 import CustomBreadcrumbs from "../../components/custom/Breadcrumbs";
+import RoomTypeSelection from "../../components/RoomTypeSelection";
 const defaultForm = {
   name: "",
   description: "",
@@ -84,12 +67,11 @@ const defaultForm = {
   password: "",
 };
 export default {
-  components: { CustomBreadcrumbs, CustomPasswordTextField },
+  components: { RoomTypeSelection, CustomBreadcrumbs, CustomPasswordTextField },
   data() {
     return {
       form: Object.assign({}, defaultForm),
       defaultForm,
-      types: ["public", "private"],
       isLoading: false,
     };
   },

@@ -42,6 +42,9 @@ export const Room = {
   create: ({ name, description, type, password }) =>
     apiService.post("/room/", { name, description, type, password }),
 
+  update: ({ id, name, description, type, password }) =>
+    apiService.put("/room/", { id, name, description, type, password }),
+
   search: (keyword, offset) =>
     apiService.get(`/room/search/${keyword}/${offset}`),
 
@@ -54,7 +57,7 @@ export const Room = {
 
   leave: (roomId) => apiService.post("/room/leave", { roomId }),
 
-  destroy: (roomId) => apiService.delete(`/room/destroy/${roomId}`),
+  destroy: (roomId) => apiService.delete(`/room/${roomId}`),
 
   remove: (roomId, accountId) =>
     apiService.post("/room/remove", { roomId, accountId }),

@@ -88,10 +88,10 @@
     >
       <chat-list-information-drawer
         :room-id="roomId"
-        :name="information.name"
-        :avatarUrl="information.avatarUrl"
-        :description="information.description"
-        :type="information.type"
+        :room-name="information.name"
+        :room-avatar-url="information.avatarUrl"
+        :room-description="information.description"
+        :room-type="information.type"
         :admin="information.admin"
         :isGetInformationStart="isGetInformationStart"
         :members="members"

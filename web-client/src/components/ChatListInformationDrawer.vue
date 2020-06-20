@@ -6,44 +6,96 @@
           Room Information
         </span>
         <div class="flex-grow-1"></div>
-        <v-btn
-          icon
-          @click="isChatListInformationUpdateFormDialogShow = true"
-          v-if="isAccountAdmin"
-        >
+        <v-btn icon @click="isCustomizeMode = true" v-if="isAccountAdmin">
           <v-icon>mdi-cog</v-icon>
         </v-btn>
       </v-card-title>
       <div class="text-center">
         <v-avatar :size="95">
-          <v-img :src="avatarUrl" :lazy-src="avatarUrl"></v-img>
+          <v-img :src="roomAvatarUrl" :lazy-src="roomAvatarUrl"></v-img>
         </v-avatar>
       </div>
-      <v-list>
+      <v-card color="white" flat v-if="isCustomizeMode">
+        <v-card-text>
+          <v-row dense>
+            <v-col cols="12">
+              <v-text-field
+                color="primary"
+                outlined
+                label="Room Name"
+                v-model="roomNameLocal"
+                dense
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12">
+              <v-textarea
+                color="primary"
+                outlined
+                label="Room Description"
+                v-model="roomDescriptionLocal"
+              ></v-textarea>
+            </v-col>
+            <v-col cols="12">
+              <room-type-selection
+                label="Room Type"
+                outlined
+                :room-type.sync="roomTypeLocal"
+              ></room-type-selection>
+            </v-col>
+            <v-col cols="12" v-if="isRoomTypePrivate">
+              <custom-password-text-field
+                :password.sync="roomPasswordLocal"
+                label="Room Password"
+                outlined
+              ></custom-password-text-field>
+            </v-col>
+          </v-row>
+        </v-card-text>
+        <v-card-actions>
+          <div class="flex-grow-1"></div>
+          <v-btn
+            color="black"
+            text
+            class="text-capitalize"
+            @click="isCustomizeMode = false"
+          >
+            Cancel
+          </v-btn>
+          <v-btn color="error">
+            <span class="text-capitalize font-weight-bold mr-1"
+              >Destroy Room</span
+            >
+            <v-icon>mdi-trash-can</v-icon>
+          </v-btn>
+          <v-btn color="primary">
+            <span class="text-capitalize">
+              <span class="mr-1">Update</span>
+              <v-icon>mdi-pencil</v-icon>
+            </span>
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+      <v-list v-else>
         <v-list-item>
           <v-list-item-content>
             <v-list-item-subtitle>Room Name</v-list-item-subtitle>
             <v-list-item-title class="font-weight-bold">{{
-              name
+              roomName
             }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item v-if="description">
+        <v-list-item v-if="roomDescription">
           <v-list-item-content>
             <v-list-item-subtitle>Description</v-list-item-subtitle>
-            <v-list-item-title>{{ description }}</v-list-item-title>
+            <v-list-item-title>{{ roomDescription }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
         <v-list-item>
           <v-list-item-content>
             <v-list-item-subtitle>Room Type</v-list-item-subtitle>
             <v-list-item-title>
-              <span
-                :class="`${
-                  type === 'public' ? 'success--text' : 'error--text'
-                } text-capitalize`"
-              >
-                {{ type }}
+              <span :class="`${roomTypeLabelColor} text-capitalize`">
+                {{ roomType }}
               </span>
             </v-list-item-title>
           </v-list-item-content>
@@ -108,9 +160,6 @@
         <!--        </div>-->
       </v-card-actions>
     </v-card>
-    <chat-list-information-drawer-update-form
-      :is-show.sync="isChatListInformationUpdateFormDialogShow"
-    ></chat-list-information-drawer-update-form>
     <v-dialog v-model="isDestroyRoomWarningDialogShow" width="700">
       <v-card>
         <v-card-title>
@@ -148,13 +197,15 @@
 <script>
 import ChatListInformationDrawerMemberListItem from "./ChatListInformationDrawerMemberListItem";
 import { ROOM_DESTROY, ROOM_LEAVE } from "../store/types/room";
-import ChatListInformationDrawerUpdateForm from "./ChatListInformationDrawerUpdateForm";
+import CustomPasswordTextField from "./custom/PasswordTextField";
+import RoomTypeSelection from "./RoomTypeSelection";
 
 export default {
   name: "chat-list-information-drawer",
 
   components: {
-    ChatListInformationDrawerUpdateForm,
+    RoomTypeSelection,
+    CustomPasswordTextField,
     ChatListInformationDrawerMemberListItem,
   },
 
@@ -164,22 +215,22 @@ export default {
       required: true,
     },
 
-    name: {
+    roomName: {
       type: String,
       required: true,
     },
 
-    avatarUrl: {
+    roomAvatarUrl: {
       type: String,
       required: true,
     },
 
-    description: {
+    roomDescription: {
       type: String,
       required: true,
     },
 
-    type: {
+    roomType: {
       type: String,
       required: true,
     },
@@ -205,7 +256,12 @@ export default {
       isLeaveRoomStart: false,
       isDestroyRoomWarningDialogShow: false,
       isDestroyRoomStart: false,
-      isChatListInformationUpdateFormDialogShow: false,
+      isCustomizeMode: false,
+      roomAvatarUrlLocal: "",
+      roomNameLocal: "",
+      roomDescriptionLocal: "",
+      roomTypeLocal: "",
+      roomPasswordLocal: "",
     };
   },
 
@@ -224,6 +280,28 @@ export default {
 
     isAccountAdmin() {
       return this.currentAccount.id === this.admin.id;
+    },
+
+    isRoomTypePrivate() {
+      return this.roomTypeLocal === "private";
+    },
+
+    roomTypeLabelColor() {
+      return this.roomType === "public" ? "success--text" : "error--text";
+    },
+  },
+
+  watch: {
+    roomName(name) {
+      this.roomNameLocal = name;
+    },
+
+    roomDescription(description) {
+      this.roomDescriptionLocal = description;
+    },
+
+    roomType(roomType) {
+      this.roomTypeLocal = roomType;
     },
   },
 
@@ -251,6 +329,13 @@ export default {
       }
       this.isDestroyRoomStart = false;
     },
+  },
+
+  created() {
+    this.roomAvatarUrlLocal = this.roomAvatarUrl;
+    this.roomNameLocal = this.roomName;
+    this.roomDescriptionLocal = this.roomDescription;
+    this.roomTypeLocal = this.roomType;
   },
 };
 </script>

@@ -9,6 +9,12 @@ router.post(
   roomController.create
 );
 
+router.put(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  roomController.update
+);
+
 router.post(
   "/join-room",
   passport.authenticate("jwt", { session: false }),
@@ -40,7 +46,7 @@ router.post(
 );
 
 router.delete(
-  "/destroy/:roomId",
+  "/:roomId",
   passport.authenticate("jwt", { session: false }),
   roomController.destroy
 );

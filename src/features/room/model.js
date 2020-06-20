@@ -30,6 +30,29 @@ const roomModel = {
       .then((result) => result[0]);
   },
 
+  update: async ({
+    id,
+    name,
+    nameSlug,
+    description,
+    type,
+    password,
+    updatedAt,
+  }) => {
+    return await knex(roomModel.tableName)
+      .update({
+        name,
+        name_slug: nameSlug,
+        description,
+        type,
+        password,
+        updated_at: updatedAt,
+      })
+      .where({ id })
+      .returning("id")
+      .then((result) => result[0]);
+  },
+
   addMember: async (roomId, accountId) => {
     return await knex(`${roomModel.tableName}_member`).insert({
       room_id: roomId,

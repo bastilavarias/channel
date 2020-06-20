@@ -53,6 +53,25 @@ const roomService = {
     };
   },
 
+  update: async ({ id, name, description, type, password }) => {
+    const roomDetails = {
+      id,
+      name: name.trim(),
+      nameSlug: name.toLowerCase().trim(),
+      description: description.trim(),
+      type,
+      password: "",
+      updatedAt: utilityService.timestamp(),
+    };
+    if (type === "private") {
+      roomDetails.password = await helperService.hashPassword(password);
+    }
+    const updatedRoomId = await roomModel.update(roomDetails);
+    return {
+      id: updatedRoomId,
+    };
+  },
+
   addMember: async (createdRoomId, accountId) =>
     await roomModel.addMember(createdRoomId, accountId),
 

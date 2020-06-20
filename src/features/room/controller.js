@@ -21,6 +21,23 @@ const roomController = {
     }
   },
 
+  update: async (req, res) => {
+    try {
+      const roomDetails = {
+        id: req.body.id,
+        name: req.body.name,
+        description: req.body.description,
+        type: req.body.type,
+        password: req.body.password,
+      };
+      const result = await roomService.update(roomDetails);
+      res.status(200).json(result);
+    } catch (error) {
+      console.log(error);
+      res.status(400).json(error);
+    }
+  },
+
   search: async (req, res) => {
     try {
       const keyword = req.params.keyword;
