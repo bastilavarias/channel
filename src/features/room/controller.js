@@ -16,7 +16,6 @@ const roomController = {
       });
       res.status(200).json(result);
     } catch (error) {
-      console.log(error);
       res.status(400).json(error);
     }
   },
@@ -33,7 +32,6 @@ const roomController = {
       const result = await roomService.update(roomDetails);
       res.status(200).json(result);
     } catch (error) {
-      console.log(error);
       res.status(400).json(error);
     }
   },
@@ -55,7 +53,6 @@ const roomController = {
       const result = await roomService.getFeatured(offset);
       res.status(200).json(result);
     } catch (error) {
-      console.log(error);
       res.status(400).json(error);
     }
   },
@@ -66,7 +63,6 @@ const roomController = {
       const result = await roomService.getInformation(roomId);
       res.status(200).json(result);
     } catch (error) {
-      console.log(error);
       res.status(400).json(error);
     }
   },
@@ -77,7 +73,7 @@ const roomController = {
       const result = await roomService.getMembers(roomId);
       members = result.members;
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
     return members;
   },
@@ -94,7 +90,6 @@ const roomController = {
       });
       res.status(200).json(result);
     } catch (error) {
-      console.log(error);
       res.status(400).json(error);
     }
   },
@@ -109,7 +104,7 @@ const roomController = {
       });
       details = result.details;
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
     return details;
   },
@@ -121,7 +116,6 @@ const roomController = {
       const result = await roomService.leave(roomId, accountId);
       res.status(200).json(result);
     } catch (error) {
-      console.log(error);
       res.status(400).json(error);
     }
   },
@@ -132,7 +126,6 @@ const roomController = {
       const result = await roomService.destroy(roomId);
       res.status(200).json(result);
     } catch (error) {
-      console.log(error);
       res.status(400).json(error);
     }
   },
@@ -144,7 +137,6 @@ const roomController = {
       const result = await roomService.leave(roomId, accountId);
       res.status(200).json(result);
     } catch (error) {
-      console.log(error);
       res.status(400).json(error);
     }
   },

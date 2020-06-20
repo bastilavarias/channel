@@ -7,7 +7,6 @@ const accountController = {
       const result = await accountService.login(code);
       res.status(200).json(result);
     } catch (error) {
-      console.log(error);
       res.status(400).json(error);
     }
   },
@@ -21,7 +20,6 @@ const accountController = {
       );
       res.status(200).json(result);
     } catch (error) {
-      console.log(error);
       res.status(400).json(error);
     }
   },

@@ -32,7 +32,7 @@ const chatController = {
     try {
       await chatService.readRecent({ chatId, accountId, roomId });
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   },
 
@@ -43,7 +43,6 @@ const chatController = {
       const result = await chatService.fetch(roomId, offset);
       res.status(200).json(result);
     } catch (error) {
-      console.log(error);
       res.status(400).json(error);
     }
   },
