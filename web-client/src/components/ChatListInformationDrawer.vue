@@ -61,7 +61,7 @@
           >
             Cancel
           </v-btn>
-          <v-btn color="error">
+          <v-btn color="error" @click="isDestroyRoomWarningDialogShow = true">
             <span class="text-capitalize font-weight-bold mr-1"
               >Destroy Room</span
             >
