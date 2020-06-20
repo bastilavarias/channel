@@ -38,7 +38,7 @@ export default {
         const { id } = result.data;
         return id;
       } catch (error) {
-        console.log(error);
+        throw new Error(`[RWV] ApiService ${error}`);
       }
     },
 
@@ -57,7 +57,7 @@ export default {
         const { information } = result.data;
         return information;
       } catch (error) {
-        console.log(error);
+        throw new Error(`[RWV] ApiService ${error}`);
       }
     },
 
@@ -66,7 +66,7 @@ export default {
         const result = await Room.search(keyword, offset);
         return result.data;
       } catch (error) {
-        console.log(error);
+        throw new Error(`[RWV] ApiService ${error}`);
       }
     },
 
@@ -75,7 +75,7 @@ export default {
         const result = await Room.getFeatured(offset);
         return result.data;
       } catch (error) {
-        console.log(error);
+        throw new Error(`[RWV] ApiService ${error}`);
       }
     },
 
@@ -86,7 +86,7 @@ export default {
         commit(SET_ROOM_INFORMATION, information);
         return information ? information : {};
       } catch (error) {
-        console.log(error);
+        throw new Error(`[RWV] ApiService ${error}`);
       }
     },
 
@@ -95,7 +95,7 @@ export default {
         const result = await Room.join(roomId, password);
         return result.data;
       } catch (error) {
-        console.log(error);
+        throw new Error(`[RWV] ApiService ${error}`);
       }
     },
 
@@ -105,7 +105,7 @@ export default {
         const { isLeft } = result.data;
         return isLeft;
       } catch (error) {
-        console.log(error);
+        throw new Error(`[RWV] ApiService ${error}`);
       }
     },
 
@@ -115,7 +115,7 @@ export default {
         const { isDestroyed } = result.data;
         return isDestroyed;
       } catch (error) {
-        console.log(error);
+        throw new Error(`[RWV] ApiService ${error}`);
       }
     },
 
@@ -125,7 +125,7 @@ export default {
         const { isLeft } = result.data;
         return isLeft;
       } catch (error) {
-        console.log(error);
+        throw new Error(`[RWV] ApiService ${error}`);
       }
     },
   },

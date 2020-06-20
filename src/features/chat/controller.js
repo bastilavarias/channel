@@ -12,7 +12,7 @@ const chatController = {
       });
       chatDetails = result.details;
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
     return chatDetails;
   },
@@ -23,7 +23,7 @@ const chatController = {
       const result = await chatService.getRecent(accountId);
       chats = result.chats;
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
     return chats;
   },

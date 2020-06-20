@@ -12,7 +12,7 @@ export default {
         const { information } = result.data;
         return information;
       } catch (error) {
-        console.log(error);
+        throw new Error(`[RWV] ApiService ${error}`);
       }
     },
 
@@ -22,7 +22,7 @@ export default {
         const { information } = result.data;
         return information;
       } catch (error) {
-        console.log(error);
+        throw new Error(`[RWV] ApiService ${error}`);
       }
     },
   },

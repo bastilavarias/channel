@@ -52,7 +52,7 @@ export default {
         const chats = result.data;
         commit(SET_CHATS, chats);
       } catch (error) {
-        console.log(error);
+        throw new Error(`[RWV] ApiService ${error}`);
       }
     },
   },

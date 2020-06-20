@@ -35,7 +35,7 @@ export default {
         const { token } = result.data;
         commit(ACCOUNT_SET_AUTHENTICATION, token);
       } catch (error) {
-        console.log(error);
+        throw new Error(`[RWV] ApiService ${error}`);
       }
     },
 
@@ -47,7 +47,7 @@ export default {
           const { token } = result.data;
           commit(ACCOUNT_SET_AUTHENTICATION, token);
         } catch (error) {
-          console.log(error);
+          throw new Error(`[RWV] ApiService ${error}`);
         }
       } else {
         commit(ACCOUNT_PURGE_AUTHENTICATION);
