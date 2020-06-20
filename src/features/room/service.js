@@ -63,8 +63,17 @@ const roomService = {
       password: "",
       updatedAt: utilityService.timestamp(),
     };
-    if (type === "private") {
+    const getSingleRoomParams = {
+      tableName: "room",
+      columnName: "id",
+      columnValue: id,
+      targetColumns: ["password"],
+    };
+    const gotSingleRoom = await helperService.getSingle(getSingleRoomParams);
+    if (password) {
       roomDetails.password = await helperService.hashPassword(password);
+    } else {
+      roomDetails.password = gotSingleRoom.password;
     }
     const updatedInformation = await roomModel.update(roomDetails);
     return {

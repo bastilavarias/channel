@@ -297,10 +297,6 @@ export default {
     },
 
     isRoomUpdateFormValid() {
-      if (this.isRoomTypePrivate)
-        return (
-          this.roomNameLocal && this.roomTypeLocal && this.roomPasswordLocal
-        );
       return this.roomNameLocal && this.roomTypeLocal;
     },
   },

@@ -21,14 +21,14 @@
               v-model="form.description"
             ></v-textarea>
           </v-col>
-          <v-col cols="12" :md="isPrivateRoom ? '2' : '12'">
+          <v-col cols="12" :md="isRoomTypePrivate ? '2' : '12'">
             <room-type-selection
               label="Room Type"
               outlined
               :room-type.sync="form.type"
             ></room-type-selection>
           </v-col>
-          <v-col cols="12" md="10" v-if="isPrivateRoom">
+          <v-col cols="12" md="10" v-if="isRoomTypePrivate">
             <custom-password-text-field
               outlined
               label="Password"
@@ -77,13 +77,13 @@ export default {
   },
 
   computed: {
-    isPrivateRoom() {
+    isRoomTypePrivate() {
       return this.form.type === "private";
     },
 
     isFormValid() {
       const { name, type, password } = this.form;
-      if (this.isPrivateRoom) return name && type && password;
+      if (this.isRoomTypePrivate) return name && type && password;
       return name && type;
     },
 
