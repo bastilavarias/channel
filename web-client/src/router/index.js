@@ -61,9 +61,18 @@ const routes = [
         name: "chat-list",
         component: () => import("../pages/room/ChatList"),
       },
+    ],
+  },
 
+  {
+    path: "/profile",
+    component: () => import("../layouts/RoomChatWindow"),
+    meta: {
+      requiresAuth: true,
+    },
+    children: [
       {
-        path: "profile/:username",
+        path: ":username",
         name: "profile",
         component: () => import("../pages/Profile"),
         meta: {
